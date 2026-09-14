@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Generar Horario | XANA</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" rel="stylesheet"/>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+
+    
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+  
+
+    <style>
+     
+      .button-list {
+        list-style: none;
+        width: 100%;
+      }
+
+      .button-list li {
+        margin-bottom: 15px;
+      }
+
+      .button-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #444;
+        font-size: 18px;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .button-item:hover {
+        background-color: #e8f1f3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .button-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        object-fit: contain;
+      }
+
+      .button-item span {
+        flex-grow: 1;
+      }
+
+      /* Responsividad */
+      @media (max-width: 600px) {
+        .button-item {
+          font-size: 16px;
+          padding: 12px 15px;
+        }
+
+        .button-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .header {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .especialidad-title {
+        font-size: 28px;
+        color: #343a40;
+        margin: 0;
+      }
+
+      .fecha-actual {
+        font-size: 18px;
+        color: #6c757d;
+      }
+
+      .trabajadores h3 {
+        font-size: 20px;
+        color: #495057;
+        margin-bottom: 10px;
+      }
+
+      .lista-trabajadores {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .lista-trabajadores li {
+        padding: 8px 12px;
+        background-color: #ffffff;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
+        transition: background-color 0.2s;
+      }
+
+      .lista-trabajadores li:hover {
+        background-color: #e9ecef;
+      }
+
+      .btn-generar {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .btn-generar:hover {
+        background-color: #0056b3;
+      }
+      
+      
+.calendario {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendario-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #343a40;
+}
+
+.selector-mes {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  max-width: 100%;
+}
+
+.dia-semana {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.dia-vacio {
+  background-color: #f5f5f5;
+  min-height: 140px; /* Altura mínima para mantener consistencia */
+}
+
+.dia {
+  background-color: #f5f0e1;
+  border: 2px solid #d1c8a8;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  min-height: 140px; /* Altura mínima, pero puede crecer */
+  overflow: visible; /* Permitir que el contenido se expanda */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.numero-dia {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 8px;
+  background-color: #fff8e1;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.turno {
+  font-size: 12px;
+  padding: 4px;
+  border-top: 1px solid #ccc;
+  cursor: pointer; /* Indica que es clicable */
+  white-space: normal; /* Permitir múltiples líneas */
+  overflow: visible; /* Mostrar todo el contenido */
+}
+
+.turno.mañana {
+  background-color: #dbeafe;
+  color: #1e3a8a;
+}
+
+.turno.tarde {
+  background-color: #fff8e1;
+  color: #4a3c31;
+}
+
+.turno.noche {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.turno.resaltado {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+/*modal*/
+#turnoModal .modal-content {
+  background-color: #1e3a8a; /* Azul oscuro */
+  color: #ffffff; /* Texto blanco */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#turnoModal .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Borde blanco tenue */
+}
+
+#turnoModal .modal-title {
+  font-size: 1.5rem;
+}
+
+#turnoModal .btn-close-white {
+  filter: invert(1); /* Hace el botón de cierre blanco */
+}
+
+#turnoModal .modal-body {
+  padding: 20px;
+}
+
+#turnoModal .modal-body p {
+  margin: 5px 0;
+}
+
+#turnoModal .modal-body ul {
+  margin-top: 10px;
+}
+
+#turnoModal .modal-body li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#turnoModal .modal-body li:last-child {
+  border-bottom: none; /* Sin borde en el último elemento */
+}
+
+#turnoModal .modal-body .btn-solicitar {
+  background-color: #3b82f6; /* Azul más claro */
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#turnoModal .modal-body .btn-solicitar:hover {
+  background-color: #2563eb; /* Tono más oscuro al pasar el ratón */
+}
+
+#turnoModal .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#turnoModal .modal-footer .btn-light {
+  background-color: #ffffff;
+  color: #1e3a8a;
+}
+
+#turnoModal .modal-footer .btn-light:hover {
+  background-color: #e5e7eb;
+}
+/* Estilos para el modal */
+#turnoModal .modal-body select {
+    width: 70%;
+    padding: 5px;
+    margin-right: 5px;
+  }
+
+  #turnoModal .modal-body .btn-eliminar {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  #turnoModal .modal-body .btn-eliminar:hover {
+    background-color: #c82333;
+  }
+/* Estilos para la cabecera */
+.calendario-header {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Espacio entre cabecera y config-empleados */
+  }
+
+  .calendario-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .selector-mes {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+  }
+
+  /* Estilos para la sección de configuración de empleados */
+  .config-empleados {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px; /* Espacio entre config-empleados y calendario */
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .config-empleados label {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  }
+
+  .config-empleados input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .config-empleados button {
+    padding: 8px 15px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .config-empleados button:hover {
+    background-color: #0056b3;
+  }
+  /*resumen trabajadores*/
+  .resumen-trabajadores h3 {
+    margin-bottom: 10px;
+  }
+
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+  }
+
+  .table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border: 1px solid #dee2e6;
+    text-align: center;
+  }
+
+  .table thead th {
+    vertical-align: bottom;
+    background-color: #f8f9fa;
+  }
+
+    </style>
+
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+        <!-- Sidebar Chat -->
+        <div
+        class="offcanvas offcanvas-end"
+        id="sidebarChat"
+        tabindex="-1"
+        aria-labelledby="sidebarLeftLabel"
+        >
+        <div id="plist" class="people-list">
+          <div class="offcanvas-header border-bottom bg-primary text-white">
+            <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="offcanvas"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="input-group p-3">
+            <input
+              type="text"
+              class="form-control"
+              id="searchInput"
+              placeholder="Buscar..."
+            />
+          </div>
+          <ul class="list-unstyled chat-list mb-0">
+            <% info.listaPersonasChat.forEach(persona => { %>
+            <li
+              class="clearfix usuario-chat d-flex align-items-center p-3"
+              data-user-id="<%= persona.id %>"
+            >
+              <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+              <div class="about flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="name"><%= persona.nombre %></div>
+                  <% if (persona.mensajes_no_leidos > 0) { %>
+                  <div class="mensaje-no-leido" style="display: block"></div>
+                  <% } %>
+                </div>
+                <div class="last-message">
+                  <%= persona.ultimo_mensaje || '' %>
+                </div>
+                <div class="message-data-time">
+                  <%= persona.fecha_ultimo_mensaje || '' %>
+                </div>
+              </div>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+    
+        <div class="chat" style="display: none">
+          <div class="chat-header bg-primary text-white">
+            <div
+              class="row align-items-center d-flex justify-content-between p-3"
+            >
+              <div class="col-lg-6 d-flex align-items-center">
+                <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+                <div class="chat-about" data-user-id="">
+                  <h6 class="m-0"></h6>
+                </div>
+              </div>
+              <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+                <button class="call-btn btn-img">
+                  <img src="/imagenes/llamada.png" alt="Llamar" />
+                </button>
+                <button id="btnVolverLista" class="call-btn btn-img">
+                  <img src="/imagenes/volver.png" alt="Volver" />
+                </button>
+              </div>
+            </div>
+          </div>
+    
+          <div class="chat-history" id="chat-box">
+            <ul class="m-b-0"></ul>
+          </div>
+          <div class="chat-message">
+            <div class="input-group">
+              <input
+                id="mensajeInput"
+                type="text"
+                class="form-control"
+                placeholder="Escribe un mensaje..."
+              />
+              <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+            </div>
+          </div>
+        </div>
+        </div>
+    
+        <!-- Sidebar Notificaciones -->
+    
+        <div
+        class="offcanvas offcanvas-end bg-light"
+        id="sidebarNotificaciones"
+        tabindex="-1"
+        aria-labelledby="sidebarRightLabel"
+        >
+        <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+        </div>
+        <div class="offcanvas-body p-0">
+        <ul class="list-unstyled m-0" id="notificaciones">
+          <% info.notificaciones.forEach(notificacion => { %>
+          <li
+            class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+            data-notificacion-id="<%= notificacion.id %>"
+          >
+            <small class="text-muted"
+              ><%= notificacion.fecha_formateada %></small
+            >
+            <div class="fw-bold">
+              <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+              Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+              'tipo_horario') { %> Cambio de Horario <% } else if
+              (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+              Perdida <% } else if (notificacion.tipo_notificacion ===
+              'tipo_mail') { %> Nuevo Email <% } else if
+              (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+              %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+              === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+              días) <% } else if (notificacion.tipo_notificacion ===
+              'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+              <% } else { %> Notificación <% } %>
+            </div>
+            <div><%= notificacion.contenido_notificacion %></div>
+            <button
+              type="button"
+              class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+              data-notificacion-id="<%= notificacion.id %>"
+            >
+              Borrar
+            </button>
+          </li>
+          <% }) %>
+        </ul>
+        <div class="p-3">
+          <a
+            href="/enfermeria/notificaciones"
+            class="btn btn-outline-primary w-100"
+          >
+            Ver todas las notificaciones
+          </a>
+        </div>
+        </div>
+        </div>
+    
+        <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+        <a
+        class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+        href="#"
+        >XANA INDUSTRIES</a>
+    
+        <div class="d-flex gap-2 me-3">
+        <button
+        class="btn btn-secondary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarChat"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        >
+        <div id="chatIcon" style="display: block">
+          <img
+            src="/imagenes/chatIcon.png"
+            alt="Chat"
+            width="24"
+            height="24"
+          />
+        </div>
+    
+        <!-- Imagen cuando hay mensajes nuevos -->
+        <div id="chatIconNew" style="display: none">
+          <img
+            src="/imagenes/chatIconNew.png"
+            alt="Chat Nuevo"
+            width="24"
+            height="24"
+          />
+        </div>
+        </button>
+    
+        <button
+        class="btn btn-secondary"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarNotificaciones"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        >
+        <div id="notIcon" style="display: block">
+          <img
+            src="/imagenes/campana.png"
+            alt="notificacion"
+            width="24"
+            height="24"
+          />
+        </div>
+    
+        <!-- Imagen cuando hay mensajes nuevos -->
+        <div id="notIconNew" style="display: none">
+          <img
+            src="/imagenes/campanaConNotificacion.png"
+            alt="notificacion"
+            width="24"
+            height="24"
+          />
+        </div>
+        </button>
+        </div>
+        </header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>            
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>    
+              <li class="border-top my-3"></li>   
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/horarios" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Horarios</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#horarios-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="horarios-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/enfermeriaEncargado/horarios/generarHorario" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generar Horario</a></li>
+                  </ul>
+                </div>
+              </li>     
+              <li class="border-top my-3"></li> 
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/farmacia" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Farmacia</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li> 
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 id="nombreDelUsuario">Generar Horario</h1>
+              <div class=" d-flex align-items-center">
+                <a id="btnVolverLista" class="call-btn btn-img me-2" href="/enfermeria/horarios">
+                  <img
+                    src="/imagenes/volver.png"
+                    alt="Volver"
+                    style="width: 24px; height: 24px"
+                  />
+                </a>
+                <h2 class="m-0"></h2>
+              </div>
+            </div>
+            <div class="album py-5 bg-body-tertiary">
+              <div class="container">
+                <div class="header">
+                  <div class="header-top">
+                    <h1 class="especialidad-title"id ="tituloEspecialidad">Enfermería</h1>
+                    <span class="fecha-actual"><%= info.mes %> <%= info.año %></span>
+                  </div>
+                  <div class="trabajadores">
+                    <h3>Plantilla</h3>
+                    <div class="lista-trabajadores">
+                      <% info.nombresPlantilla.forEach(trabajador => { %>
+                        <span data-id="<%= trabajador.id %>"><%= trabajador.nombre_completo %></span>
+                      <% }) %>
+                    </div>
+                  </div>
+                </div>
+          
+                <!-- Sección del calendario -->
+                <div class="calendario">
+                  <div class="calendario-header">
+                    <h2>Horario</h2>
+                    <select class="selector-mes" id="selectorMes">
+                      <option value="Enero">Enero</option>
+                      <option value="Febrero">Febrero</option>
+                      <option value="Marzo" selected>Marzo</option>
+                      <option value="Abril">Abril</option>
+                      <option value="Mayo">Mayo</option>
+                      <option value="Junio">Junio</option>
+                      <option value="Julio">Julio</option>
+                      <option value="Agosto">Agosto</option>
+                      <option value="Septiembre">Septiembre</option>
+                      <option value="Octubre">Octubre</option>
+                      <option value="Noviembre">Noviembre</option>
+                      <option value="Diciembre">Diciembre</option>
+                    </select>
+                    <select class="selector-año" id="selectorAño">
+                      <% for(let i = 2020; i <= 2030; i++) { %>
+                        <option value="<%= i %>" <%= i === 2025 ? 'selected' : '' %>><%= i %></option>
+                      <% } %>
+                    </select>
+                  </div>
+          
+                
+          
+                  <div class="calendario-grid" id="calendarioGrid">
+                    <div class="dia-semana">Lun</div>
+                    <div class="dia-semana">Mar</div>
+                    <div class="dia-semana">Mié</div>
+                    <div class="dia-semana">Jue</div>
+                    <div class="dia-semana">Vie</div>
+                    <div class="dia-semana">Sáb</div>
+                    <div class="dia-semana">Dom</div>
+                  </div>
+                </div>
+                <div class="resumen-trabajadores" style="margin-top: 20px;">
+                  <h3>Resumen de Turnos</h3>
+                  <table class="table table-bordered" id="tablaResumen">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Turnos de Mañana</th>
+                        <th>Turnos de Tarde</th>
+                        <th>Días de Descanso</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaResumenBody"></tbody>
+                  </table>
+                </div>
+                <!-- Botón Confirmar Horario -->
+        <div class="confirmar-horario" style="text-align: center; margin-top: 20px;">
+            <button id="btnConfirmarHorario" class="btn btn-primary">Confirmar Horario</button>
+          </div>
+              </div>
+            </div>
+          </main>
+      </div>
+    </div>
+
+    <div class="modal fade" id="turnoModal" tabindex="-1" aria-labelledby="turnoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="background-color: #1e3a8a; color: #ffffff;">
+            <div class="modal-header">
+              <h5 class="modal-title" id="turnoModalLabel">Detalles del Turno</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><strong>Día:</strong> <span id="modalDia"></span></p>
+              <p><strong>Turno:</strong> <span id="modalTurno"></span></p>
+              <p><strong>Horas:</strong> <span id="modalHora"></span></p>
+              <p><strong>Trabajadores asignados:</strong></p>
+              <ul id="modalTrabajadoresList" class="list-unstyled"></ul>
+              <button type="button" class="btn btn-light" id="btnNuevoTrabajador">Nuevo Trabajador</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-success" id="btnAplicar">Aplicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+
+    <script>
+  // Obtener la lista de trabajadores desde el DOM
+  const trabajadoresElements = document.querySelectorAll('.lista-trabajadores span');
+  const nombresPlantilla = Array.from(trabajadoresElements).map(span => ({
+    id: span.getAttribute('data-id'),
+    nombre_completo: span.textContent.trim()
+  }));
+
+  // Función para generar el calendario
+  function generarCalendario(mes, año) {
+    fetch('/enfermeriaEncargado/horarios/horarioExiste', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mes, año })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success === true) {
+        const confirmacion = confirm(`Ya existe un horario para ${mes} ${año}. Si creas uno nuevo, el anterior se perderá. ¿Deseas continuar?`);
+        if (!confirmacion) {
+          // Restaurar el mes y año anteriores si el usuario cancela
+          document.getElementById('selectorMes').value = mesInicial;
+          document.getElementById('selectorAño').value = añoInicial;
+          return;
+        }
+      }
+      // Si no existe horario o el usuario confirma, generar el calendario
+      const calendarioGrid = document.getElementById('calendarioGrid');
+      while (calendarioGrid.children.length > 7) {
+        calendarioGrid.removeChild(calendarioGrid.lastChild);
+      }
+
+      const diasEnMes = {
+        'Enero': 31, 'Febrero': 28, 'Marzo': 31, 'Abril': 30, 'Mayo': 31, 'Junio': 30,
+        'Julio': 31, 'Agosto': 31, 'Septiembre': 30, 'Octubre': 31, 'Noviembre': 30, 'Diciembre': 31
+      };
+
+      const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      const mesIndex = meses.indexOf(mes);
+      const primerDia = new Date(año, mesIndex, 1);
+      const offset = primerDia.getDay() === 0 ? 6 : primerDia.getDay() - 1;
+
+      if (mes === 'Febrero') {
+        diasEnMes['Febrero'] = (año % 4 === 0 && (año % 100 !== 0 || año % 400 === 0)) ? 29 : 28;
+      }
+
+      for (let i = 0; i < offset; i++) {
+        const diaVacio = document.createElement('div');
+        diaVacio.className = 'dia-vacio';
+        calendarioGrid.appendChild(diaVacio);
+      }
+
+      const dias = diasEnMes[mes];
+      for (let dia = 1; dia <= dias; dia++) {
+        const diaDiv = document.createElement('div');
+        diaDiv.className = 'dia';
+
+        const numeroDia = document.createElement('div');
+        numeroDia.className = 'numero-dia';
+        numeroDia.textContent = dia;
+        diaDiv.appendChild(numeroDia);
+
+        const turnoMañana = document.createElement('div');
+        turnoMañana.className = 'turno mañana';
+        turnoMañana.setAttribute('data-bs-toggle', 'modal');
+        turnoMañana.setAttribute('data-bs-target', '#turnoModal');
+        turnoMañana.setAttribute('data-info', JSON.stringify([{ turno: 'Mañana', dia: dia, mes: mes, año: año, nombre_trabajador: '-', id: null }]));
+        turnoMañana.innerHTML = '<div>-</div>';
+        diaDiv.appendChild(turnoMañana);
+
+        const turnoTarde = document.createElement('div');
+        turnoTarde.className = 'turno tarde';
+        turnoTarde.setAttribute('data-bs-toggle', 'modal');
+        turnoTarde.setAttribute('data-bs-target', '#turnoModal');
+        turnoTarde.setAttribute('data-info', JSON.stringify([{ turno: 'Tarde', dia: dia, mes: mes, año: año, nombre_trabajador: '-', id: null }]));
+        turnoTarde.innerHTML = '<div>-</div>';
+        diaDiv.appendChild(turnoTarde);
+
+        const turnoNoche = document.createElement('div');
+        turnoNoche.className = 'turno noche';
+        turnoNoche.setAttribute('data-bs-toggle', 'modal');
+        turnoNoche.setAttribute('data-bs-target', '#turnoModal');
+        turnoNoche.setAttribute('data-info', JSON.stringify([{ turno: 'Noche', dia: dia, mes: mes, año: año, nombre_trabajador: '-', id: null }]));
+        turnoNoche.innerHTML = '<div>-</div>';
+        diaDiv.appendChild(turnoNoche);
+
+        calendarioGrid.appendChild(diaDiv);
+      }
+
+      actualizarEventosTurnos();
+      actualizarTablaResumen(mes, año);
+    })
+    .catch(error => {
+      console.error('Error al consultar el servidor:', error);
+      alert('Hubo un error al verificar el horario. Intenta de nuevo.');
+    });
+  }
+  // Función para actualizar los eventos de los turnos
+  function actualizarEventosTurnos() {
+    document.querySelectorAll('.turno').forEach(turno => {
+      turno.addEventListener('click', function() {
+        const info = JSON.parse(this.getAttribute('data-info'));
+        const turnoElement = this;
+
+        document.getElementById('modalDia').textContent = `${info[0].dia} de ${info[0].mes} ${info[0].año}`;
+        document.getElementById('modalTurno').textContent = info[0].turno;
+        document.getElementById('modalHora').textContent = info[0].turno === 'Mañana' ? '08:00 - 14:00' : 
+                                                          info[0].turno === 'Tarde' ? '14:00 - 20:00' : '20:00 - 08:00';
+
+        const trabajadoresList = document.getElementById('modalTrabajadoresList');
+        trabajadoresList.innerHTML = '';
+        if (info.length === 1 && info[0].nombre_trabajador === '-' && info[0].id === null) {
+          const li = document.createElement('li');
+          li.textContent = 'No asignado';
+          trabajadoresList.appendChild(li);
+        } else {
+          info.forEach(trabajador => {
+            const li = document.createElement('li');
+            li.textContent = trabajador.nombre_trabajador;
+            const btnEliminar = document.createElement('button');
+            btnEliminar.className = 'btn-eliminar';
+            btnEliminar.textContent = 'Eliminar';
+            btnEliminar.onclick = function() {
+              li.remove();
+            };
+            li.appendChild(btnEliminar);
+            trabajadoresList.appendChild(li);
+          });
+        }
+
+        document.getElementById('btnNuevoTrabajador').onclick = function() {
+          const li = document.createElement('li');
+          const select = document.createElement('select');
+          select.innerHTML = '<option value="">Selecciona un empleado</option>';
+          nombresPlantilla.forEach(empleado => {
+            const option = document.createElement('option');
+            option.value = empleado.id;
+            option.textContent = empleado.nombre_completo;
+            select.appendChild(option);
+          });
+
+          const btnEliminar = document.createElement('button');
+          btnEliminar.className = 'btn-eliminar';
+          btnEliminar.textContent = 'Eliminar';
+          btnEliminar.onclick = function() {
+            li.remove();
+          };
+
+          li.appendChild(select);
+          li.appendChild(btnEliminar);
+          trabajadoresList.appendChild(li);
+        };
+
+        document.getElementById('btnAplicar').onclick = function() {
+          const nuevosTrabajadores = [];
+          trabajadoresList.querySelectorAll('li').forEach(li => {
+            const select = li.querySelector('select');
+            const textContent = li.textContent.replace('Eliminar', '').trim();
+            if (select && select.value) {
+              const empleado = nombresPlantilla.find(e => e.id == select.value);
+              nuevosTrabajadores.push({
+                turno: info[0].turno,
+                dia: info[0].dia,
+                mes: info[0].mes,
+                año: info[0].año,
+                nombre_trabajador: empleado.nombre_completo,
+                id: empleado.id
+              });
+            } else if (textContent && textContent !== 'No asignado') {
+              const empleadoExistente = info.find(t => t.nombre_trabajador === textContent);
+              if (empleadoExistente) {
+                nuevosTrabajadores.push(empleadoExistente);
+              }
+            }
+          });
+
+          if (nuevosTrabajadores.length === 0) {
+            nuevosTrabajadores.push({
+              turno: info[0].turno,
+              dia: info[0].dia,
+              mes: info[0].mes,
+              año: info[0].año,
+              nombre_trabajador: '-',
+              id: null
+            });
+          }
+
+          turnoElement.setAttribute('data-info', JSON.stringify(nuevosTrabajadores));
+          turnoElement.innerHTML = '';
+          nuevosTrabajadores.forEach(trabajador => {
+            const div = document.createElement('div');
+            div.textContent = trabajador.nombre_trabajador;
+            turnoElement.appendChild(div);
+          });
+
+          const modal = bootstrap.Modal.getInstance(document.getElementById('turnoModal'));
+          modal.hide();
+
+          // Actualizar la tabla después de aplicar cambios
+          actualizarTablaResumen(info[0].mes, info[0].año);
+        };
+      });
+    });
+  }
+
+  // Función para actualizar la tabla de resumen
+  function actualizarTablaResumen(mes, año) {
+    const turnos = document.querySelectorAll('.turno');
+    const diasEnMes = {
+      'Enero': 31, 'Febrero': (año % 4 === 0 && (año % 100 !== 0 || año % 400 === 0)) ? 29 : 28, 'Marzo': 31, 'Abril': 30,
+      'Mayo': 31, 'Junio': 30, 'Julio': 31, 'Agosto': 31, 'Septiembre': 30, 'Octubre': 31, 'Noviembre': 30, 'Diciembre': 31
+    };
+    const totalDias = diasEnMes[mes];
+    const tablaBody = document.getElementById('tablaResumenBody');
+    tablaBody.innerHTML = '';
+
+    // Inicializar asignaciones con valores por defecto
+    const asignaciones = {};
+    nombresPlantilla.forEach(trabajador => {
+      asignaciones[trabajador.id] = {
+        nombre: trabajador.nombre_completo,
+        mañana: 0,
+        tarde: 0,
+        diasTrabajados: new Set()
+      };
+    });
+
+    // Actualizar asignaciones basadas en los turnos
+    turnos.forEach(turno => {
+      const info = JSON.parse(turno.getAttribute('data-info'));
+      info.forEach(trabajador => {
+        if (trabajador.id !== null) {
+          if (trabajador.turno === 'Mañana') {
+            asignaciones[trabajador.id].mañana++;
+          } else if (trabajador.turno === 'Tarde') {
+            asignaciones[trabajador.id].tarde++;
+          }
+          asignaciones[trabajador.id].diasTrabajados.add(trabajador.dia);
+        }
+      });
+    });
+
+    // Generar filas de la tabla
+    Object.keys(asignaciones).forEach(id => {
+      const datos = asignaciones[id];
+      const diasDescanso = totalDias - datos.diasTrabajados.size;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${datos.nombre}</td>
+        <td>${datos.mañana}</td>
+        <td>${datos.tarde}</td>
+        <td>${diasDescanso}</td>
+      `;
+      tablaBody.appendChild(row);
+    });
+  }
+
+  // Generar calendario inicial
+  const mesInicial = document.getElementById('selectorMes').value;
+  const añoInicial = parseInt(document.getElementById('selectorAño').value);
+  generarCalendario(mesInicial, añoInicial);
+
+  // Escuchar cambios en el selector de mes
+  document.getElementById('selectorMes').addEventListener('change', function() {
+    const mesSeleccionado = this.value;
+    const añoSeleccionado = parseInt(document.getElementById('selectorAño').value);
+    generarCalendario(mesSeleccionado, añoSeleccionado);
+  });
+
+  // Escuchar cambios en el selector de año
+  document.getElementById('selectorAño').addEventListener('change', function() {
+    const añoSeleccionado = parseInt(this.value);
+    const mesSeleccionado = document.getElementById('selectorMes').value;
+    generarCalendario(mesSeleccionado, añoSeleccionado);
+  });
+
+ 
+
+  // Script para el botón Confirmar Horario
+  document.getElementById('btnConfirmarHorario').addEventListener('click', function() {
+    const mes = document.getElementById('selectorMes').value;
+    const año = parseInt(document.getElementById('selectorAño').value);
+    const turnos = document.querySelectorAll('.turno');
+    const horarioConfirmado = [];
+    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const especialidad = "<%= info.especialidad %>"
+
+   /* let turnosVacios = [];
+    turnos.forEach(turno => {
+      const info = JSON.parse(turno.getAttribute('data-info'));
+      if (info.length === 1 && info[0].nombre_trabajador === '-' && info[0].id === null) {
+        turnosVacios.push(`${info[0].dia} de ${info[0].mes} - ${info[0].turno}`);
+      }
+    });
+
+    if (turnosVacios.length > 0) {
+      alert(`No se puede confirmar el horario. Los siguientes turnos están vacíos:\n${turnosVacios.join('\n')}\nPor favor, asigna al menos un empleado a cada turno.`);
+      return;
+    }*/
+
+    turnos.forEach(turno => {
+      const info = JSON.parse(turno.getAttribute('data-info'));
+      info.forEach(trabajador => {
+        const fecha = new Date(año, ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].indexOf(mes), trabajador.dia);
+        const diaSemana = diasSemana[fecha.getDay()];
+        
+        horarioConfirmado.push({
+          año: trabajador.año,
+          mes: trabajador.mes,
+          dia: trabajador.dia,
+          turno: trabajador.turno,
+          nombre_trabajador: trabajador.nombre_trabajador,
+          id_empleado: trabajador.id,
+          dia_semana: diaSemana
+        });
+      });
+    });
+
+    console.log('Horario confirmado:', horarioConfirmado);
+    // Verificar que cada turno tenga al menos un empleado
+    
+    fetch('/enfermeriaEncargado/horarios/confirmarHorario', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({horarioConfirmado, especialidad})
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success === true) {
+        alert(`Horario creado`);
+        window.location.href="/enfermeria/horarios"
+       
+        }
+    })
+    
+  });
+</script>
+  </body>
+</html>

@@ -1,0 +1,342 @@
+/* Asegura que el cuerpo no genere desplazamiento no deseado */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Ajusta el contenedor principal */
+.container-fluid {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: none; /* Previene el efecto muelle en el contenedor raíz */
+}
+
+/* Ajusta la barra de navegación superior */
+.navbar {
+  flex-shrink: 0;
+}
+
+/* Ajusta la fila principal */
+.row {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Ajusta el sidebar */
+.sidebar {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Ajusta el main */
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: none; /* Previene el efecto muelle */
+}
+
+/* Main container for the empleados section */
+.empleados-section {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor desplazable */
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto; /* Desplazamiento vertical */
+  overflow-x: auto; /* Desplazamiento horizontal */
+  -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en iOS */
+  overscroll-behavior: contain; /* Previene el efecto muelle en ambos ejes */
+  max-height: calc(100vh - 120px); /* Ajusta para navbar (~56px) y encabezado (~64px) */
+}
+
+/* Espaciador inferior para evitar que el efecto muelle afecte la tabla */
+.bottom-spacer {
+  height: 150px; /* Espacio adicional en la parte inferior */
+  width: 100%; /* Asegura que cubra todo el ancho */
+}
+
+/* Estilo para el título */
+.empleados-section h2 {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #2dd4bf;
+  padding-bottom: 8px;
+}
+
+/* Estilo para el contenedor de la tabla */
+.empleados-card {
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+  min-width: fit-content; /* Asegura que la tarjeta no se encoja más allá del contenido */
+}
+
+/* Efecto hover */
+.empleados-card:hover {
+  background-color: #e6fffa;
+}
+
+/* Estilo para la tabla */
+.table-responsive {
+  width: 100%;
+  min-width: fit-content; /* Permite que la tabla sea más ancha que el contenedor */
+}
+
+/* Estilo para la tabla */
+.table {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+  color: #1f2937;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+/* Estilo para los encabezados de la tabla */
+.table th {
+  font-weight: 600;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  white-space: nowrap;
+}
+
+/* Estilo para las celdas de la tabla */
+.table td {
+  line-height: 1.5;
+  padding: 0.5rem;
+  white-space: nowrap; /* Por defecto, texto en una línea */
+}
+
+/* Específicamente para la columna Nombre */
+.table td.nombre {
+  white-space: normal; /* Permite que el texto se envuelva */
+  word-break: break-word; /* Rompe palabras largas de forma más natural */
+}
+
+/* Est “‘ilo para el mensaje de no datos */
+.empleados-no-data {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  padding: 15px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+}
+
+/* Estilo para los filtros y botón */
+.input-group-sm {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.btn-sm {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+/* Estilo para las filas y columnas */
+.row.align-items-center {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.col-auto {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Estilos para la tabla */
+.table thead th {
+  background-color: #1e90ff !important;
+  border-color: #1c86ee !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f0f8ff;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e6f3ff;
+}
+
+/* Estilos para DataTables */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: #1e90ff !important;
+  border-color: #1e90ff !important;
+  color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #4169e1 !important;
+  border-color: #4169e1 !important;
+  color: white !important;
+}
+
+/* Asegura que DataTables no fuerce un ancho mínimo */
+#tablaEmpleados {
+  max-width: 100% !important;
+}
+
+/* Estilos para el modal */
+#empleadoModal .modal-content {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+#empleadoModal .modal-header {
+  background-color: #2dd4bf;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  color: #ffffff;
+}
+
+#empleadoModal .modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#empleadoModal .btn-close {
+  filter: invert(1);
+}
+
+#empleadoModal .scrollable-content {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+#empleadoModal .bottom-spacer {
+  height: 80px;
+  width: 100%;
+}
+
+#empleadoModal .modal-body {
+  padding: 1.5rem;
+  background-color: #f8fafc;
+}
+
+#empleadoModal .empleados-card {
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+  min-width: 600px;
+}
+
+#empleadoModal .empleados-card:hover {
+  background-color: #e6fffa;
+}
+
+#empleadoModal .card-title {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+#empleadoModal .card-text {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+#empleadoModal .card-text strong {
+  display: inline-block;
+  width: 180px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+#empleadoModal .modal-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
+  background-color: #f8fafc;
+}
+
+#empleadoModal .btn-primary,
+#empleadoModal .btn-secondary {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .empleados-section {
+    padding: 10px;
+  }
+
+  .scrollable-content {
+    max-height: calc(100vh - 100px); /* Ajusta para pantallas pequeñas */
+  }
+
+  .bottom-spacer {
+    height: 100px; /* Menos espacio en pantallas pequeñas */
+  }
+
+  .empleados-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.3rem;
+  }
+
+  /* Ajustes específicos para la columna Nombre */
+  .table td.nombre {
+    white-space: normal; /* Asegurar que el texto se envuelva */
+    word-break: break-word; /* Romper palabras largas de forma natural */
+  }
+
+  .input-group-sm,
+  .form-select,
+  .btn-sm {
+    font-size: 0.8rem;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  main {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+ 

@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Balance Paciente | XANA</title>
+
+
+    <!-- Dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/paciente/pacienteBase.css" rel="stylesheet" />
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+    <style>
+     /* Estilos para la sección de balance hídrico */
+.balance-section {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para el título */
+.balance-title {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2dd4bf;
+    padding-bottom: 8px;
+}
+
+/* Estilos para el botón principal (fuera de modales) */
+.balance-btn-primary {
+    background-color: #2dd4bf;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.balance-btn-primary:hover {
+    background-color: #26a69a;
+    transform: translateY(-1px);
+}
+
+/* Estilos para la tabla */
+.table-container {
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #0d6efd #e9ecef;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e9ecef;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #0d6efd;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #0b5ed7;
+}
+
+#tablaBalances {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tablaBalances th,
+#tablaBalances td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#tablaBalances th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    color: #212529;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+#tablaBalances tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+#tablaBalances tbody td {
+    font-size: 0.9rem;
+    color: #1f2937;
+}
+
+/* Estilos para el checkbox */
+.balance-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.balance-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #ecfdf5;
+    border: 2px solid #5eead4;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.balance-checkbox:checked {
+    background-color: #047857;
+    border-color: #047857;
+    position: relative;
+}
+
+.balance-checkbox:checked::after {
+    content: '✔';
+    color: #ffffff;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.balance-checkbox-label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #064e3b;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.balance-checkbox-label:hover {
+    color: #047857;
+}
+
+.balance-checkbox-container:hover .balance-checkbox {
+    border-color: #047857;
+}
+
+/* Estilos para el gráfico */
+.chart-container {
+    max-width: 100%;
+    margin: 20px auto;
+}
+
+#balanceChart {
+    max-height: 400px !important;
+}
+
+/* Estilos para el modal #addBalanceModal */
+#addBalanceModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1055;
+}
+
+#addBalanceModal .balance-dialog {
+    max-width: 820px;
+    margin: 2rem auto;
+}
+
+#addBalanceModal .balance-content {
+    background-color: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(45, 212, 191, 0.2);
+    border: 2px solid #5eead4;
+    overflow: hidden;
+}
+
+#addBalanceModal .balance-header {
+    background: linear-gradient(to right, #2dd4bf, #6ee7b7);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #5eead4;
+}
+
+#addBalanceModal .balance-title {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #064e3b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+#addBalanceModal .balance-title::before {
+    content: '💧';
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+#addBalanceModal .balance-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #064e3b;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+#addBalanceModal .balance-close:hover {
+    color: #047857;
+}
+
+#addBalanceModal .balance-body {
+    padding: 20px;
+}
+
+#addBalanceModal .balance-section {
+    margin-bottom: 20px;
+}
+
+#addBalanceModal .balance-section h6 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #064e3b;
+    margin-bottom: 10px;
+}
+
+#addBalanceModal .balance-row {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+#addBalanceModal .balance-row.general-info {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#addBalanceModal .balance-field {
+    display: flex;
+    flex-direction: column;
+}
+
+#addBalanceModal .balance-field label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #064e3b;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+#addBalanceModal .balance-field p {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #1f2937;
+    margin: 0;
+}
+
+#addBalanceModal .balance-field input,
+#addBalanceModal .balance-field select {
+    width: 100%;
+    padding: 8px;
+    background-color: #ecfdf5;
+    border: 1px solid #5eead4;
+    border-radius: 6px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #1f2937;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#addBalanceModal .balance-field input:focus,
+#addBalanceModal .balance-field select:focus {
+    outline: none;
+    border-color: #047857;
+    box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+}
+
+#addBalanceModal .balance-field input::placeholder,
+#addBalanceModal .balance-field select::placeholder {
+    color: #6b7280;
+}
+
+#addBalanceModal .balance-footer {
+    background-color: #f1f5f9;
+    border-top: 1px solid #d1fae5;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+#addBalanceModal .balance-btn-secondary {
+    background-color: #475569;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#addBalanceModal .balance-btn-secondary:hover {
+    background-color: #334155;
+    transform: translateY(-1px);
+}
+
+#addBalanceModal .balance-btn-primary {
+    background-color: #047857;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#addBalanceModal .balance-btn-primary:hover {
+    background-color: #065f46;
+    transform: translateY(-1px);
+}
+
+/* Estilos para el modal #balanceDetailsModal */
+#balanceDetailsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1055;
+}
+
+#balanceDetailsModal .balance-dialog {
+    max-width: 820px;
+    margin: 2rem auto;
+}
+
+#balanceDetailsModal .balance-content {
+    background-color: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(45, 212, 191, 0.2);
+    border: 2px solid #5eead4;
+    overflow: hidden;
+}
+
+#balanceDetailsModal .balance-header {
+    background: linear-gradient(to right, #2dd4bf, #6ee7b7);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #5eead4;
+}
+
+#balanceDetailsModal .balance-title {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #064e3b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+#balanceDetailsModal .balance-title::before {
+    content: '💧';
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+#balanceDetailsModal .balance-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #064e3b;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+#balanceDetailsModal .balance-close:hover {
+    color: #047857;
+}
+
+#balanceDetailsModal .balance-body {
+    padding: 20px;
+}
+
+#balanceDetailsModal .balance-section {
+    margin-bottom: 20px;
+}
+
+#balanceDetailsModal .balance-section h6 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #064e3b;
+    margin-bottom: 10px;
+}
+
+#balanceDetailsModal .balance-row {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+#balanceDetailsModal .balance-row.general-info {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#balanceDetailsModal .balance-field {
+    display: flex;
+    flex-direction: column;
+}
+
+#balanceDetailsModal .balance-field label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #064e3b;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+#balanceDetailsModal .balance-field p {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #1f2937;
+    margin: 0;
+}
+
+#balanceDetailsModal .balance-footer {
+    background-color: #f1f5f9;
+    border-top: 1px solid #d1fae5;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+#balanceDetailsModal .balance-btn-secondary {
+    background-color: #475569;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+#balanceDetailsModal .balance-btn-secondary:hover {
+    background-color: #334155;
+    transform: translateY(-1px);
+}
+
+/* Responsividad */
+@media (max-width: 680px) {
+    .balance-section {
+        padding: 15px;
+    }
+
+    #addBalanceModal .balance-dialog,
+    #balanceDetailsModal .balance-dialog {
+        max-width: 95%;
+    }
+
+    #addBalanceModal .balance-row,
+    #balanceDetailsModal .balance-row {
+        grid-template-columns: 1fr;
+    }
+
+    #addBalanceModal .balance-row.general-info,
+    #balanceDetailsModal .balance-row.general-info {
+        grid-template-columns: 1fr;
+    }
+}
+      </style>
+
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+         <!-- Sidebar Chat -->
+    <div
+         class="offcanvas offcanvas-end"
+         id="sidebarChat"
+         tabindex="-1"
+         aria-labelledby="sidebarLeftLabel"
+         >
+         <div id="plist" class="people-list">
+           <div class="offcanvas-header border-bottom bg-primary text-white">
+             <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+             <button
+               type="button"
+               class="btn-close btn-close-white"
+               data-bs-dismiss="offcanvas"
+               aria-label="Cerrar"
+             ></button>
+           </div>
+           <div class="input-group p-3">
+             <input
+               type="text"
+               class="form-control"
+               id="searchInput"
+               placeholder="Buscar..."
+             />
+           </div>
+           <ul class="list-unstyled chat-list mb-0">
+             <% info.listaPersonasChat.forEach(persona => { %>
+             <li
+               class="clearfix usuario-chat d-flex align-items-center p-3"
+               data-user-id="<%= persona.id %>"
+             >
+               <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+               <div class="about flex-grow-1">
+                 <div class="d-flex justify-content-between align-items-center">
+                   <div class="name"><%= persona.nombre %></div>
+                   <% if (persona.mensajes_no_leidos > 0) { %>
+                   <div class="mensaje-no-leido" style="display: block"></div>
+                   <% } %>
+                 </div>
+                 <div class="last-message">
+                   <%= persona.ultimo_mensaje || '' %>
+                 </div>
+                 <div class="message-data-time">
+                   <%= persona.fecha_ultimo_mensaje || '' %>
+                 </div>
+               </div>
+             </li>
+             <% }) %>
+           </ul>
+         </div>
+     
+         <div class="chat" style="display: none">
+           <div class="chat-header bg-primary text-white">
+             <div
+               class="row align-items-center d-flex justify-content-between p-3"
+             >
+               <div class="col-lg-6 d-flex align-items-center">
+                 <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+                 <div class="chat-about" data-user-id="">
+                   <h6 class="m-0"></h6>
+                 </div>
+               </div>
+               <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+                 <button class="call-btn btn-img">
+                   <img src="/imagenes/llamada.png" alt="Llamar" />
+                 </button>
+                 <button id="btnVolverLista" class="call-btn btn-img">
+                   <img src="/imagenes/volver.png" alt="Volver" />
+                 </button>
+               </div>
+             </div>
+           </div>
+     
+           <div class="chat-history" id="chat-box">
+             <ul class="m-b-0"></ul>
+           </div>
+           <div class="chat-message">
+             <div class="input-group">
+               <input
+                 id="mensajeInput"
+                 type="text"
+                 class="form-control"
+                 placeholder="Escribe un mensaje..."
+               />
+               <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+             </div>
+           </div>
+         </div>
+    </div>
+     
+    <!-- Sidebar Notificaciones -->
+     
+    <div
+         class="offcanvas offcanvas-end bg-light"
+         id="sidebarNotificaciones"
+         tabindex="-1"
+         aria-labelledby="sidebarRightLabel"
+         >
+           <div class="offcanvas-header border-bottom">
+             <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+             <button
+               type="button"
+               class="btn-close"
+               data-bs-dismiss="offcanvas"
+               aria-label="Cerrar"
+             ></button>
+           </div>
+           <div class="offcanvas-body p-0">
+             <ul class="list-unstyled m-0" id="notificaciones">
+               <% info.notificaciones.forEach(notificacion => { %>
+               <li
+                 class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+                 data-notificacion-id="<%= notificacion.id %>"
+               >
+                 <small class="text-muted"
+                   ><%= notificacion.fecha_formateada %></small
+                 >
+                 <div class="fw-bold">
+                   <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+                   Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+                   'tipo_horario') { %> Cambio de Horario <% } else if
+                   (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+                   Perdida <% } else if (notificacion.tipo_notificacion ===
+                   'tipo_mail') { %> Nuevo Email <% } else if
+                   (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+                   %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+                   === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+                   días) <% } else if (notificacion.tipo_notificacion ===
+                   'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+                   <% } else { %> Notificación <% } %>
+                 </div>
+                 <div><%= notificacion.contenido_notificacion %></div>
+                 <button
+                   type="button"
+                   class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+                   data-notificacion-id="<%= notificacion.id %>"
+                 >
+                   Borrar
+                 </button>
+               </li>
+               <% }) %>
+             </ul>
+             <div class="p-3">
+               <a
+                 href="/enfermeria/notificaciones"
+                 class="btn btn-outline-primary w-100"
+               >
+                 Ver todas las notificaciones
+               </a>
+             </div>
+           </div>
+    </div>
+     
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+         <a
+         class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+         href="#"
+         >XANA INDUSTRIES</a
+         >
+     
+         <div class="d-flex gap-2 me-3">
+         <button
+         class="btn btn-secondary"
+         type="button"
+         data-bs-toggle="offcanvas"
+         data-bs-target="#sidebarChat"
+         aria-controls="sidebarMenu"
+         aria-expanded="false"
+         aria-label="Toggle navigation"
+         >
+         <div id="chatIcon" style="display: block">
+           <img
+             src="/imagenes/chatIcon.png"
+             alt="Chat"
+             width="24"
+             height="24"
+           />
+         </div>
+     
+         <!-- Imagen cuando hay mensajes nuevos -->
+         <div id="chatIconNew" style="display: none">
+           <img
+             src="/imagenes/chatIconNew.png"
+             alt="Chat Nuevo"
+             width="24"
+             height="24"
+           />
+         </div>
+         </button>
+     
+         <button
+         class="btn btn-secondary"
+         data-bs-toggle="offcanvas"
+         data-bs-target="#sidebarNotificaciones"
+         aria-controls="sidebarMenu"
+         aria-expanded="false"
+         aria-label="Toggle navigation"
+         >
+         <div id="notIcon" style="display: block">
+           <img
+             src="/imagenes/campana.png"
+             alt="notificacion"
+             width="24"
+             height="24"
+           />
+         </div>
+     
+         <!-- Imagen cuando hay mensajes nuevos -->
+         <div id="notIconNew" style="display: none">
+           <img
+             src="/imagenes/campanaConNotificacion.png"
+             alt="notificacion"
+             width="24"
+             height="24"
+           />
+         </div>
+         </button>
+         </div>
+    </header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/paciente?ingreso_id=<%= info.ingreso_id %>" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">PACIENTE</a>
+                </div>
+                <div class="always-expanded" id="paciente-expanded">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/paciente/diagnosticoPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Diagnóstico</a></li>
+                    <li><a href="/paciente/evolutivoMedico?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Evolutivo Medicina</a></li>
+                    <li><a href="/paciente/medicacionPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Medicación</a></li>
+                    <li><a href="/paciente/constantesPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Constantes</a></li>
+                    <li><a href="/paciente/evolutivoEnfermeria?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Evolutivo Enfermería</a></li>
+                    <li><a href="/paciente/testPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tests</a></li>
+                    <li><a href="/paciente/balancePaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Balance</a></li>
+                    <li><a href="/paciente/viasPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Vías</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3 separator"></li> <!-- Enhanced separator -->
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/documentos" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Documentos</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documentos-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="documentos-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/documentos/listaEmitirDocumento" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Emitir Documento</a></li>
+                    <li><a href="/documentos/listaDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Imprimir Documento</a></li>
+                    <li><a href="/documentos/todosDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ver Documentos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/medicina/consultarExpedientes" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Expedientes</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Medicina | Balance Paciente</h1>
+            <div class=" d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/planta">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+            </div>
+           
+          </div>
+          <% if (info && info.infoCabecera) { %>
+            <div class="patient-info-container container" 
+                 data-documento-identificacion="<%= info.infoCabecera.documento_identificacion_paciente || 'unknown' %>" 
+                 data-id-medico="<%= info.infoCabecera.medico_id || 'unknown' %>"
+                 data-cama-id="<%= info.infoCabecera.cama_id || 'unknown' %>"
+                 data-ingreso-id="<%= info.infoCabecera.ingreso_id || 'unknown' %>">
+              <div class="header">
+                <!-- Botón para abrir el modal -->
+                <button class="edit-button incidence-button" data-bs-toggle="modal" data-bs-target="#incidenciaModal">Incidencia</button>
+                <button class="edit-button" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>
+                <!-- Panel del paciente a la izquierda -->
+                <div class="panel-paciente">
+                  <% if (info.infoCabecera.panelPaciente) { %>
+                    <img src="<%= info.infoCabecera.panelPaciente %>" 
+                         alt="Panel Paciente" />
+                  <% } else { %>
+                    <p>Sin imagen de panel</p>
+                  <% } %>
+                </div>
+                
+                <!-- Campos de la cabecera en columnas -->
+                <div class="info-paciente">
+                  <div class="info-column">
+                    <p>
+                      <strong>PACIENTE:</strong> 
+                      <span id="paciente-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %>">
+                        <%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.paciente_nombre_completo && info.infoCabecera.paciente_nombre_completo.length > 20) { %>
+                        <button class="toggle-button" onclick="expandirTexto('paciente-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.paciente_nombre_completo.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p>
+                      <strong>MÉDICO:</strong> 
+                      <span id="medico-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.medico_nombre_completo || 'No disponible' %>">
+                        <%= info.infoCabecera.medico_nombre_completo || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.medico_nombre_completo && info.infoCabecera.medico_nombre_completo.length > 20) { %>
+                        <button class="toggle-button" onclick="expandirTexto('medico-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.medico_nombre_completo.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p>
+                      <strong>SERVICIO:</strong> 
+                      <span id="servicio-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.especialidad || 'No disponible' %>">
+                        <%= info.infoCabecera.especialidad || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.especialidad && info.infoCabecera.especialidad.length > 20) { %>
+                        <button class="toggle-button" onclick="expandirTexto('servicio-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.especialidad.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p><strong>FECHA DE INGRESO:</strong> <span class="text-limited" title="<%= info.infoCabecera.fecha_ini || 'No disponible' %>"><%= info.infoCabecera.fecha_ini || 'No disponible' %></span></p>
+                    <p>
+                      <strong>DIAGNÓSTICO:</strong> 
+                      <span id="diagnostico-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.diagnostico || 'No especificado' %>">
+                        <%= info.infoCabecera.diagnostico || 'No especificado' %>
+                      </span>
+                      <% if (info.infoCabecera.diagnostico && info.infoCabecera.diagnostico.length > 30) { %>
+                        <button class="toggle-button" onclick="expandirTexto('diagnostico-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.diagnostico.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p>
+                      <strong>ALERGIAS:</strong> 
+                      <span id="alergias-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="(<%= info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna' %>) <%= info.infoCabecera.alergia || 'Ninguna' %>">
+                        (<%= info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna' %>) <%= info.infoCabecera.alergia || 'Ninguna' %>
+                      </span>
+                      <% 
+                        const alergiasText = `(${info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna'}) ${info.infoCabecera.alergia || 'Ninguna'}`;
+                        if (alergiasText.length > 30) { 
+                      %>
+                        <button class="toggle-button" onclick="expandirTexto('alergias-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= alergiasText.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                  </div>
+                  <div class="info-column">
+                    <p>
+                      <strong>DIETA:</strong> 
+                      <span id="dieta-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="(<%= info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna' %>) <%= info.infoCabecera.dieta || 'Ninguna' %>">
+                        (<%= info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna' %>) <%= info.infoCabecera.dieta || 'Ninguna' %>
+                      </span>
+                      <% 
+                        const dietaText = `(${info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna'}) ${info.infoCabecera.dieta || 'Ninguna'}`;
+                        if (dietaText.length > 30) { 
+                      %>
+                        <button class="toggle-button" onclick="expandirTexto('dieta-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= dietaText.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p><strong>AISLAMIENTO:</strong> <span class="text-limited" id="aislamiento-<%= info.infoCabecera.ingreso_id || 'unknown' %>" title="<%= info.infoCabecera.aislamiento ? 'Sí' : 'No' %>"><%= info.infoCabecera.aislamiento ? 'Sí' : 'No' %></span></p>
+                    <p><strong>GRUPO SANGUÍNEO:</strong> <span class="text-limited" id="grupoSanguineo-<%= info.infoCabecera.ingreso_id || 'unknown' %>" title="<%= info.infoCabecera.grupo_rh || 'No especificado' %>"><%= info.infoCabecera.grupo_rh || 'No especificado' %></span></p>
+                    <p>
+                      <strong>HISTORIA:</strong> 
+                      <span id="historia-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.historia || 'No disponible' %>">
+                        <%= info.infoCabecera.historia || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.historia && info.infoCabecera.historia.length > 20) { %>
+                        <button class="toggle-button" onclick="expandirTexto('historia-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.historia.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p><strong>EPISODIO:</strong> <span class="text-limited" title="<%= info.infoCabecera.ingreso_id || 'No disponible' %>"><%= info.infoCabecera.ingreso_id || 'No disponible' %></span></p>
+                    <p>
+                      <strong>AT:</strong> 
+                      <span id="antecedentes-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.antecedentes || 'No disponible' %>">
+                        <%= info.infoCabecera.antecedentes || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.antecedentes && info.infoCabecera.antecedentes.length > 30) { %>
+                        <button class="toggle-button" onclick="expandirTexto('antecedentes-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.antecedentes.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } else { %>
+            <div class="patient-info-container container">
+              <p class="error-message">No se encontró información para el ingreso especificado.</p>
+            </div>
+          <% } %>
+               
+              
+              <div class="balance-section">
+                  <!-- Título y botones -->
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h2 class="balance-title">Balance Hídrico</h2>
+                      <div class="d-flex align-items-center">
+                          <div class="balance-checkbox-container me-3">
+                              <input
+                                  class="balance-checkbox"
+                                  type="checkbox"
+                                  id="activarBalancePaciente"
+                                  value="activar"
+                                  <%= info.balanceActivo === 1 ? 'checked' : info.balanceActivo === 0 ? '' : '' %>
+                              >
+                              <label class="balance-checkbox-label" for="activarBalancePaciente">
+                                  Activar balance paciente
+                              </label>
+                          </div>
+                          <button
+                              type="button"
+                              class="balance-btn-primary btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#addBalanceModal"
+                          >
+                              <i class="fas fa-plus"></i> Agregar Nuevo Balance
+                          </button>
+                      </div>
+                  </div>
+              
+                  <!-- Tabla de balances -->
+                  <div class="card shadow">
+                      <div class="card-body p-0">
+                          <div class="table-container">
+                              <table id="tablaBalances">
+                                  <thead class="bg-light text-dark">
+                                      <tr>
+                                          <th>FECHA</th>
+                                          <th>ENTRADAS (ML)</th>
+                                          <th>SALIDAS (ML)</th>
+                                          <th>BALANCE (ML)</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="tablaBalancesBody">
+                                      <% if (info && info.balancePaciente) { %>
+                                          <% info.balancePaciente.forEach((balance, index) => { %>
+                                          <tr
+                                              class="balance-row"
+                                              data-id="<%= balance.id %>"
+                                              data-ingreso_id="<%= info.ingreso_id %>"
+                                              data-id_trabajador="<%= balance.id_trabajador %>"
+                                              data-nombre_trabajador="<%= balance.nombre_trabajador %>"
+                                              data-documento_identificacion="<%= balance.documento_identificacion %>"
+                                          >
+                                              <td id="fechaEmision_<%= index %>"><%= balance.fecha_emision %></td>
+                                              <td id="entradas_<%= index %>"><%= parseFloat(balance.entradas).toFixed(2) %></td>
+                                              <td id="salidas_<%= index %>"><%= parseFloat(balance.salidas).toFixed(2) %></td>
+                                              <td id="balance_<%= index %>"><%= parseFloat(balance.balance_total).toFixed(2) %></td>
+                                          </tr>
+                                          <% }) %>
+                                      <% } %>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="chart-container mt-4">
+                <canvas id="balanceChart" style="max-height: 400px;"></canvas>
+              </div>
+              
+              
+            
+
+              
+          
+        </main>
+      </div>
+    </div>
+    <div class="modal fade incidencia-modal" id="incidenciaModal" tabindex="-1" aria-labelledby="incidenciaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="incidenciaModalLabel">Gestión de Incidencias</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Lista de incidencias -->
+            <div class="mb-3">
+              <h6>Incidencias Asociadas</h6>
+              <ul id="incidenciasLista" class="list-group">
+                <% if (info.infoIncidencias && info.infoIncidencias.length > 0) { %>
+                  <% info.infoIncidencias.forEach(incidencia => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <div data-id_incidencia=" <%= incidencia.id_incidencia %>">
+                        <strong>Descripcion: </strong> - <%= incidencia.informacion_incidencia %>
+                        <br>
+                        <small>
+                          Episodio: <%= incidencia.ingreso_id %> | 
+                          Estado: <%= incidencia.activa ? 'Activa' : 'Inira' %> | 
+                          Fecha de emisión: <%= incidencia.fecha_emision %> 
+                          <% if (!incidencia.activa && incidencia.fecha_desactivacion) { %>
+                            | Fecha de desactivación: <%= incidencia.fecha_desactivacion %>
+                          <% } %>
+                        </small>
+                      </div>
+                      <% if (incidencia.activa) { %>
+                        <button class="btn btn-danger btn-sm desactivar-incidencia" data-id-incidencia="<%= incidencia.id_incidencia %>" data-id-ingreso="<%= incidencia.ingreso_id %>">Desactivar</button>
+                      <% } %>
+                    </li>
+                  <% }); %>
+                <% } else { %>
+                  <li class="list-group-item">No hay incidencias asociadas.</li>
+                <% } %>
+              </ul>
+            </div>
+            <!-- Botón para añadir nueva incidencia -->
+            <button type="button" class="btn btn-primary mb-3" id="btnNuevaIncidencia">Nueva Incidencia</button>
+            <!-- Formulario para nueva incidencia (oculto inicialmente) -->
+            <div id="nuevaIncidenciaForm" style="display: none;">
+              <div class="mb-3">
+                <label for="incidenciaCuerpo" class="form-label">Descripción de la Incidencia:</label>
+                <textarea class="form-control" id="incidenciaCuerpo" rows="4" placeholder="Escriba los detalles de la incidencia"></textarea>
+              </div>
+              <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary" id="btnCancelarIncidencia">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnAceptarIncidencia">Aceptar</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade edit-info-modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Editar Información del Paciente</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-column">
+                <!-- Campos no editables -->
+                <div class="mb-3">
+                  <label>PACIENTE:</label>
+                  <p><%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>MÉDICO:</label>
+                  <p><%= info.infoCabecera.medico_nombre_completo || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>SERVICIO:</label>
+                  <p><%= info.infoCabecera.especialidad || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>FECHA DE INGRESO:</label>
+                  <p><%= info.infoCabecera.fecha_ini || 'No disponible' %></p>
+                </div>
+                <!-- Diagnóstico (solo editable por médico) -->
+                <div class="mb-3">
+                  <label for="modalDiagnostico">DIAGNÓSTICO:</label>
+                  <input type="text" class="form-control" id="modalDiagnostico" value="<%= info.infoCabecera.diagnostico || 'No especificado' %>" 
+                         <%= info.rol === 'medico' ? '' : 'disabled' %>>
+                </div>
+                <!-- Alergias -->
+                <div class="mb-3">
+                  <label>ALERGIAS:</label>
+                  <div class="d-flex flex-wrap">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaNinguna" value="ninguna" 
+                             <%= (!info.infoCabecera.tipo_alergia || info.infoCabecera.tipo_alergia === 'ninguna') ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaNinguna">Ninguna</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaLeve" value="leve" 
+                             <%= info.infoCabecera.tipo_alergia === 'leve' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaLeve">Leve</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaModerada" value="moderada" 
+                             <%= info.infoCabecera.tipo_alergia === 'moderada' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaModerada">Moderada</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaGrave" value="grave" 
+                             <%= info.infoCabecera.tipo_alergia === 'grave' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaGrave">Grave</label>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control mt-2" id="modalAlergia" placeholder="Especifique alergia" 
+                         value="<%= info.infoCabecera.alergia || '' %>" 
+                         <%= (!info.infoCabecera.tipo_alergia || info.infoCabecera.tipo_alergia === 'ninguna') ? 'disabled' : '' %>>
+                </div>
+              </div>
+              <div class="form-column">
+                <!-- Dieta -->
+                <div class="mb-3">
+                  <label>DIETA:</label>
+                  <div class="d-flex flex-wrap">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaNinguna" value="ninguna" 
+                             <%= (!info.infoCabecera.tipo_dieta || info.infoCabecera.tipo_dieta === 'ninguna') ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaNinguna">Ninguna</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaNormal" value="normal" 
+                             <%= info.infoCabecera.tipo_dieta === 'normal' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaNormal">Normal</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaBlanda" value="blanda" 
+                             <%= info.infoCabecera.tipo_dieta === 'blanda' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaBlanda">Blanda</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaLiquida" value="liquidos" 
+                             <%= info.infoCabecera.tipo_dieta === 'liquidos' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaLiquida">Líquida</label>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control mt-2" id="modalDieta" placeholder="Especifique dieta" 
+                         value="<%= info.infoCabecera.dieta || '' %>" 
+                         <%= (!info.infoCabecera.tipo_dieta || info.infoCabecera.tipo_dieta === 'ninguna') ? 'disabled' : '' %>>
+                </div>
+                <!-- Aislamiento -->
+                <div class="mb-3">
+                  <label>AISLAMIENTO:</label>
+                  <div class="d-flex">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="aislamiento" id="aislamientoNo" value="no" 
+                             <%= info.infoCabecera.aislamiento ? '' : 'checked' %>>
+                      <label class="form-check-label" for="aislamientoNo">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="aislamiento" id="aislamientoSi" value="si" 
+                             <%= info.infoCabecera.aislamiento ? 'checked' : '' %>>
+                      <label class="form-check-label" for="aislamientoSi">Sí</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Grupo Sanguíneo (Select) -->
+                <div class="mb-3">
+                  <label for="modalGrupoSanguineo">GRUPO SANGUÍNEO:</label>
+                  <select class="form-control" id="modalGrupoSanguineo">
+                    <option value="No especificado" <%= info.infoCabecera.grupo_rh === 'No especificado' || !info.infoCabecera.grupo_rh ? 'selected' : '' %>>No especificado</option>
+                    <option value="A+" <%= info.infoCabecera.grupo_rh === 'A+' ? 'selected' : '' %>>A+</option>
+                    <option value="A-" <%= info.infoCabecera.grupo_rh === 'A-' ? 'selected' : '' %>>A-</option>
+                    <option value="B+" <%= info.infoCabecera.grupo_rh === 'B+' ? 'selected' : '' %>>B+</option>
+                    <option value="B-" <%= info.infoCabecera.grupo_rh === 'B-' ? 'selected' : '' %>>B-</option>
+                    <option value="AB+" <%= info.infoCabecera.grupo_rh === 'AB+' ? 'selected' : '' %>>AB+</option>
+                    <option value="AB-" <%= info.infoCabecera.grupo_rh === 'AB-' ? 'selected' : '' %>>AB-</option>
+                    <option value="O+" <%= info.infoCabecera.grupo_rh === 'O+' ? 'selected' : '' %>>O+</option>
+                    <option value="O-" <%= info.infoCabecera.grupo_rh === 'O-' ? 'selected' : '' %>>O-</option>
+                  </select>
+                </div>
+                <!-- Campos no editables -->
+                <div class="mb-3">
+                  <label>HISTORIA:</label>
+                  <p><%= info.infoCabecera.historia || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>EPISODIO:</label>
+                  <p><%= info.infoCabecera.ingreso_id || 'No disponible' %></p>
+                </div>
+                <!-- Antecedentes (No editable) -->
+                <div class="mb-3">
+                  <label>ANTECEDENTES (AT):</label>
+                  <p><%= info.infoCabecera.antecedentes || 'No disponible' %></p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" onclick="aplicarCambiosPanel('<%= info.infoCabecera.ingreso_id || 'unknown' %>')">Aplicar Cambios</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    
+    <div class="modal balance-modal fade" id="addBalanceModal" tabindex="-1" aria-labelledby="addBalanceModalLabel" aria-hidden="true"
+    data-ingreso_id="<%= info.infoCabecera.ingreso_id %>"
+    data-paciente_id="<%= info.infoCabecera.documento_identificacion_paciente %>"
+    data-id_trabajador="<%= info.id_trabajador %>"
+    data-nombreTrabajador="<%= info.nombreTrabajador %>">
+    <div class="balance-dialog modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="balance-content modal-content">
+            <div class="balance-header modal-header">
+                <h5 class="balance-title" id="addBalanceModalLabel">Añadir Nuevo Balance Hídrico</h5>
+                <button type="button" class="balance-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+            </div>
+            <div class="balance-body modal-body">
+                <form id="addBalanceForm">
+                    <div class="balance-section">
+                        <h6>Información General</h6>
+                        <div class="balance-row general-info">
+                            <div class="balance-field">
+                                <label>Paciente</label>
+                                <p><%= info.infoCabecera.paciente_nombre_completo %></p>
+                            </div>
+                            <div class="balance-field">
+                                <label>Enfermero/a</label>
+                                <p><%= info.nombreTrabajador %></p>
+                            </div>
+                            <div class="balance-field">
+                                <label>Episodio</label>
+                                <p><%= info.infoCabecera.ingreso_id %></p>
+                            </div>
+                            <div class="balance-field">
+                                <label>Fecha de Emisión</label>
+                                <p id="fechaEmision"></p>
+                                <input type="hidden" id="fecha_emision" name="fecha_emision">
+                            </div>
+                            <div class="balance-field">
+                                <label>Especialidad</label>
+                                <p><%= info.infoCabecera.especialidad %></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="balance-section">
+                        <h6>Entradas de Líquidos</h6>
+                        <div class="balance-row">
+                            <div class="balance-field">
+                                <label>Sueroterapia (mL)</label>
+                                <input type="number" name="sueroterapia" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Nutrición Parenteral (mL)</label>
+                                <input type="number" name="nutricion_parenteral" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Hemoderivados (mL)</label>
+                                <input type="number" name="hemoderivados" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Agua Endógena (mL)</label>
+                                <input type="number" name="agua_endogena" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Alimentos Líquidos (mL)</label>
+                                <input type="number" name="alimentos_liquidos" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Fórmula Enteral (mL)</label>
+                                <input type="number" name="formula_enteral" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Medicación (mL)</label>
+                                <input type="number" name="medicacion" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Otros (mL)</label>
+                                <input type="number" name="otros_entradas" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="balance-section">
+                        <h6>Salidas de Líquidos</h6>
+                        <div class="balance-row">
+                            <div class="balance-field">
+                                <label>Diuresis (mL)</label>
+                                <input type="number" name="diuresis" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Drenaje (mL)</label>
+                                <input type="number" name="drenaje" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Vómitos (mL)</label>
+                                <input type="number" name="vomitos" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Deposiciones (mL)</label>
+                                <input type="number" name="deposiciones" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Aspiración Gástrica (mL)</label>
+                                <input type="number" name="aspiracion_gastrica" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Pérdidas Sensibles (mL)</label>
+                                <input type="number" name="perdidas_sensibles" min="0" placeholder="0">
+                            </div>
+                            <div class="balance-field">
+                                <label>Otros (mL)</label>
+                                <input type="number" name="otros_salidas" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="balance-footer modal-footer">
+                <button type="button" class="balance-btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="balance-btn-primary" onclick="guardarNuevoBalance()">Guardar</button>
+            </div>
+        </div>
+    </div>
+   </div>
+   <div class="modal balance-modal fade" id="balanceDetailsModal" tabindex="-1" aria-labelledby="balanceDetailsModalLabel" aria-hidden="true">
+    <div class="balance-dialog modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="balance-content modal-content">
+            <div class="balance-header modal-header">
+                <h5 class="balance-title" id="balanceDetailsModalLabel">Detalles del Balance Hídrico</h5>
+                <button type="button" class="balance-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+            </div>
+            <div class="balance-body modal-body">
+                <div class="balance-section">
+                    <h6>Información General</h6>
+                    <div class="balance-row general-info">
+                        <div class="balance-field">
+                            <label>Paciente</label>
+                            <p><%= info.infoCabecera.paciente_nombre_completo %></p>
+                            
+                        </div>
+                        <div class="balance-field">
+                            <label>Enfermero/a</label>
+                            <p id="detailNombreTrabajador">N/A</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Episodio</label>
+                            <p id="detailIngresoId">N/A</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Fecha de Emisión</label>
+                            <p id="detailFechaEmision">N/A</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Especialidad</label>
+                            <p><%= info.especialidad%></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-section">
+                    <h6>Entradas de Líquidos</h6>
+                    <div class="balance-row">
+                        <div class="balance-field">
+                            <label>Sueroterapia (mL)</label>
+                            <p id="detailSueroterapia">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Nutrición Parenteral (mL)</label>
+                            <p id="detailNutricionParenteral">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Hemoderivados (mL)</label>
+                            <p id="detailHemoderivados">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Agua Endógena (mL)</label>
+                            <p id="detailAguaEndogena">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Alimentos Líquidos (mL)</label>
+                            <p id="detailAlimentosLiquidos">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Fórmula Enteral (mL)</label>
+                            <p id="detailFormulaEnteral">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Medicación (mL)</label>
+                            <p id="detailMedicacion">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Otros (mL)</label>
+                            <p id="detailOtrosEntradas">0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-section">
+                    <h6>Salidas de Líquidos</h6>
+                    <div class="balance-row">
+                        <div class="balance-field">
+                            <label>Diuresis (mL)</label>
+                            <p id="detailDiuresis">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Drenaje (mL)</label>
+                            <p id="detailDrenaje">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Vómitos (mL)</label>
+                            <p id="detailVomitos">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Deposiciones (mL)</label>
+                            <p id="detailDeposiciones">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Aspiración Gástrica (mL)</label>
+                            <p id="detailAspiracionGastrica">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Pérdidas Sensibles (mL)</label>
+                            <p id="detailPerdidasSensibles">0.00</p>
+                        </div>
+                        <div class="balance-field">
+                            <label>Otros (mL)</label>
+                            <p id="detailOtrosSalidas">0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-section">
+                    <h6>Balance Total</h6>
+                    <div class="balance-row">
+                        <div class="balance-field">
+                            <label>Balance Total (mL)</label>
+                            <p class="text-success fw-bold" id="detailBalanceTotal">0.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="balance-footer modal-footer">
+                <button type="button" class="balance-btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+ 
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const now = new Date();
+        const fechaEmision = now.toISOString().slice(0, 16).replace('T', ' ');
+        document.getElementById('fechaEmision').textContent = fechaEmision;
+        document.getElementById('fecha_emision').value = fechaEmision;
+
+
+
+
+
+          // Preparar los datos desde info.balancePaciente
+          const balances = <%- JSON.stringify(info.balancePaciente) %>;
+          const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+          const ingresoId = '<%= info.infoCabecera.ingreso_id || 'unknown' %>';
+          let balance;
+
+          // Extraer fechas y balances totales
+          const fechas = balances.map(balance => new Date(balance.fecha_emision).toLocaleString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).replace(',', ''));
+          const balancesTotales = balances.map(balance => parseFloat(balance.balance_total));
+  
+          // Obtener el contexto del canvas
+          const ctx = document.getElementById('balanceChart').getContext('2d');
+  
+          // Crear el gráfico de barras vertical
+          new Chart(ctx, {
+              type: 'bar', // Cambia a 'bar' con indexAxis: 'y' para barras horizontales
+              data: {
+                  labels: fechas,
+                  datasets: [{
+                      label: 'Balance Total (mL)',
+                      data: balancesTotales,
+                      backgroundColor: 'rgba(16, 185, 129, 0.6)', // Verde claro con opacidad
+                      borderColor: 'rgba(16, 185, 129, 1)', // Verde sólido
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                      x: {
+                          title: {
+                              display: true,
+                              text: 'Fecha de Emisión',
+                              font: {
+                                  size: 14,
+                                  family: 'Arial'
+                              },
+                              color: '#1f2937'
+                          },
+                          ticks: {
+                              maxRotation: 45,
+                              minRotation: 45,
+                              font: {
+                                  size: 12
+                              }
+                          }
+                      },
+                      y: {
+                          title: {
+                              display: true,
+                              text: 'Balance Total (mL)',
+                              font: {
+                                  size: 14,
+                                  family: 'Arial'
+                              },
+                              color: '#1f2937'
+                          },
+                          beginAtZero: true,
+                          ticks: {
+                              font: {
+                                  size: 12
+                              }
+                          }
+                      }
+                  },
+                  plugins: {
+                      legend: {
+                          display: true,
+                          position: 'top',
+                          labels: {
+                              font: {
+                                  size: 12,
+                                  family: 'Arial'
+                              }
+                          }
+                      },
+                      tooltip: {
+                          callbacks: {
+                              label: function(context) {
+                                  return `Balance: ${context.parsed.y} mL`;
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+      
+          
+          // Activar balance
+
+          const checkbox = document.getElementById('activarBalancePaciente');
+          checkbox.addEventListener('change', async () => {
+              console.log(checkbox.checked ? 1 : 0);
+              if(checkbox.checked){
+                  balance = 1;
+              }else{
+                  balance = 0;
+              }
+
+              try {
+                const response = await fetch(`/enfermeria/cambiarEstadoBalancePanel`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({balance,cama_id, ingreso_id:ingresoId })
+                });
+
+                if (response.ok) {
+                  const nuevoPanelResumen = await response.json();
+
+                  if (nuevoPanelResumen) {
+                    const panel = document.querySelector('.panel-paciente img');
+                    if (panel) {
+                      panel.src = nuevoPanelResumen;
+                    } else {
+                      console.warn('No se encontró el elemento .panel-paciente img en el DOM');
+                    }
+                  }
+                }else {
+                  alert('Error al desactivar la incidencia.');
+                }
+              } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectar con el servidor.');
+              }
+          }); 
+ 
+
+          // Activar balance
+          const rows = document.querySelectorAll('.balance-row');
+          rows.forEach(row => {
+            row.addEventListener('click', async () => {
+                const balanceData = {
+                    id: row.dataset.id,
+                    ingreso_id: row.dataset.ingreso_id,
+                    id_trabajador: row.dataset.id_trabajador,
+                    nombre_trabajador: row.dataset.nombre_trabajador,
+                    documento_identificacion: row.dataset.documento_identificacion,
+                    fecha_emision: row.querySelector(`#fechaEmision_${row.rowIndex - 1}`).textContent
+                };
+                console.log('Datos del balance:', balanceData);
+
+                // Realizar fetch para obtener detalles
+                try {
+                    const response = await fetch(`/enfermeria/recuperarDetallesBalance?ingreso_id=${balanceData.ingreso_id}&id_balance=${balanceData.id}`);
+                    const detailData = await response.json();
+                    console.log(detailData)
+// Acceder al primer elemento del array
+                    const balanceDetails = detailData[0];
+
+                    // Actualizar la cabecera
+                    document.getElementById('detailNombreTrabajador').textContent = balanceData.nombre_trabajador || 'N/A';
+                    document.getElementById('detailFechaEmision').textContent = balanceDetails.fecha_emision || 'N/A';
+                    document.getElementById('detailIngresoId').textContent = balanceDetails.ingreso_id || 'N/A';
+
+                    // Actualizar entradas
+                    document.getElementById('detailSueroterapia').textContent = balanceDetails.sueroterapia || '0.00';
+                    document.getElementById('detailNutricionParenteral').textContent = balanceDetails.nutricion_parenteral || '0.00';
+                    document.getElementById('detailHemoderivados').textContent = balanceDetails.hemoderivados || '0.00';
+                    document.getElementById('detailAguaEndogena').textContent = balanceDetails.agua_endogena || '0.00';
+                    document.getElementById('detailAlimentosLiquidos').textContent = balanceDetails.alimentos_liquidos || '0.00';
+                    document.getElementById('detailFormulaEnteral').textContent = balanceDetails.formula_enteral || '0.00';
+                    document.getElementById('detailMedicacion').textContent = balanceDetails.medicacion || '0.00';
+                    document.getElementById('detailOtrosEntradas').textContent = balanceDetails.otros_entradas || '0.00';
+
+                    // Actualizar salidas
+                    document.getElementById('detailDiuresis').textContent = balanceDetails.diuresis || '0.00';
+                    document.getElementById('detailDrenaje').textContent = balanceDetails.drenaje || '0.00';
+                    document.getElementById('detailVomitos').textContent = balanceDetails.vomitos || '0.00';
+                    document.getElementById('detailDeposiciones').textContent = balanceDetails.deposiciones || '0.00';
+                    document.getElementById('detailAspiracionGastrica').textContent = balanceDetails.aspiracion_gastrica || '0.00';
+                    document.getElementById('detailPerdidasSensibles').textContent = balanceDetails.perdidas_sensibles || '0.00';
+                    document.getElementById('detailOtrosSalidas').textContent = balanceDetails.otros_salidas || '0.00';
+
+                    // Actualizar balance total
+                    document.getElementById('detailBalanceTotal').textContent = balanceDetails.balance_total || '0.00';
+
+                    // Mostrar el modal
+                    const modal = new bootstrap.Modal(document.getElementById('balanceDetailsModal'));
+                    modal.show();
+                } catch (error) {
+                    console.error('Error al cargar los detalles:', error);
+                }
+            });
+          });
+        
+    
+        
+        
+        
+        });
+
+         
+      
+      async function guardarNuevoBalance() {
+        const form = document.getElementById('addBalanceForm');
+        const nombreTrabajador= "<%= info.nombreTrabajador %>"
+        const formData = new FormData(form);
+        const balanceData = {
+            ingreso_id: document.getElementById('addBalanceModal').dataset.ingreso_id,
+            paciente_id: document.getElementById('addBalanceModal').dataset.paciente_id,
+            id_trabajador: document.getElementById('addBalanceModal').dataset.id_trabajador,
+            nombreTrabajador:nombreTrabajador,
+            fecha_emision: formData.get('fecha_emision'),
+            entradas: {
+                sueroterapia: formData.get('sueroterapia') || 0,
+                nutricion_parenteral: formData.get('nutricion_parenteral') || 0,
+                hemoderivados: formData.get('hemoderivados') || 0,
+                agua_endogena: formData.get('agua_endogena') || 0,
+                alimentos_liquidos: formData.get('alimentos_liquidos') || 0,
+                formula_enteral: formData.get('formula_enteral') || 0,
+                medicacion: formData.get('medicacion') || 0,
+                otros_entradas: formData.get('otros_entradas') || 0
+            },
+            salidas: {
+                diuresis: formData.get('diuresis') || 0,
+                drenaje: formData.get('drenaje') || 0,
+                vomitos: formData.get('vomitos') || 0,
+                deposiciones: formData.get('deposiciones') || 0,
+                aspiracion_gastrica: formData.get('aspiracion_gastrica') || 0,
+                perdidas_sensibles: formData.get('perdidas_sensibles') || 0,
+                otros_salidas: formData.get('otros_salidas') || 0
+            },
+            total_entradas: Number(formData.get('sueroterapia') || 0) +
+                            Number(formData.get('nutricion_parenteral') || 0) +
+                            Number(formData.get('hemoderivados') || 0) +
+                            Number(formData.get('agua_endogena') || 0) +
+                            Number(formData.get('alimentos_liquidos') || 0) +
+                            Number(formData.get('formula_enteral') || 0) +
+                            Number(formData.get('medicacion') || 0) +
+                            Number(formData.get('otros_entradas') || 0),
+            total_salidas: Number(formData.get('diuresis') || 0) +
+                           Number(formData.get('drenaje') || 0) +
+                           Number(formData.get('vomitos') || 0) +
+                           Number(formData.get('deposiciones') || 0) +
+                           Number(formData.get('aspiracion_gastrica') || 0) +
+                           Number(formData.get('perdidas_sensibles') || 0) +
+                           Number(formData.get('otros_salidas') || 0)
+        };
+        console.log('Datos del balance:', balanceData);
+        try {
+        const response = await fetch('/enfermeria/nuevaEntradaBalance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ balanceData})
+        });
+       if (response.ok) {
+        window.location.reload()
+       }
+         else {
+          alert('Error al añadir la Balance a la abse de datos.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+        }
+      } 
+    // Establecer la fecha actual en el campo de fecha_emision
+
+  </script>
+  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const nuevaIncidenciaBtn = document.getElementById('btnNuevaIncidencia');
+  const nuevaIncidenciaForm = document.getElementById('nuevaIncidenciaForm');
+  const cancelarIncidenciaBtn = document.getElementById('btnCancelarIncidencia');
+  const aceptarIncidenciaBtn = document.getElementById('btnAceptarIncidencia');
+  const incidenciaCuerpo = document.getElementById('incidenciaCuerpo');
+  const incidenciasLista = document.getElementById('incidenciasLista');
+
+  // Mostrar/ocultar formulario de nueva incidencia
+  nuevaIncidenciaBtn.addEventListener('click', () => {
+    nuevaIncidenciaForm.style.display = 'block';
+    nuevaIncidenciaBtn.style.display = 'none';
+  });
+
+  cancelarIncidenciaBtn.addEventListener('click', () => {
+    nuevaIncidenciaForm.style.display = 'none';
+    nuevaIncidenciaBtn.style.display = 'block';
+    incidenciaCuerpo.value = '';
+  });
+
+  // Añadir nueva incidencia
+  aceptarIncidenciaBtn.addEventListener('click', async () => {
+    const cuerpo = incidenciaCuerpo.value.trim();
+    const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+    const documento_identificacion_paciente ='<%= info.infoCabecera.documento_identificacion_paciente || 'unknown' %>';
+  
+    const ingresoId = '<%= info.infoCabecera.ingreso_id || 'unknown' %>';
+    if (!cuerpo) {
+      alert('Por favor, ingrese una descripción para la incidencia.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/enfermeria/reportarIncidencia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ingreso_id: ingresoId, cuerpo, activa: 1 ,cama_id:cama_id, documento_identificacion_paciente: documento_identificacion_paciente})
+      });
+    if (response.ok) {
+        const nuevaIncidencia = await response.json();
+        console.log(nuevaIncidencia)
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+        listItem.innerHTML = `
+          <div>
+            <strong>Descripcion: ${nuevaIncidencia.informacion_incidencia}</strong>
+            <br>
+            <small>Episodio: ${nuevaIncidencia.ingreso_id} | Estado: Activa | Fecha: ${nuevaIncidencia.fecha_emision}</small>
+          </div>
+          <button class="btn btn-danger btn-sm desactivar-incidencia" 
+                  data-id-incidencia="${nuevaIncidencia.id_incidencia}" 
+                  data-id-ingreso="${nuevaIncidencia.ingreso_id}">Desactivar</button>
+        `;
+        incidenciasLista.appendChild(listItem);
+        incidenciaCuerpo.value = '';
+        nuevaIncidenciaForm.style.display = 'none';
+        nuevaIncidenciaBtn.style.display = 'block';
+
+        // Si la lista estaba vacía, remover el mensaje de "No hay incidencias"
+        const noIncidenciasItem = incidenciasLista.querySelector('li');
+        if (noIncidenciasItem && noIncidenciasItem.textContent === 'No hay incidencias asociadas.') {
+          noIncidenciasItem.remove();
+        }
+
+        const panel = document.querySelector('.panel-paciente img');
+        panel.src = nuevaIncidencia.panelPaciente;
+      }
+      else {
+        alert('Error al añadir la incidencia.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al conectar con el servidor.');
+    }
+  });
+
+  // Desactivar incidencia
+  incidenciasLista.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('desactivar-incidencia')) {
+      const idIncidencia = e.target.dataset.idIncidencia;
+      const idIngreso = e.target.dataset.idIngreso;
+      const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+
+      console.log(`Desactivando incidencia - ID Ingreso: ${idIngreso}, ID Incidencia: ${idIncidencia}`);
+
+      try {
+        const response = await fetch(`/enfermeria/desactivarIncidencia`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idIncidencia,activa: 0,cama_id, ingreso_id:idIngreso })
+        });
+
+        if (response.ok) {
+          const nuevaIncidenciaDesactivada = await response.json();
+          console.log(nuevaIncidenciaDesactivada);
+
+          // Actualizar la lista de incidencias
+          const listItem = e.target.closest('.list-group-item');
+          listItem.querySelector('small').textContent = `Episodio: ${nuevaIncidenciaDesactivada.ingreso_id} | Estado: Inactiva | Fecha de desactivación: ${nuevaIncidenciaDesactivada.fecha_desactivacion}`;
+          e.target.remove();
+
+          // Actualizar el panel del paciente si panelPaciente no es null
+          if (nuevaIncidenciaDesactivada.panelPaciente) {
+            const panel = document.querySelector('.panel-paciente img');
+            if (panel) {
+              panel.src = nuevaIncidenciaDesactivada.panelPaciente;
+            } else {
+              console.warn('No se encontró el elemento .panel-paciente img en el DOM');
+            }
+          }
+        }else {
+          alert('Error al desactivar la incidencia.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+      }
+    }
+  });
+
+  })
+    // Función para expandir/colapsar texto
+    function expandirTexto(id, fullText) {
+      const element = document.getElementById(id);
+      const button = element.nextElementSibling;
+      if (element.classList.contains('text-limited')) {
+        element.classList.remove('text-limited');
+        element.classList.add('text-full');
+        element.innerText = fullText;
+        button.innerText = 'Ver menos';
+      } else {
+        element.classList.remove('text-full');
+        element.classList.add('text-limited');
+        element.innerText = fullText;
+        button.innerText = 'Ver más';
+      }
+    }
+
+    // Función para inicializar el estado de los campos de alergias y dieta
+    function initializarModalInputs() {
+      const tipoAlergia = document.querySelector('input[name="tipoAlergia"]:checked');
+      const alergiaInput = document.getElementById('modalAlergia');
+      if (tipoAlergia) {
+        alergiaInput.disabled = tipoAlergia.value === 'ninguna';
+        if (tipoAlergia.value === 'ninguna') alergiaInput.value = '';
+      }
+
+      const tipoDieta = document.querySelector('input[name="tipoDieta"]:checked');
+      const dietaInput = document.getElementById('modalDieta');
+      if (tipoDieta) {
+        dietaInput.disabled = tipoDieta.value === 'ninguna';
+        if (tipoDieta.value === 'ninguna') dietaInput.value = '';
+      }
+    }
+
+    // Habilitar/deshabilitar campos de alergias y dieta al cambiar selección
+    document.querySelectorAll('input[name="tipoAlergia"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const alergiaInput = document.getElementById('modalAlergia');
+        alergiaInput.disabled = this.value === 'ninguna';
+        if (this.value === 'ninguna') alergiaInput.value = '';
+      });
+    });
+
+    document.querySelectorAll('input[name="tipoDieta"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const dietaInput = document.getElementById('modalDieta');
+        dietaInput.disabled = this.value === 'ninguna';
+        if (this.value === 'ninguna') dietaInput.value = '';
+      });
+    });
+
+    // Inicializar el estado al abrir el modal
+    document.getElementById('editModal').addEventListener('shown.bs.modal', function () {
+      initializarModalInputs();
+    });
+
+    // Aplicar cambios
+    async function aplicarCambiosPanel(ingresoId) {
+      console.log('Ingreso ID:', ingresoId); // Depuración
+
+      const diagnostico = document.getElementById('modalDiagnostico').value;
+      let tipoAlergiaInput = document.querySelector('input[name="tipoAlergia"]:checked');
+      let tipoAlergia = tipoAlergiaInput ? tipoAlergiaInput.value : 'ninguna';
+      let alergia = document.getElementById('modalAlergia').value;
+      let tipoDietaInput = document.querySelector('input[name="tipoDieta"]:checked');
+      let tipoDieta = tipoDietaInput ? tipoDietaInput.value : 'ninguna';
+      let dieta = document.getElementById('modalDieta').value;
+      const aislamientoInput = document.querySelector('input[name="aislamiento"]:checked');
+      const aislamiento = aislamientoInput ? aislamientoInput.value === 'si' : false;
+      const grupoSanguineo = document.getElementById('modalGrupoSanguineo').value;
+      const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+      const medico_id = '<%= info.infoCabecera.medico_id || 'unknown' %>';
+      const documento_identificacion_paciente = '<%= info.infoCabecera.documento_identificacion_paciente || 'unknown' %>';
+      console.log("cama_id", cama_id)
+
+      // Ajustar valores según las condiciones
+      if (tipoDieta === "ninguna") {
+        tipoDieta = "non";
+        dieta = "";
+      }
+
+      if (tipoAlergia === "ninguna") {
+        tipoAlergia = "non";
+        alergia = "";
+      }
+
+      // Mostrar datos en consola
+    
+
+      try {
+        const response = await fetch('/enfermeria/actualizarInformacionCabecera', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingreso_id: ingresoId,
+        diagnostico: diagnostico,
+        tipo_alergia: tipoAlergia,
+        alergia: alergia,
+        tipo_dieta: tipoDieta,
+        dieta: dieta,
+        aislamiento: aislamiento,
+        grupo_sanguineo: grupoSanguineo,
+        cama_id: cama_id,
+        medico_id: medico_id,
+        documento_identificacion_paciente: documento_identificacion_paciente})
+        });
+      if (response.ok) {
+          const datosActualizados = await response.json();
+          console.log(datosActualizados)
+          if(datosActualizados.panelPaciente){
+            const panel = document.querySelector('.panel-paciente img');
+            panel.src = datosActualizados.panelPaciente;
+
+          }
+
+
+
+          const diagnosticoElement = document.getElementById(`diagnostico-${ingresoId}`);
+          if (diagnosticoElement) {
+            diagnosticoElement.innerText = diagnostico;
+            diagnosticoElement.setAttribute('title', diagnostico);
+            if (diagnostico.length > 30) {
+              const toggleButton = diagnosticoElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => expandirTexto(`diagnostico-${ingresoId}`, diagnostico);
+                diagnosticoElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = diagnosticoElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID diagnostico-${ingresoId} no encontrado`);
+          }
+
+          const alergiasElement = document.getElementById(`alergias-${ingresoId}`);
+          if (alergiasElement) {
+            const alergiasText = `(${tipoAlergia === 'grave' ? 'Grave' : tipoAlergia === 'moderada' ? 'Moderada' : tipoAlergia === 'leve' ? 'Leve' : 'Ninguna'}) ${alergia || 'Ninguna'}`;
+            alergiasElement.innerText = alergiasText;
+            alergiasElement.setAttribute('title', alergiasText);
+            if (alergiasText.length > 30) {
+              const toggleButton = alergiasElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => expandirTexto(`alergias-${ingresoId}`, alergiasText);
+                alergiasElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = alergiasElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID alergias-${ingresoId} no encontrado`);
+          }
+
+          const dietaElement = document.getElementById(`dieta-${ingresoId}`);
+          if (dietaElement) {
+            const dietaText = `(${tipoDieta === 'normal' ? 'Normal' : tipoDieta === 'blanda' ? 'Blanda' : tipoDieta === 'liquidos' ? 'Líquida' : 'Ninguna'}) ${dieta || 'Ninguna'}`;
+            dietaElement.innerText = dietaText;
+            dietaElement.setAttribute('title', dietaText);
+            if (dietaText.length > 30) {
+              const toggleButton = dietaElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => expandirTexto(`dieta-${ingresoId}`, dietaText);
+                dietaElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = dietaElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID dieta-${ingresoId} no encontrado`);
+          }
+
+          const aislamientoElement = document.getElementById(`aislamiento-${ingresoId}`);
+          if (aislamientoElement) {
+            aislamientoElement.innerText = aislamiento ? 'Sí' : 'No';
+            aislamientoElement.setAttribute('title', aislamiento ? 'Sí' : 'No');
+          } else {
+            console.warn(`Elemento con ID aislamiento-${ingresoId} no encontrado`);
+          }
+
+          const grupoSanguineoElement = document.getElementById(`grupoSanguineo-${ingresoId}`);
+          if (grupoSanguineoElement) {
+            grupoSanguineoElement.innerText = grupoSanguineo;
+            grupoSanguineoElement.setAttribute('title', grupoSanguineo);
+          } else {
+            console.warn(`Elemento con ID grupoSanguineo-${ingresoId} no encontrado`);
+          }
+
+          // Cerrar el modal
+          const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+          modal.hide();
+          
+        }
+        else {
+          alert('Error al aplicar cambios.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+      }
+
+      // Actualizar la cabecera con validación
+      
+    }
+
+
+  
+
+  </script>
+
+
+ 
+
+  
+   
+  </body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Paciente</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            overflow: hidden; /* Evita el scroll general de la página */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh; /* Toma toda la altura de la pantalla */
+        }
+
+        /* Menú Izquierdo */
+        .menu-izquierdo {
+            width: 15%;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .menu-izquierdo button {
+            background: none;
+            border: none;
+            color: white;
+            margin: 10px 0;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .menu-izquierdo button:hover {
+            background-color: #34495e;
+        }
+
+        /* Parte Central */
+        .parte-central {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ecf0f1;
+        }
+
+        .encabezado-superior {
+            background-color: #2980b9;
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .encabezado-superior h1 {
+            font-size: 24px;
+        }
+
+        .encabezado-superior h2 {
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .contenido-inferior {
+            flex: 1;
+            overflow-y: auto; /* Permite scroll solo en esta sección si es necesario */
+            padding: 20px;
+        }
+
+        /* Menú Derecho Desplegable */
+        .menu-derecho {
+            width: 40px;
+            background-color: #34495e;
+            color: white;
+            position: relative;
+            transition: width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-derecho.abierto {
+            width: 300px;
+        }
+
+        .toggle-menu {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #1abc9c;
+            width: 100%;
+            text-align: center;
+        }
+
+        .contenido-chat {
+            display: none;
+            padding: 20px;
+        }
+
+        .menu-derecho.abierto .contenido-chat {
+            display: block;
+        }
+
+        .lista-pacientes {
+            padding: 20px;
+            overflow-y: auto; /* Para hacer scroll solo en la lista */
+        }
+
+        .paciente-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .paciente-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .resumen-grafico {
+            width: 125px;
+            height: 125px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .paciente-info h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .documento-id {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .medico-tratante {
+            color: #555;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Menú Izquierdo -->
+    <div class="menu-izquierdo">
+        <button>Opción 1</button>
+        <button>Opción 2</button>
+        <button>Opción 3</button>
+        <button>Opción 4</button>
+    </div>
+
+    <!-- Parte Central -->
+    <div class="parte-central">
+        <!-- Encabezado Superior Fijo -->
+        <div class="encabezado-superior">
+            <h1><%= info.nombre %></h1>
+            <h2><%= info.especialidad %></h2>
+        </div>
+
+        <!-- Contenido Inferior -->
+        <div class="lista-pacientes">
+            <!-- Pacientes del Médico -->
+            <h2>Mis Pacientes</h2>
+            <% info.pacientesMedico.forEach(paciente => { %>
+                <div class="paciente-item">
+                    <img src="<%= paciente.rutaResumenGrafico %>" alt="Resumen Gráfico de <%= paciente.paciente_nombre_completo %>" class="resumen-grafico">
+                    <div class="paciente-info">
+                        <h3><%= paciente.paciente_nombre_completo %> <span class="documento-id">(<%= paciente.documento_identificacion_paciente %>)</span></h3>
+                    </div>
+                </div>
+            <% }) %>
+        
+            <!-- Otros Pacientes de la Planta -->
+            <h2>Otros Pacientes de la Planta</h2>
+            <% info.pacientesPlanta.forEach(paciente => { %>
+                <div class="paciente-item">
+                    <img src="<%= paciente.rutaResumenGrafico %>" alt="Resumen Gráfico de <%= paciente.paciente_nombre_completo %>" class="resumen-grafico">
+                    <div class="paciente-info">
+                        <h3><%= paciente.paciente_nombre_completo %> <span class="documento-id">(<%= paciente.documento_identificacion_paciente %>)</span></h3>
+                        <p class="medico-tratante">Atendido por: <%= paciente.medico_nombre_completo %></p>
+                        <p><%= paciente.rutaResumenGrafico %></p>
+                    </div>
+
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Menú Derecho Desplegable -->
+    <div class="menu-derecho" id="menuDerecho">
+        <div class="toggle-menu" onclick="toggleMenu()">Chat</div>
+        <div class="contenido-chat">
+            <p>Chat del paciente (por implementar).</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleMenu() {
+        const menuDerecho = document.getElementById('menuDerecho');
+        menuDerecho.classList.toggle('abierto');
+    }
+</script>
+
+</body>
+</html>

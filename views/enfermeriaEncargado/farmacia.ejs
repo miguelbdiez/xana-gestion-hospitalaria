@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Farmacia | XANA</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" rel="stylesheet"/>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+
+    
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+    <style>
+      
+      /* Estilo para la sección de pedidos (moderno y atractivo) */
+      .pedido-section {
+        max-width: 100%;
+        margin: 20px auto;
+        padding: 25px;
+        background: linear-gradient(145deg, #ffffff, #f0f7ff);
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .pedido-section:hover {
+        transform: translateY(-2px);
+      }
+
+      .pedido-section h2,
+      .pedido-section h5 {
+        font-family: "Roboto", Arial, sans-serif;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #3b82f6;
+        padding-bottom: 10px;
+      }
+
+      .pedido-form {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .pedido-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      .pedido-field label {
+        font-family: "Roboto", Arial, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .pedido-field input,
+      .pedido-field select,
+      .pedido-field textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        font-family: "Roboto", Arial, sans-serif;
+        font-size: 0.95rem;
+        color: #1e40af;
+        background-color: #f8fafc;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .pedido-field input:focus,
+      .pedido-field select:focus,
+      .pedido-field textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        background-color: #ffffff;
+      }
+
+      .pedido-field textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .pedido-btn-primary {
+        background: linear-gradient(to right, #3b82f6, #60a5fa);
+        color: #ffffff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-family: "Roboto", Arial, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .pedido-btn-primary:hover {
+        background: linear-gradient(to right, #2563eb, #3b82f6);
+        transform: translateY(-2px);
+      }
+
+      .pedido-btn-secondary {
+        background: linear-gradient(to right, #6b7280, #9ca3af);
+        color: #ffffff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-family: "Roboto", Arial, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .pedido-btn-secondary:hover {
+        background: linear-gradient(to right, #4b5563, #6b7280);
+        transform: translateY(-2px);
+      }
+    </style>
+
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+    <!-- Sidebar Chat -->
+    <div
+    class="offcanvas offcanvas-end"
+    id="sidebarChat"
+    tabindex="-1"
+    aria-labelledby="sidebarLeftLabel"
+    >
+    <div id="plist" class="people-list">
+      <div class="offcanvas-header border-bottom bg-primary text-white">
+        <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="input-group p-3">
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Buscar..."
+        />
+      </div>
+      <ul class="list-unstyled chat-list mb-0">
+        <% info.listaPersonasChat.forEach(persona => { %>
+        <li
+          class="clearfix usuario-chat d-flex align-items-center p-3"
+          data-user-id="<%= persona.id %>"
+        >
+          <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+          <div class="about flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="name"><%= persona.nombre %></div>
+              <% if (persona.mensajes_no_leidos > 0) { %>
+              <div class="mensaje-no-leido" style="display: block"></div>
+              <% } %>
+            </div>
+            <div class="last-message">
+              <%= persona.ultimo_mensaje || '' %>
+            </div>
+            <div class="message-data-time">
+              <%= persona.fecha_ultimo_mensaje || '' %>
+            </div>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="chat" style="display: none">
+      <div class="chat-header bg-primary text-white">
+        <div
+          class="row align-items-center d-flex justify-content-between p-3"
+        >
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+            <div class="chat-about" data-user-id="">
+              <h6 class="m-0"></h6>
+            </div>
+          </div>
+          <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+            <button class="call-btn btn-img">
+              <img src="/imagenes/llamada.png" alt="Llamar" />
+            </button>
+            <button id="btnVolverLista" class="call-btn btn-img">
+              <img src="/imagenes/volver.png" alt="Volver" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-history" id="chat-box">
+        <ul class="m-b-0"></ul>
+      </div>
+      <div class="chat-message">
+        <div class="input-group">
+          <input
+            id="mensajeInput"
+            type="text"
+            class="form-control"
+            placeholder="Escribe un mensaje..."
+          />
+          <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Cerrar"
+    ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+    <ul class="list-unstyled m-0" id="notificaciones">
+      <% info.notificaciones.forEach(notificacion => { %>
+      <li
+        class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+        data-notificacion-id="<%= notificacion.id %>"
+      >
+        <small class="text-muted"
+          ><%= notificacion.fecha_formateada %></small
+        >
+        <div class="fw-bold">
+          <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+          Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+          'tipo_horario') { %> Cambio de Horario <% } else if
+          (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+          Perdida <% } else if (notificacion.tipo_notificacion ===
+          'tipo_mail') { %> Nuevo Email <% } else if
+          (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+          %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+          === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+          días) <% } else if (notificacion.tipo_notificacion ===
+          'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+          <% } else { %> Notificación <% } %>
+        </div>
+        <div><%= notificacion.contenido_notificacion %></div>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          Borrar
+        </button>
+      </li>
+      <% }) %>
+    </ul>
+    <div class="p-3">
+      <a
+        href="/enfermeria/notificaciones"
+        class="btn btn-outline-primary w-100"
+      >
+        Ver todas las notificaciones
+      </a>
+    </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a>
+
+    <div class="d-flex gap-2 me-3">
+    <button
+    class="btn btn-secondary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarChat"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="chatIcon" style="display: block">
+      <img
+        src="/imagenes/chatIcon.png"
+        alt="Chat"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="chatIconNew" style="display: none">
+      <img
+        src="/imagenes/chatIconNew.png"
+        alt="Chat Nuevo"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+
+    <button
+    class="btn btn-secondary"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarNotificaciones"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="notIcon" style="display: block">
+      <img
+        src="/imagenes/campana.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="notIconNew" style="display: none">
+      <img
+        src="/imagenes/campanaConNotificacion.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+    </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>            
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>    
+              <li class="border-top my-3"></li>   
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/horarios" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Horarios</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#horarios-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="horarios-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/enfermeriaEncargado/horarios/generarHorario" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generar Horario</a></li>
+                  </ul>
+                </div>
+              </li>     
+              <li class="border-top my-3"></li> 
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/farmacia" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Farmacia</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li> 
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Farmacia</h1>
+            <div class=" d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/home">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+              <h2 class="m-0"></h2>
+            </div>
+          </div>
+          <div class="album py-5 bg-body-tertiary">
+            <div class="container mt-4">
+              <h1
+                class="text-center mb-4"
+                style="color: #1e90ff; font-weight: bold"
+              >
+                Consultar Inventario de Farmacia
+              </h1>
+
+              <!-- Filtros -->
+              <div class="row mb-4 g-3">
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                      <i class="fas fa-pills"></i>
+                    </span>
+                    <input
+                      type="text"
+                      id="filtroNombre"
+                      class="form-control"
+                      placeholder="Filtrar por nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                      <i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <input
+                      type="date"
+                      id="filtroFechaCaducidad"
+                      class="form-control"
+                      placeholder="Filtrar por fecha de caducidad"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                      <i class="fas fa-filter"></i>
+                    </span>
+                    <select id="filtroTipo" class="form-select">
+                      <option value="">Todos los tipos</option>
+                      <option value="Medicamento">Medicamento</option>
+                      <option value="Material Sanitario">
+                        Material Sanitario
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tabla -->
+              <div class="card shadow">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table
+                      id="tablaFarmacos"
+                      class="table table-striped table-bordered table-hover mb-0"
+                      style="width: 100%"
+                    >
+                      <thead class="bg-primary text-white">
+                        <tr>
+                          <th>Lote</th>
+                          <th>Nombre</th>
+                          <th>Tipo</th>
+                          <th>Cantidad</th>
+                          <th>Fecha de Caducidad</th>
+                          <th>Ubicación</th>
+                        </tr>
+                      </thead>
+                      <% if (info && info.farmacos) { %>
+                      <tbody>
+                        <% info.farmacos.forEach(farmaco => { %>
+                        <tr
+                          class="farmaco-row"
+                          data-farmaco="<%- JSON.stringify(farmaco) %>"
+                        >
+                          <td><%= farmaco.lote %></td>
+                          <td><%= farmaco.nombre %></td>
+                          <td><%= farmaco.tipo %></td>
+                          <td><%= farmaco.cantidad %></td>
+                          <td><%= farmaco.fecha_caducidad %></td>
+                          <td><%= farmaco.ubicacion || 'No especificada' %></td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                      <% } %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="album py-5 bg-body-tertiary">
+            <div class="container mt-4">
+              <h2
+                class="text-center mb-4"
+                style="color: #1e90ff; font-weight: bold"
+              >
+                Pedidos de Farmacia
+              </h2>
+              <div class="mb-4 text-end">
+                <button
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#nuevoPedidoModal"
+                >
+                  <i class="fas fa-plus"></i> Nuevo Pedido
+                </button>
+              </div>
+              <div class="row mb-4 g-3">
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                      <i class="fas fa-pills"></i>
+                    </span>
+                    <input
+                      type="text"
+                      id="filtroPedidoNombre"
+                      class="form-control"
+                      placeholder="Filtrar por nombre"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                      <i class="fas fa-filter"></i>
+                    </span>
+                    <select id="filtroPedidoEstado" class="form-select">
+                      <option value="">Todos los estados</option>
+                      <option value="Pendiente">Pendiente</option>
+                      <option value="Completado">Completado</option>
+                      <option value="Extraviado">Extraviado</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tabla Pedidos -->
+              <div class="card shadow">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table
+                      id="tablaPedidos"
+                      class="table table-striped table-bordered table-hover mb-0"
+                      style="width: 100%"
+                    >
+                      <thead class="bg-primary text-white">
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Tipo</th>
+                          <th>Estado</th>
+                          <th>Fecha de Pedido</th>
+                          <th>Notas</th>
+                        </tr>
+                      </thead>
+                      <% if (info && info.pedidos) { %>
+                      <tbody>
+                        <% info.pedidos.forEach(pedido => { %>
+                        <tr
+                          class="pedido-row"
+                          data-pedido="<%- JSON.stringify(pedido) %>"
+                        >
+                          <td><%= pedido.nombre %></td>
+                          <td><%= pedido.tipo %></td>
+                          <td><%= pedido.estado %></td>
+                          <td><%= pedido.fecha_pedido %></td>
+                          <td><%= pedido.notas %></td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                      <% } %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="nuevoPedidoModal"
+      tabindex="-1"
+      aria-labelledby="nuevoPedidoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content pedido-section">
+          <div class="modal-header">
+            <h5 class="modal-title" id="nuevoPedidoModalLabel">Nuevo Pedido</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="pedidoForm" class="pedido-form">
+              <div class="pedido-field">
+                <label for="pedidoNombre">Nombre</label>
+                <input type="text" id="pedidoNombre" name="nombre" required />
+              </div>
+              <div class="pedido-field">
+                <label for="pedidoTipo">Tipo</label>
+                <select id="pedidoTipo" name="tipo" required>
+                  <option value="" disabled selected>Seleccione un tipo</option>
+                  <option value="Medicamento">Medicamento</option>
+                  <option value="Material Sanitario">Material Sanitario</option>
+                </select>
+              </div>
+              <div class="pedido-field">
+                <label for="pedidoNotas">Notas</label>
+                <textarea id="pedidoNotas" name="notas" rows="4"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="pedido-btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="button" class="pedido-btn-primary" id="enviarPedido">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para Detalles de Pedido -->
+    <div
+      class="modal fade"
+      id="pedidoModal"
+      tabindex="-1"
+      aria-labelledby="pedidoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content pedido-section">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pedidoModalLabel">
+              Detalles del Pedido
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>ID:</strong> <span id="modalPedidoId"></span></p>
+            <p><strong>Nombre:</strong> <span id="modalPedidoNombre"></span></p>
+            <p><strong>Tipo:</strong> <span id="modalPedidoTipo"></span></p>
+            <p>
+              <strong>Cantidad:</strong> <span id="modalPedidoCantidad"></span>
+            </p>
+            <p>
+              <strong>Especialidad:</strong>
+              <span id="modalPedidoEspecialidad"></span>
+            </p>
+            <p><strong>Estado:</strong> <span id="modalPedidoEstado"></span></p>
+            <p>
+              <strong>Fecha de Pedido:</strong>
+              <span id="modalPedidoFecha"></span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="pedido-btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+    <!-- Scripts necesarios -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <script>
+                  const farmacos = <%- JSON.stringify(info.farmacos || []) %>;
+      const pedidos = <%- JSON.stringify(info.pedidos || []) %>;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const tablaFarmacosElement = document.getElementById('tablaFarmacos');
+        const tablaPedidosElement = document.getElementById('tablaPedidos');
+        if (!tablaFarmacosElement || !tablaPedidosElement) {
+          console.error('Error: No se encontraron los elementos tablaFarmacos o tablaPedidos');
+          return;
+        }
+
+        const tablaFarmacos = new DataTable(tablaFarmacosElement, {
+          language: {
+            url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+          },
+          pageLength: 10,
+          order: [[2, 'asc']],
+          columnDefs: [
+            {
+              targets: 4,
+              render: function (data) {
+                return data ? data.split(' ')[0] : 'No especificada';
+              }
+            },
+            {
+              targets: 5,
+              render: function (data) {
+                return data || 'No especificada';
+              }
+            }
+          ]
+        });
+
+        const filtroNombre = document.getElementById('filtroNombre');
+        const filtroFechaCaducidad = document.getElementById('filtroFechaCaducidad');
+        const filtroTipo = document.getElementById('filtroTipo');
+
+        if (filtroNombre) {
+          filtroNombre.addEventListener('keyup', function () {
+            console.log('Filtering nombre (inventario):', this.value);
+            tablaFarmacos.column(2).search(this.value).draw();
+          });
+        } else {
+          console.warn('Elemento filtroNombre no encontrado');
+        }
+
+        if (filtroFechaCaducidad) {
+          filtroFechaCaducidad.addEventListener('change', function () {
+            const value = this.value;
+            console.log('Filtering fecha_caducidad (inventario):', value);
+            tablaFarmacos.column(4).search(value).draw();
+          });
+        } else {
+          console.warn('Elemento filtroFechaCaducidad no encontrado');
+        }
+
+        if (filtroTipo) {
+          filtroTipo.addEventListener('change', function () {
+            console.log('Filtering tipo (inventario):', this.value);
+            tablaFarmacos.column(3).search(this.value).draw();
+          });
+        } else {
+          console.warn('Elemento filtroTipo no encontrado');
+        }
+
+        const tablaPedidos = new DataTable(tablaPedidosElement, {
+          language: {
+            url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+          },
+          pageLength: 10,
+          order: [[3, 'desc']],
+          columnDefs: [
+            {
+              targets: 3,
+              render: function (data) {
+                return data ? data : 'No especificada';
+              }
+            },
+            {
+              targets: 4,
+              render: function (data) {
+                return data || 'Sin notas';
+              }
+            }
+          ]
+        });
+
+        const filtroPedidoNombre = document.getElementById('filtroPedidoNombre');
+        const filtroPedidoEstado = document.getElementById('filtroPedidoEstado');
+
+        if (filtroPedidoNombre) {
+          filtroPedidoNombre.addEventListener('keyup', function () {
+            console.log('Filtering nombre (pedidos):', this.value);
+            tablaPedidos.column(1).search(this.value).draw();
+          });
+        } else {
+          console.warn('Elemento filtroPedidoNombre no encontrado');
+        }
+
+        if (filtroPedidoEstado) {
+          filtroPedidoEstado.addEventListener('change', function () {
+            console.log('Filtering estado (pedidos):', this.value);
+            tablaPedidos.column(5).search(this.value).draw();
+          });
+        } else {
+          console.warn('Elemento filtroPedidoEstado no encontrado');
+        }
+
+
+
+                // Handle form submission for new pedido
+                document.getElementById('enviarPedido').addEventListener('click', async function () {
+                  console.log("ENTRA")
+                    const formData = {
+                        nombre: document.getElementById('pedidoNombre').value,
+                        tipo: document.getElementById('pedidoTipo').value,
+                        notas: document.getElementById('pedidoNotas').value || null,
+                        fecha_pedido: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                        especialidad:'<%=info.especialidad%>'
+                    };
+                    console.log('Datos del pedido:', formData);
+                    try {
+                          const response = await fetch('/enfermeria/nuevoPedidoFarmacia', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({ formData }),
+                      });
+                      const result= response.json();
+                      if(response.ok){
+                          window.location.href="/enfermeria/farmacia"
+                      }else{
+                          alert(result.message)
+                      }
+
+                  } catch (error) {
+                      console.error('Error al buscar:', error);
+                      alert('Error al realizar envio');
+                  }
+
+
+                });
+            });
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Xana Home</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.3/examples/dashboard/"
+    />
+    <!-- En el <head> -->
+
+<!-- Antes del </body> -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    />
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+
+    <style>
+      
+  /* Medicacion css */
+  .container-medicacion {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.container-medicacion h2 {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #2dd4bf;
+  padding-bottom: 8px;
+}
+
+.medicacion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.medicacion-list {
+  margin-top: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-medicacion {
+  text-align: center;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 1rem;
+  color: #6b7280;
+  padding: 15px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+  margin-top: 20px;
+}
+
+.medicacion-btn-primary {
+  background-color: #2dd4bf;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.medicacion-btn-primary:hover {
+  background-color: #26a69a;
+  transform: translateY(-1px);
+}
+
+/* Estilos para filas alargadas */
+.medicacion-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #1f2937;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.medicacion-row:last-child {
+  border-bottom: none;
+}
+
+.medicacion-row-header {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  padding: 12px;
+  border-bottom: 2px solid #2dd4bf;
+}
+
+.medicacion-row-even {
+  background-color: #ffffff;
+}
+
+.medicacion-row-odd {
+  background-color: #f8fafc;
+}
+
+.medicacion-row:hover {
+  background-color: #e6fffa;
+  transition: background-color 0.2s ease;
+}
+
+.medicacion-col {
+  flex: 1;
+  min-width: 80px;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medicacion-col:nth-child(1) {
+  flex: 2; /* Más espacio para el nombre del medicamento */
+}
+
+.medicacion-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.medicacion-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.medicacion-badge-active {
+  background-color: #2dd4bf;
+  color: #ffffff;
+}
+
+.medicacion-badge-paused {
+  background-color: #f59e0b;
+  color: #ffffff;
+}
+
+.medicacion-badge-inactive {
+  background-color: #6b7280;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .medicacion-row {
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+  .medicacion-col {
+    flex: 1 1 50%;
+    min-width: 0;
+    margin-bottom: 8px;
+  }
+  .medicacion-col:nth-child(1) {
+    flex: 1 1 100%;
+  }
+  .medicacion-btn-sm {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+    /* Estilos del modal */
+   /* Estilos del modal */
+   .modal-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: none;
+  }
+
+  .modal-header {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 15px 20px;
+  }
+
+  .modal-header .modal-title {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .modal-body {
+    padding: 20px;
+    background-color: #ffffff;
+  }
+
+  .modal-body h6 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 15px;
+  }
+
+  .medicacion-activa {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .medicacion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .medicacion-item:hover {
+    background-color: #e6fffa;
+  }
+
+  .medicacion-btn-primary {
+    background-color: #2dd4bf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  .medicacion-btn-primary:hover {
+    background-color: #26a69a;
+    transform: translateY(-1px);
+  }
+
+  .medicacion-btn-secondary {
+    background-color: #6b7280;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .medicacion-btn-secondary:hover {
+    background-color: #4b5563;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .form-group label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+  }
+
+  .busqueda-medicamento {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .busqueda-input {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .busqueda-input input {
+    max-width: 300px;
+  }
+
+  .resultados-busqueda {
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    min-height: 120px;
+    max-height: 240px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .resultado-item {
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .resultado-item:hover {
+    background-color: #e6fffa;
+  }
+
+  .resultado-item:last-child {
+    border-bottom: none;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #e5e7eb;
+    padding: 15px 20px;
+    background-color: #f8fafc;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+  
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+    <!-- Sidebar Izquierdo -->
+    <div
+      class="offcanvas offcanvas-end bg-light"
+      id="sidebarChat"
+      tabindex="-1"
+      aria-labelledby="sidebarLeftLabel"
+    >
+      <div id="plist" class="people-list" style="display: block">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Search..." />
+        </div>
+        <ul class="list-unstyled chat-list mt-2 mb-0">
+          <% info.listaPersonasChat.forEach(persona => { %>
+          <li
+            class="clearfix usuario-chat d-flex align-items-center"
+            data-user-id="<%= persona.id %>"
+          >
+            <img src="../imagenes/user.png" alt="A" />
+
+            <div class="about">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="name"><%= persona.nombre %></div>
+                <div class="d-flex align-items-center">
+                  <div class="status mr-2">
+                    <i
+                      class="fa fa-circle <%= persona.estado ? 'online' : 'offline' %>"
+                    ></i>
+                    <%= persona.estado ? 'online' : 'offline' %>
+                  </div>
+                </div>
+              </div>
+              <div class="last-message" style="color: #808080; font-size: 12px">
+                <%= persona.ultimo_mensaje || '' %>
+              </div>
+              <div class="message-time" style="color: #808080; font-size: 10px">
+                <%= persona.fecha_ultimo_mensaje || '' %>
+              </div>
+            </div>
+          </li>
+          <!-- Botón de llamada -->
+
+          <% }) %>
+        </ul>
+      </div>
+
+      <div class="chat" style="display: none">
+        <div class="chat-header clearfix">
+          <div class="row align-items-center d-flex justify-content-between">
+            <div class="col-lg-6 d-flex align-items-center">
+              <a
+                href="javascript:void(0);"
+                data-toggle="modal"
+                data-target="#view_info"
+              >
+                <img
+                  src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                  alt="https://192.168.1.66/imagenes/userPre.png"
+                  class="me-2"
+                />
+              </a>
+              <div class="chat-about" data-user-id="">
+                <h6 class="m-b-0"></h6>
+              </div>
+            </div>
+            <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+              <button class="call-btn btn-img">
+                <img src="/imagenes/llamada.png" alt="Llamar" />
+              </button>
+              <button id="btnVolverLista" class="call-btn btn-img">
+                <img src="/imagenes/volver.png" alt="Volver" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-history" id="chat-box">
+          <ul class="m-b-0"></ul>
+        </div>
+        <div class="chat-message clearfix">
+          <div class="input-group">
+            <input
+              id="mensajeInput"
+              type="text"
+              class="form-control bg-light"
+              placeholder="Escribe un mensaje..."
+            />
+            <button class="btn btn-primary" id="enviarBtn">
+              <span class="input-group-text"><i class="fa fa-send"></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Derecho -->
+    <div
+      class="offcanvas offcanvas-end bg-dark text-white"
+      id="sidebarRight"
+      tabindex="-1"
+      aria-labelledby="sidebarRightLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarRightLabel">Menú Derecho</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#">Reportes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#">Soporte</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <header
+      class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+      data-bs-theme="dark"
+    >
+      <a
+        class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+        href="/home"
+        >XANA INDUSTRIES</a
+      >
+
+      <div class="d-flex gap-2 me-3">
+        <button
+          class="btn btn-secondary"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarChat"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <div id="chatIcon" style="display: block">
+            <img
+              src="/imagenes/chatIcon.png"
+              alt="Chat"
+              width="24"
+              height="24"
+            />
+          </div>
+
+          <!-- Imagen cuando hay mensajes nuevos -->
+          <div id="chatIconNew" style="display: none">
+            <img
+              src="/imagenes/chatIconNew.png"
+              alt="Chat Nuevo"
+              width="24"
+              height="24"
+            />
+          </div>
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarRight"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          ☰ Assistant IA
+        </button>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/paciente?ingreso_id=<%= info.ingreso_id %>" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">PACIENTE</a>
+                </div>
+                <div class="always-expanded" id="paciente-expanded">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/paciente/diagnosticoPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Diagnóstico</a></li>
+                    <li><a href="/paciente/paciente/evolutivoMedico?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Evolutivo Medicina</a></li>
+                    <li><a href="/medicacionPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Medicación</a></li>
+                    <li><a href="/paciente/constantesPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Constantes</a></li>
+                    <li><a href="/paciente/evolutivoEnfermeria?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Evolutivo Enfermería</a></li>
+                    <li><a href="/paciente/testPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Tests</a></li>
+                    <li><a href="/paciente/balancePaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Balance</a></li>
+                    <li><a href="/paciente/viasPaciente?ingreso_id=<%= info.ingreso_id %>" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Vías</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3 separator"></li> <!-- Enhanced separator -->
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/documentos" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Documentos</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documentos-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="documentos-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/documentos/listaEmitirDocumento" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Emitir Documento</a></li>
+                    <li><a href="/documentos/listaDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Imprimir Documento</a></li>
+                    <li><a href="/documentos/todosDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ver Documentos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/medicina/consultarExpedientes" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Expedientes</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario"><%= info.especialidad %></h1>
+            <div class="chat-header d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/medicina/planta">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+            </div>
+           
+          </div>
+          <% if (info && info.infoCabecera) { %>
+            <div class="container" 
+                 data-documento_identificacion="<%= info.infoCabecera.documento_identificacion_paciente %>" 
+                 data-id_medico="<%= info.infoCabecera.medico_id %>">
+              <div class="header">
+                <!-- Botón para abrir el modal -->
+                <button class="edit-button incidence-button" data-bs-toggle="modal" data-bs-target="#incidenciaModal">Incidencia</button>
+                <button class="edit-button" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>
+                <!-- Panel del paciente a la izquierda -->
+                <div class="panel-paciente">
+                  <% if (info.infoCabecera.panelPaciente) { %>
+                    <img src="<%= info.infoCabecera.panelPaciente %>" 
+                         alt="Panel Paciente" />
+                  <% } else { %>
+                    <p>Sin imagen de panel</p>
+                  <% } %>
+                </div>
+                
+                <!-- Campos de la cabecera en columnas -->
+                <div class="info-paciente">
+                  <div class="info-column">
+                    <p><strong>PACIENTE:</strong> <span class="text-limited" title="<%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %>"><%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %></span></p>
+                    <p><strong>MÉDICO:</strong> <span class="text-limited" title="<%= info.infoCabecera.medico_nombre_completo || 'No disponible' %>"><%= info.infoCabecera.medico_nombre_completo || 'No disponible' %></span></p>
+                    <p><strong>SERVICIO:</strong> <span class="text-limited" title="<%= info.infoCabecera.especialidad || 'No disponible' %>"><%= info.infoCabecera.especialidad || 'No disponible' %></span></p>
+                    <p><strong>FECHA DE INGRESO:</strong> <span class="text-limited" title="<%= info.infoCabecera.fecha_ini || 'No disponible' %>"><%= info.infoCabecera.fecha_ini || 'No disponible' %></span></p>
+                    <p>
+                      <strong>DIAGNÓSTICO:</strong> 
+                      <span id="diagnostico-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.diagnostico || 'No especificado' %>">
+                        <%= info.infoCabecera.diagnostico || 'No especificado' %>
+                      </span>
+                      <% if (info.infoCabecera.diagnostico && info.infoCabecera.diagnostico.length > 30) { %>
+                        <button class="toggle-button" onclick="toggleText('diagnostico-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.diagnostico.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p>
+                      <strong>ALERGIAS:</strong> 
+                      <span id="alergias-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="(<%= info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna' %>) <%= info.infoCabecera.alergia || 'Ninguna' %>">
+                        (<%= info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna' %>) <%= info.infoCabecera.alergia || 'Ninguna' %>
+                      </span>
+                      <% 
+                        const alergiasText = `(${info.infoCabecera.tipo_alergia === 'grave' ? 'Grave' : info.infoCabecera.tipo_alergia === 'moderada' ? 'Moderada' : info.infoCabecera.tipo_alergia === 'leve' ? 'Leve' : 'Ninguna'}) ${info.infoCabecera.alergia || 'Ninguna'}`;
+                        if (alergiasText.length > 30) { 
+                      %>
+                        <button class="toggle-button" onclick="toggleText('alergias-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= alergiasText.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                  </div>
+                  <div class="info-column">
+                    <p>
+                      <strong>DIETA:</strong> 
+                      <span id="dieta-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="(<%= info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna' %>) <%= info.infoCabecera.dieta || 'Ninguna' %>">
+                        (<%= info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna' %>) <%= info.infoCabecera.dieta || 'Ninguna' %>
+                      </span>
+                      <% 
+                        const dietaText = `(${info.infoCabecera.tipo_dieta === 'normal' ? 'Normal' : info.infoCabecera.tipo_dieta === 'blanda' ? 'Blanda' : info.infoCabecera.tipo_dieta === 'liquidos' ? 'Líquidos' : 'Ninguna'}) ${info.infoCabecera.dieta || 'Ninguna'}`;
+                        if (dietaText.length > 30) { 
+                      %>
+                        <button class="toggle-button" onclick="toggleText('dieta-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= dietaText.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                    <p><strong>AISLAMIENTO:</strong> <span class="text-limited" id="aislamiento-<%= info.infoCabecera.ingreso_id || 'unknown' %>" title="<%= info.infoCabecera.aislamiento ? 'Sí' : 'No' %>"><%= info.infoCabecera.aislamiento ? 'Sí' : 'No' %></span></p>
+                    <p><strong>GRUPO SANGUÍNEO:</strong> <span class="text-limited" id="grupoSanguineo-<%= info.infoCabecera.ingreso_id || 'unknown' %>" title="<%= info.infoCabecera.grupo_rh || 'No especificado' %>"><%= info.infoCabecera.grupo_rh || 'No especificado' %></span></p>
+                    <p><strong>HISTORIA:</strong> <span class="text-limited" title="<%= info.infoCabecera.historia || 'No disponible' %>"><%= info.infoCabecera.historia || 'No disponible' %></span></p>
+                    <p><strong>EPISODIO:</strong> <span class="text-limited" title="<%= info.infoCabecera.ingreso_id || 'No disponible' %>"><%= info.infoCabecera.ingreso_id || 'No disponible' %></span></p>
+                    <p>
+                      <strong>AT:</strong> 
+                      <span id="antecedentes-<%= info.infoCabecera.ingreso_id || 'unknown' %>" class="text-limited" title="<%= info.infoCabecera.antecedentes || 'No disponible' %>">
+                        <%= info.infoCabecera.antecedentes || 'No disponible' %>
+                      </span>
+                      <% if (info.infoCabecera.antecedentes && info.infoCabecera.antecedentes.length > 30) { %>
+                        <button class="toggle-button" onclick="toggleText('antecedentes-<%= info.infoCabecera.ingreso_id || 'unknown' %>', '<%= info.infoCabecera.antecedentes.replace(/'/g, "\\'") %>')">Ver más</button>
+                      <% } %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } else { %>
+                <div class="container">
+                  <p class="error-message">No se encontró información para el ingreso especificado.</p>
+                </div>
+            <% } %>
+            <div class="container-medicacion">
+              <div class="medicacion-header">
+                <h2>Medicación Activa del Paciente</h2>
+                <button type="button" class="medicacion-btn-primary" data-bs-toggle="modal" data-bs-target="#medicacionModal">
+                  Recetar/Modificar Medicación
+                </button>
+              </div>
+            
+              <!-- Verificar si hay medicación -->
+              <% if (!info.medicacion || info.medicacion.length <= 0) { %>
+                <div class="no-medicacion">
+                  <p>El paciente aún no tiene ninguna medicación recetada.</p>
+                </div>
+              <% } else { %>
+                <!-- Lista de medicación en filas alargadas -->
+                <div class="medicacion-list">
+                  <div class="medicacion-row medicacion-row-header">
+                    <div class="medicacion-col">Medicamento</div>
+                    <div class="medicacion-col">Vía</div>
+                    <div class="medicacion-col">Dosis</div>
+                    <div class="medicacion-col">Frecuencia</div>
+                    <div class="medicacion-col">Duración</div>
+                    <div class="medicacion-col">Inicio</div>
+                    <div class="medicacion-col">Fin</div>
+                    <div class="medicacion-col">Estado</div>
+                  </div>
+                  <% info.medicacion.forEach((medicacion, index) => { %>
+                    <div class="medicacion-row <%= index % 2 === 0 ? 'medicacion-row-even' : 'medicacion-row-odd' %>">
+                      <div class="medicacion-col"><%= medicacion.nombre_medicamento %></div>
+                      <div class="medicacion-col"><%= medicacion.via_administracion %></div>
+                      <div class="medicacion-col">
+                        <%= medicacion.dosis %> <%= medicacion.via_administracion === 'Oral' ? 'comprimido(s)' : 'unidad(es)' %>
+                      </div>
+                      <div class="medicacion-col">Cada <%= medicacion.frecuencia_horas %> horas</div>
+                      <div class="medicacion-col">
+                        <% if (medicacion.fecha_fin) { %>
+                          <% 
+                            const inicio = new Date(medicacion.fecha_inicio);
+                            const fin = new Date(medicacion.fecha_fin);
+                            const dias = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24)) + 1;
+                          %>
+                          <%= dias %> día<%= dias > 1 ? 's' : '' %>
+                        <% } else if (medicacion.numero_dosis) { %>
+                          <%= medicacion.numero_dosis %> dosis
+                        <% } else { %>
+                          No especificada
+                        <% } %>
+                      </div>
+                      <div class="medicacion-col"><%= medicacion.fecha_inicio.split(' ')[0] %></div>
+                      <div class="medicacion-col">
+                        <% if (medicacion.fecha_fin) { %>
+                          <%= medicacion.fecha_fin.split(' ')[0] %>
+                        <% } else if (medicacion.numero_dosis) { %>
+                          Hasta <%= medicacion.numero_dosis %> dosis
+                        <% } else { %>
+                          No especificado
+                        <% } %>
+                      </div>
+                      <div class="medicacion-col">
+                        <span class="medicacion-badge <%= medicacion.estado === 'Activa' ? 'medicacion-badge-active' : 'medicacion-badge-paused'%>">
+                          <%= medicacion.estado %>
+                        </span>
+                      </div>
+                      
+                    </div>
+                  <% }) %>
+                </div>
+              <% } %>
+
+              <div class="medicacion-header">
+                <h2>Historial - Medicación Activa del Paciente</h2>
+               
+              </div>
+
+
+              <!-- Verificar si hay historial de medicación -->
+              <% if (!info.medicacionActivaHistorial || info.medicacionActivaHistorial.length <= 0) { %>
+                <div class="no-medicacion">
+                  <p>El paciente aún no tiene ninguna medicación en su historial de medicacion activa.</p>
+                </div>
+              <% } else { %>
+                
+                <!-- Lista de medicación en filas alargadas -->
+                <div class="medicacion-list">
+                  <div class="medicacion-row medicacion-row-header">
+                    <div class="medicacion-col">Medicamento</div>
+                    <div class="medicacion-col">Vía</div>
+                    <div class="medicacion-col">Dosis</div>
+                    <div class="medicacion-col">Frecuencia</div>
+                    <div class="medicacion-col">Duración</div>
+                    <div class="medicacion-col">Inicio</div>
+                    <div class="medicacion-col">Fin</div>
+                    <div class="medicacion-col">Estado</div>
+                  </div>
+                  <% info.medicacionActivaHistorial.forEach((medicacion, index) => { %>
+                    <div class="medicacion-row <%= index % 2 === 0 ? 'medicacion-row-even' : 'medicacion-row-odd' %>">
+                      <div class="medicacion-col"><%= medicacion.nombre_medicamento %></div>
+                      <div class="medicacion-col"><%= medicacion.via_administracion %></div>
+                      <div class="medicacion-col">
+                        <%= medicacion.dosis %> <%= medicacion.via_administracion === 'Oral' ? 'comprimido(s)' : 'unidad(es)' %>
+                      </div>
+                      <div class="medicacion-col">Cada <%= medicacion.frecuencia_horas %> horas</div>
+                      <div class="medicacion-col">
+                        <% if (medicacion.fecha_fin) { %>
+                          <% 
+                            const inicio = new Date(medicacion.fecha_inicio);
+                            const fin = new Date(medicacion.fecha_fin);
+                            const dias = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24)) + 1;
+                          %>
+                          <%= dias %> día<%= dias > 1 ? 's' : '' %>
+                        <% } else if (medicacion.numero_dosis) { %>
+                          <%= medicacion.numero_dosis %> dosis
+                        <% } else { %>
+                          No especificada
+                        <% } %>
+                      </div>
+                      <div class="medicacion-col"><%= medicacion.fecha_inicio.split(' ')[0] %></div>
+                      <div class="medicacion-col">
+                        <% if (medicacion.fecha_fin) { %>
+                          <%= medicacion.fecha_fin.split(' ')[0] %>
+                        <% } else if (medicacion.numero_dosis) { %>
+                          Hasta <%= medicacion.numero_dosis %> dosis
+                        <% } else { %>
+                          No especificado
+                        <% } %>
+                      </div>
+                      <div class="medicacion-col">
+                        <span class="medicacion-badge-inactive">
+                          <%= medicacion.estado %>
+                        </span>
+                      </div>
+                      
+                    </div>
+                  <% }) %>
+                </div>
+              <% } %>
+            </div>
+
+            
+
+              
+
+
+              
+          
+        </main>
+      </div>
+    </div>
+
+    <div class="modal fade" id="medicacionModal" tabindex="-1" aria-labelledby="medicacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="medicacionModalLabel">Gestionar Medicación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Lista de medicación activa -->
+            <h6>Medicación Activa</h6>
+            <div class="medicacion-activa" id="medicacionList">
+              <% if (info.medicacion && info.medicacion.length > 0) { %>
+                <% info.medicacion.forEach(medicamento => { %>
+                  <div class="medicacion-item" data-id="<%= medicamento.id_medicacion %>" onclick="editarMedicacion('<%= medicamento.id_medicacion %>')">
+                    <span>Medicamento: <%= medicamento.nombre_medicamento %> | Pauta: (<%= medicamento.dosis %> und) - Cada <%= medicamento.frecuencia_horas %> horas - <%= medicamento.estado %></span>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No hay medicación recetada.</p>
+              <% } %>
+            </div>
+    
+            <!-- Botón para recetar nuevo medicamento -->
+            <button class="medicacion-btn-primary mt-3" id="btnRecetarNuevo" onclick="mostrarFormulario('agregar')">Recetar Nuevo Medicamento</button>
+    
+            <!-- Formulario para añadir medicamento (original) -->
+            <form id="formAgregarMedicacion" class="hidden">
+              <h6 class="mt-4">Añadir Medicamento</h6>
+              <!-- Búsqueda de medicamento -->
+              <div class="busqueda-medicamento">
+                <div class="busqueda-input">
+                  <div class="form-group">
+                    <label for="buscar-medicamento">Buscar Medicamento</label>
+                    <input type="text" id="buscar-medicamento" class="form-control" placeholder="Paracetamol, Ibuprofeno" maxlength="50">
+                  </div>
+                  <button type="button" class="medicacion-btn-primary" onclick="buscarMedicamentos()">Buscar</button>
+                </div>
+                <div class="resultados-busqueda" id="resultados-busqueda"></div>
+              </div>
+    
+              <!-- Campos del medicamento -->
+              <div class="form-group">
+                <label for="nombre_medicamento">Medicamento</label>
+                <input type="text" class="form-control" id="nombre_medicamento" name="nombre_medicamento" readonly required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="dosis">Dosis</label>
+                  <input type="text" class="form-control" id="dosis" name="dosis" required>
+                </div>
+                <div class="form-group">
+                  <label for="frecuencia_horas">Cada (horas)</label>
+                  <input type="text" class="form-control" id="frecuencia_horas" name="frecuencia_horas" required>
+                </div>
+                <div class="form-group">
+                  <label for="via_administracion">Vía Administración</label>
+                  <input type="text" class="form-control" id="via_administracion" name="via_administracion" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fecha_inicio">Desde (fecha)</label>
+                  <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                </div>
+                <div class="form-group">
+                  <label for="fecha_fin">Hasta (fecha, opcional)</label>
+                  <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
+                </div>
+                <div class="form-group">
+                  <label for="numero_dosis">O Número de Dosis</label>
+                  <input type="number" class="form-control" id="numero_dosis" name="numero_dosis" min="1">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="medicacion-btn-primary" id="btnAñadirMedicamento">Añadir a Medicación Activa</button>
+                <button type="button" class="medicacion-btn-secondary" onclick="cancelarFormulario()">Cancelar</button>
+              </div>
+            </form>
+    
+            <!-- Formulario para editar medicamento -->
+            <form id="formEditarMedicacion" class="hidden">
+              <h6 class="mt-4">Editar Medicación</h6>
+              <div class="form-group">
+                <label>Medicamento</label>
+                <p class="form-control-static" id="edit_nombre_medicamento"></p>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit_via_administracion">Vía de Administración</label>
+                  <input type="text" class="form-control" id="edit_via_administracion" name="via_administracion" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit_dosis">Dosis</label>
+                  <input type="number" class="form-control" id="edit_dosis" name="dosis" min="1" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit_frecuencia_horas">Frecuencia (horas)</label>
+                  <input type="number" class="form-control" id="edit_frecuencia_horas" name="frecuencia_horas" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="edit_fecha_inicio">Fecha de Inicio</label>
+                  <input type="date" class="form-control" id="edit_fecha_inicio" name="fecha_inicio" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit_fecha_fin">Fecha de Fin (opcional)</label>
+                  <input type="date" class="form-control" id="edit_fecha_fin" name="fecha_fin">
+                </div>
+                <div class="form-group">
+                  <label for="edit_numero_dosis">Número de Dosis (opcional)</label>
+                  <input type="number" class="form-control" id="edit_numero_dosis" name="numero_dosis" min="1">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="edit_estado">Estado</label>
+                <select class="form-control" id="edit_estado" name="estado" required>
+                  <option value="Activa">Activa</option>
+                  <option value="Pausada">Pausada</option>
+                  <option value="Finalizada">Finalizada</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="medicacion-btn-primary" id="btnActualizarMedicamento">Actualizar Medicación</button>
+                <button type="button" class="medicacion-btn-secondary" onclick="cancelarFormulario()">Cancelar</button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="medicacion-btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="medicacion-btn-primary" id="btnGuardarCambios" onclick="guardarCambios()">Guardar Cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade incidencia-modal" id="incidenciaModal" tabindex="-1" aria-labelledby="incidenciaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="incidenciaModalLabel">Gestión de Incidencias</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Lista de incidencias -->
+            <div class="mb-3">
+              <h6>Incidencias Asociadas</h6>
+              <ul id="incidenciasList" class="list-group">
+                <% if (info.infoIncidencias && info.infoIncidencias.length > 0) { %>
+                  <% info.infoIncidencias.forEach(incidencia => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <div data-id_incidencia=" <%= incidencia.id_incidencia %>">
+                        <strong>Descripcion: </strong> - <%= incidencia.informacion_incidencia %>
+                        <br>
+                        <small>
+                          Episodio: <%= incidencia.ingreso_id %> | 
+                          Estado: <%= incidencia.activa ? 'Activa' : 'Inira' %> | 
+                          Fecha de emisión: <%= incidencia.fecha_emision %> 
+                          <% if (!incidencia.activa && incidencia.fecha_desactivacion) { %>
+                            | Fecha de desactivación: <%= incidencia.fecha_desactivacion %>
+                          <% } %>
+                        </small>
+                      </div>
+                      <% if (incidencia.activa) { %>
+                        <button class="btn btn-danger btn-sm desactivar-incidencia" data-id-incidencia="<%= incidencia.id_incidencia %>" data-id-ingreso="<%= incidencia.ingreso_id %>">Desactivar</button>
+                      <% } %>
+                    </li>
+                  <% }); %>
+                <% } else { %>
+                  <li class="list-group-item">No hay incidencias asociadas.</li>
+                <% } %>
+              </ul>
+            </div>
+            <!-- Botón para añadir nueva incidencia -->
+            <button type="button" class="btn btn-primary mb-3" id="btnNuevaIncidencia">Nueva Incidencia</button>
+            <!-- Formulario para nueva incidencia (oculto inicialmente) -->
+            <div id="nuevaIncidenciaForm" style="display: none;">
+              <div class="mb-3">
+                <label for="incidenciaCuerpo" class="form-label">Descripción de la Incidencia:</label>
+                <textarea class="form-control" id="incidenciaCuerpo" rows="4" placeholder="Escriba los detalles de la incidencia"></textarea>
+              </div>
+              <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary" id="btnCancelarIncidencia">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnAceptarIncidencia">Aceptar</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="modal fade edit-info-modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Editar Información del Paciente</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-column">
+                <!-- Campos no editables -->
+                <div class="mb-3">
+                  <label>PACIENTE:</label>
+                  <p><%= info.infoCabecera.paciente_nombre_completo || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>MÉDICO:</label>
+                  <p><%= info.infoCabecera.medico_nombre_completo || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>SERVICIO:</label>
+                  <p><%= info.infoCabecera.especialidad || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>FECHA DE INGRESO:</label>
+                  <p><%= info.infoCabecera.fecha_ini || 'No disponible' %></p>
+                </div>
+                <!-- Diagnóstico (solo editable por médico) -->
+                <div class="mb-3">
+                  <label for="modalDiagnostico">DIAGNÓSTICO:</label>
+                  <input type="text" class="form-control" id="modalDiagnostico" value="<%= info.infoCabecera.diagnostico || 'No especificado' %>" 
+                         <%= info.rol === 'medico' ? '' : 'disabled' %>>
+                </div>
+                <!-- Alergias -->
+                <div class="mb-3">
+                  <label>ALERGIAS:</label>
+                  <div class="d-flex flex-wrap">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaNinguna" value="ninguna" 
+                             <%= (!info.infoCabecera.tipo_alergia || info.infoCabecera.tipo_alergia === 'ninguna') ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaNinguna">Ninguna</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaLeve" value="leve" 
+                             <%= info.infoCabecera.tipo_alergia === 'leve' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaLeve">Leve</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaModerada" value="moderada" 
+                             <%= info.infoCabecera.tipo_alergia === 'moderada' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaModerada">Moderada</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="tipoAlergia" id="alergiaGrave" value="grave" 
+                             <%= info.infoCabecera.tipo_alergia === 'grave' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="alergiaGrave">Grave</label>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control mt-2" id="modalAlergia" placeholder="Especifique alergia" 
+                         value="<%= info.infoCabecera.alergia || '' %>" 
+                         <%= (!info.infoCabecera.tipo_alergia || info.infoCabecera.tipo_alergia === 'ninguna') ? 'disabled' : '' %>>
+                </div>
+              </div>
+              <div class="form-column">
+                <!-- Dieta -->
+                <div class="mb-3">
+                  <label>DIETA:</label>
+                  <div class="d-flex flex-wrap">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaNinguna" value="ninguna" 
+                             <%= (!info.infoCabecera.tipo_dieta || info.infoCabecera.tipo_dieta === 'ninguna') ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaNinguna">Ninguna</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaNormal" value="normal" 
+                             <%= info.infoCabecera.tipo_dieta === 'normal' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaNormal">Normal</label>
+                    </div>
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaBlanda" value="blanda" 
+                             <%= info.infoCabecera.tipo_dieta === 'blanda' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaBlanda">Blanda</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="tipoDieta" id="dietaLiquida" value="liquidos" 
+                             <%= info.infoCabecera.tipo_dieta === 'liquidos' ? 'checked' : '' %>>
+                      <label class="form-check-label" for="dietaLiquida">Líquida</label>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control mt-2" id="modalDieta" placeholder="Especifique dieta" 
+                         value="<%= info.infoCabecera.dieta || '' %>" 
+                         <%= (!info.infoCabecera.tipo_dieta || info.infoCabecera.tipo_dieta === 'ninguna') ? 'disabled' : '' %>>
+                </div>
+                <!-- Aislamiento -->
+                <div class="mb-3">
+                  <label>AISLAMIENTO:</label>
+                  <div class="d-flex">
+                    <div class="form-check me-2">
+                      <input class="form-check-input" type="radio" name="aislamiento" id="aislamientoNo" value="no" 
+                             <%= info.infoCabecera.aislamiento ? '' : 'checked' %>>
+                      <label class="form-check-label" for="aislamientoNo">No</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="aislamiento" id="aislamientoSi" value="si" 
+                             <%= info.infoCabecera.aislamiento ? 'checked' : '' %>>
+                      <label class="form-check-label" for="aislamientoSi">Sí</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Grupo Sanguíneo (Select) -->
+                <div class="mb-3">
+                  <label for="modalGrupoSanguineo">GRUPO SANGUÍNEO:</label>
+                  <select class="form-control" id="modalGrupoSanguineo">
+                    <option value="No especificado" <%= info.infoCabecera.grupo_rh === 'No especificado' || !info.infoCabecera.grupo_rh ? 'selected' : '' %>>No especificado</option>
+                    <option value="A+" <%= info.infoCabecera.grupo_rh === 'A+' ? 'selected' : '' %>>A+</option>
+                    <option value="A-" <%= info.infoCabecera.grupo_rh === 'A-' ? 'selected' : '' %>>A-</option>
+                    <option value="B+" <%= info.infoCabecera.grupo_rh === 'B+' ? 'selected' : '' %>>B+</option>
+                    <option value="B-" <%= info.infoCabecera.grupo_rh === 'B-' ? 'selected' : '' %>>B-</option>
+                    <option value="AB+" <%= info.infoCabecera.grupo_rh === 'AB+' ? 'selected' : '' %>>AB+</option>
+                    <option value="AB-" <%= info.infoCabecera.grupo_rh === 'AB-' ? 'selected' : '' %>>AB-</option>
+                    <option value="O+" <%= info.infoCabecera.grupo_rh === 'O+' ? 'selected' : '' %>>O+</option>
+                    <option value="O-" <%= info.infoCabecera.grupo_rh === 'O-' ? 'selected' : '' %>>O-</option>
+                  </select>
+                </div>
+                <!-- Campos no editables -->
+                <div class="mb-3">
+                  <label>HISTORIA:</label>
+                  <p><%= info.infoCabecera.historia || 'No disponible' %></p>
+                </div>
+                <div class="mb-3">
+                  <label>EPISODIO:</label>
+                  <p><%= info.infoCabecera.ingreso_id || 'No disponible' %></p>
+                </div>
+                <!-- Antecedentes (No editable) -->
+                <div class="mb-3">
+                  <label>ANTECEDENTES (AT):</label>
+                  <p><%= info.infoCabecera.antecedentes || 'No disponible' %></p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" onclick="applyChanges('<%= info.infoCabecera.ingreso_id || 'unknown' %>')">Aplicar Cambios</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      // Almacenar medicación inicial y medicamento seleccionado
+      const medicacionInicial = <%- JSON.stringify(info.medicacion || []) %>;
+      let medicacionesModificadas = [];
+      let medicacionEditandoId = null;
+      let medicamentoSeleccionado = null;
+      let tempIdCounter = -1; // Para IDs temporales de nuevas medicaciones
+    
+      // Mostrar formulario (tipo: 'agregar' o 'editar')
+      function mostrarFormulario(tipo) {
+        const formAgregar = document.getElementById('formAgregarMedicacion');
+        const formEditar = document.getElementById('formEditarMedicacion');
+        const btnRecetar = document.getElementById('btnRecetarNuevo');
+    
+        formAgregar.classList.add('hidden');
+        formEditar.classList.add('hidden');
+        btnRecetar.classList.add('hidden');
+    
+        if (tipo === 'agregar') {
+          formAgregar.classList.remove('hidden');
+          formAgregar.reset();
+          document.getElementById('nombre_medicamento').value = medicamentoSeleccionado ? medicamentoSeleccionado.nombre : '';
+          document.getElementById('estado').value = 'Activa';
+          medicacionEditandoId = null;
+          document.getElementById('btnAñadirMedicamento').textContent = 'Añadir a Medicación Activa';
+        } else if (tipo === 'editar') {
+          formEditar.classList.remove('hidden');
+        }
+      }
+    
+      // Cancelar formulario y volver al estado inicial
+      function cancelarFormulario() {
+        const formAgregar = document.getElementById('formAgregarMedicacion');
+        const formEditar = document.getElementById('formEditarMedicacion');
+        const btnRecetar = document.getElementById('btnRecetarNuevo');
+    
+        formAgregar.classList.add('hidden');
+        formEditar.classList.add('hidden');
+        btnRecetar.classList.remove('hidden');
+        formAgregar.reset();
+        formEditar.reset();
+        medicacionEditandoId = null;
+        medicamentoSeleccionado = null;
+      }
+    
+      // Buscar medicamentos
+      async function buscarMedicamentos() {
+        const query = document.getElementById('buscar-medicamento').value;
+        const resultados = document.getElementById('resultados-busqueda');
+        try {
+          const response = await fetch(`/buscarMedicamentosCoincidenciaNombre?q=${encodeURIComponent(query)}`);
+          if (!response.ok) throw new Error('Error al buscar medicamentos');
+          const data = await response.json();
+          const medicamentos = data.data;
+          resultados.innerHTML = medicamentos.length > 0
+            ? medicamentos.map(med => `
+                <div data-id_medicamento="${med.id}"  class="resultado-item" onclick="seleccionarMedicamento('${med.nombre}', ${med.cantidad}, ${med.id}, '${med.lote}')">
+                  ${med.nombre} (Lote: ${med.lote}, Cantidad: ${med.cantidad})
+                </div>
+              `).join('')
+            : '<p>No se encontraron medicamentos.</p>';
+        } catch (error) {
+          console.error('Error:', error);
+          resultados.innerHTML = '<p>Error al buscar medicamentos.</p>';
+        }
+      }
+    
+      // Seleccionar un medicamento
+      function seleccionarMedicamento(nombre, cantidad, id_medicamento, lote) {
+        console.log(lote)
+        medicamentoSeleccionado = { nombre, cantidad, id_medicamento, lote };
+        document.getElementById('nombre_medicamento').value = nombre;
+        document.getElementById('resultados-busqueda').innerHTML = '';
+        document.getElementById('buscar-medicamento').value = '';
+      }
+    
+      // Editar una medicación
+      function editarMedicacion(id_medicacion) {
+        const medicacion = medicacionesModificadas.find(m => m.id_medicacion == id_medicacion) || 
+                           medicacionInicial.find(m => m.id_medicacion == id_medicacion);
+        if (!medicacion) return;
+    
+        mostrarFormulario('editar');
+        medicacionEditandoId = id_medicacion;
+    
+        document.getElementById('edit_nombre_medicamento').textContent = medicacion.nombre_medicamento;
+        document.getElementById('edit_via_administracion').value = medicacion.via_administracion;
+        document.getElementById('edit_dosis').value = medicacion.dosis;
+        document.getElementById('edit_frecuencia_horas').value = medicacion.frecuencia_horas;
+        document.getElementById('edit_fecha_inicio').value = medicacion.fecha_inicio.split(' ')[0];
+        document.getElementById('edit_fecha_fin').value = medicacion.fecha_fin ? medicacion.fecha_fin.split(' ')[0] : '';
+        document.getElementById('edit_numero_dosis').value = medicacion.numero_dosis || '';
+        document.getElementById('edit_estado').value = medicacion.estado || 'Activa';
+        medicamentoSeleccionado = { 
+          nombre: medicacion.nombre_medicamento, 
+          id_medicamento: medicacion.id_medicamento 
+        };
+      }
+    
+      // Actualizar la lista de medicaciones en el modal
+      function actualizarListaMedicaciones() {
+        const list = document.getElementById('medicacionList');
+        // Combinar medicaciones no modificadas de medicacionInicial con medicacionesModificadas
+        const medicaciones = [
+          ...medicacionInicial.filter(m => !medicacionesModificadas.some(mod => mod.id_medicacion == m.id_medicacion)),
+          ...medicacionesModificadas
+        ];
+        list.innerHTML = medicaciones.length > 0
+          ? medicaciones.map(med => `
+              <div class="medicacion-item" data-id="${med.id_medicacion}" onclick="editarMedicacion('${med.id_medicacion}')">
+                <span>Medicamento: ${med.nombre_medicamento} | Pauta: ${med.dosis}  - Cada ${med.frecuencia_horas} horas - ${med.estado}</span>
+              </div>
+            `).join('')
+          : '<p>No hay medicación recetada.</p>';
+      }
+    
+      // Manejar formulario de añadir
+      document.getElementById('formAgregarMedicacion').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+    
+        // Validar número de dosis si no hay fecha_fin
+        if (!data.fecha_fin && !data.numero_dosis) {
+          alert('Debe proporcionar el número de dosis si no hay fecha de fin.');
+          return;
+        }
+    
+        
+    
+        const medicacion = {
+          id_medicacion: medicacionEditandoId || tempIdCounter--, // ID temporal para nuevas medicaciones
+          nombre_medicamento: data.nombre_medicamento,
+          via_administracion: data.via_administracion,
+          id_medicamento: medicamentoSeleccionado.id_medicamento,
+          lote_medicamento:medicamentoSeleccionado.lote,
+          dosis: data.dosis,
+          frecuencia_horas: data.frecuencia_horas,
+          fecha_inicio: data.fecha_inicio,
+          fecha_fin: data.fecha_fin || null,
+          numero_dosis: data.numero_dosis ? data.numero_dosis : null,
+          paciente_id: '<%= info.infoCabecera.documento_identificacion_paciente || " " %>',
+          medico_id: '<%= info.id || "" %>',
+          ingreso_id: '<%= info.ingreso_id || "" %>',
+          estado:"Activa"
+        };
+        medicacionesModificadas.push(medicacion);
+
+    
+        // Actualizar o añadir medicación
+        if (medicacionEditandoId) {
+          const index = medicacionesModificadas.findIndex(m => m.id_medicacion == medicacionEditandoId);
+          if (index !== -1) {
+            medicacionesModificadas[index] = medicacion;
+          } else {
+            medicacionesModificadas.push(medicacion);
+          }
+        } else {
+        }
+    
+        // Actualizar la lista en el modal
+        actualizarListaMedicaciones();
+    
+        // Ocultar formulario y mostrar botón
+        document.getElementById('formAgregarMedicacion').classList.add('hidden');
+        document.getElementById('btnRecetarNuevo').classList.remove('hidden');
+        event.target.reset();
+        medicamentoSeleccionado = null;
+      });
+    
+      // Manejar formulario de editar
+      document.getElementById('formEditarMedicacion').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+    
+        // Validar número de dosis si no hay fecha_fin
+        if (!data.fecha_fin && !data.numero_dosis) {
+          alert('Debe proporcionar el número de dosis si no hay fecha de fin.');
+          return;
+        }
+    
+        const medicacion = {
+          id_medicacion: medicacionEditandoId,
+          nombre_medicamento: document.getElementById('edit_nombre_medicamento').textContent,
+          via_administracion: data.via_administracion,
+          id_medicamento: medicamentoSeleccionado.id_medicamento,
+          dosis: data.dosis,
+          frecuencia_horas: parseFloat(data.frecuencia_horas),
+          fecha_inicio: data.fecha_inicio,
+          fecha_fin: data.fecha_fin || null,
+          numero_dosis: data.numero_dosis ? parseInt(data.numero_dosis) : null,
+          paciente_id: '<%= info.infoCabecera.documento_identificacion_paciente || "" %>',
+          medico_id: '<%= info.id || "" %>',
+          ingreso_id: '<%= info.ingreso_id || "" %>',
+          estado: data.estado
+        };
+    
+        const index = medicacionesModificadas.findIndex(m => m.id_medicacion == medicacionEditandoId);
+        if (index !== -1) {
+          medicacionesModificadas[index] = medicacion;
+        } else {
+          medicacionesModificadas.push(medicacion);
+        }
+    
+        // Actualizar la lista en el modal
+        actualizarListaMedicaciones();
+    
+        // Volver al estado inicial
+        cancelarFormulario();
+      });
+    
+      // Guardar cambios en el servidor
+      async function guardarCambios() {
+        const pacienteId = '<%= info.infoCabecera.documento_identificacion_paciente || "" %>';
+        const ingresoId = '<%= info.ingreso_id || "" %>';
+        if (!pacienteId || !ingresoId) {
+          alert('Error: ID del paciente o ingreso no definido');
+          return;
+        }
+    
+        try {
+          for (const medicacion of medicacionesModificadas) {
+            const response = await fetch(
+              !medicacion.id_medicacion || medicacion.id_medicacion < 0 ? '/paciente/agregarMedicacion' : `/paciente/actualizarMedicacion`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(medicacion)
+              }
+            );
+            if (!response.ok) {
+              throw new Error('Error al guardar medicación');
+            }
+          }
+          alert('Cambios guardados correctamente');
+          medicacionesModificadas = [];
+          document.getElementById('medicacionModal').querySelector('.btn-close').click();
+          window.location.reload();
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error al guardar los cambios');
+        }
+      }
+    </script>
+   
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const usuarioId = localStorage.getItem("usuarioId");
+        const nombreDelUsuario =
+          document.getElementById("nombreDelUsuario").innerText;
+        const socket = io({ query: { usuarioId } });
+
+        //WebRTC
+        let MiConnexionPeer;
+        let localStream;
+        let ofertaRecibida;
+        let candidatosICERecibidos = [];
+
+        /*Modal LLamada en Curso*/
+        const modalLLamadaEnCurso = new bootstrap.Modal(
+          document.getElementById("modalLLamadaEnCurso")
+        );
+        const personaConLaQueSeHabla = document.getElementById(
+          "persona_con_la_que_se_habla"
+        );
+        const btnFinalizarLLamadaEnCurso = document.getElementById(
+          "btnFinalizarLLamadaEnCurso"
+        );
+
+        /* Modal Llamada Entrante */
+
+        const modalLlamandaEntrante = new bootstrap.Modal(
+          document.getElementById("modalLlamandaEntrante")
+        );
+        const personaQueLlama = document.getElementById("Persona_que_llama");
+
+        const btnRechazarLlamada =
+          document.getElementById("btnRechazarLlamada");
+        const btnAceptarLlamada = document.getElementById("btnAceptarLlamada");
+        console.log(btnAceptarLlamada);
+
+        /********************/
+
+        /*Modal Llamando*/
+
+        const botonLlamada = document.querySelector(".call-btn");
+        //const modalLlamando = document.getElementById("modalLlamando");
+        const modalLlamando = new bootstrap.Modal(
+          document.getElementById("modalLlamando")
+        );
+
+        const personaALaQueSeLlama = document.getElementById(
+          "persona_a_la_que_se_llama"
+        );
+
+        const btnFinalizarLlamando = document.getElementById(
+          "btnFinalizarLlamando"
+        );
+
+        let guardarNombreUser = "";
+        let receptorId = "";
+
+        /****************/
+
+        const sidebarChat = document.getElementById("sidebarChat");
+        const chatContainer = document.querySelector(".chat"); // Contenedor del chat
+        const chatAboutElement = document.querySelector(".chat-about"); // Info del usuario en el chat
+        const chatBox = document.getElementById("chat-box"); // Historial de mensajes
+        const chatHeaderImg = document.querySelector(".chat-header img"); // Imagen en el chat
+        const btnVolverLista = document.getElementById("btnVolverLista"); // Botón para volver al listado de usuarios
+        const enviarBtn = document.getElementById("enviarBtn"); // Historial de mensajes
+        const mensajeInput = document.getElementById("mensajeInput"); // Historial de mensajes
+
+        const usuarioReceptorMensaje =
+          chatAboutElement.getAttribute("data-user-id");
+
+        // Agregar evento a cada usuario en la lista
+        document.querySelectorAll(".usuario-chat").forEach((usuario) => {
+          usuario.addEventListener("click", async () => {
+            const receptorId = usuario.getAttribute("data-user-id"); // ID del usuario seleccionado
+            const nombreUsuario = usuario.querySelector(".name").textContent; // Nombre del usuario
+            guardarNombreUser = nombreUsuario;
+            const fotoPerfil = usuario.querySelector("img").src; // Foto de perfil
+
+            // Actualizar la información del usuario en el chat
+
+            chatAboutElement.setAttribute("data-user-id", receptorId);
+            chatAboutElement.querySelector("h6").textContent = nombreUsuario;
+            chatHeaderImg.src = fotoPerfil; // Actualizar imagen en el chat
+
+            //Boton de llamada
+            botonLlamada.setAttribute("data-user-id", receptorId);
+
+            // Mostrar el chat y ocultar la lista
+            document.getElementById("plist").style.display = "none";
+            chatContainer.style.display = "block";
+
+            // Cargar mensajes del usuario seleccionado
+            await cargarMensajes(receptorId);
+          });
+        });
+
+        enviarBtn.addEventListener("click", () => {
+          const mensaje = mensajeInput.value.trim();
+          const chatAboutElement = document.querySelector(".chat-about"); // Info del usuario en el chat
+          const usuarioReceptorMensaje =
+            chatAboutElement.getAttribute("data-user-id");
+          if (mensaje !== "") {
+            socket.emit("mensaje", {
+              contenido: mensaje,
+              usuarioReceptorMensaje: usuarioReceptorMensaje,
+            });
+            agregarMensaje(mensaje, true, new Date()); // Mostrar el mensaje en el chat
+            mensajeInput.value = ""; // Limpiar el input después de enviar
+
+            // Buscar el usuario en la lista
+            const chatList = document.querySelector(".chat-list");
+            const usuarioChat = document.querySelector(
+              `.usuario-chat[data-user-id='${usuarioReceptorMensaje}']`
+            );
+
+            if (usuarioChat) {
+              // Actualizar el último mensaje y la hora
+              usuarioChat.querySelector(".last-message").textContent = mensaje;
+              usuarioChat.querySelector(".message-time").textContent =
+                formatearFecha(new Date());
+
+              // Mover el usuario al inicio de la lista
+              chatList.prepend(usuarioChat);
+            }
+          }
+        });
+
+        btnVolverLista.addEventListener("click", () => {
+          chatContainer.style.display = "none";
+          document.getElementById("plist").style.display = "block";
+        });
+
+        botonLlamada.addEventListener("click", async () => {
+          receptorId = botonLlamada.getAttribute("data-user-id"); // Obtener el ID del usuario
+
+          if (receptorId) {
+            personaALaQueSeLlama.setAttribute(
+              "data-Persona-a-la-que-se-llama-id",
+              receptorId
+            );
+            /*WebRTC configuracion*/
+            const iceServers = [
+              { urls: "stun:stun.l.google.com:19302" }, // Servidor STUN de Google
+            ];
+            MiConnexionPeer = new RTCPeerConnection({ iceServers });
+            if (!localStream) {
+              await setupLocalStream();
+            }
+            localStream
+              .getTracks()
+              .forEach((track) => MiConnexionPeer.addTrack(track, localStream));
+            console.log("despues de local stream ");
+
+            //Crear la oferta
+
+            MiConnexionPeer.onicecandidate = (e) => {
+              if (e.candidate) {
+                personaALaQueSeLlama.textContent = guardarNombreUser;
+                modalLlamando.show();
+                socket.emit("enviarCandidatoICE", {
+                  receptorId: receptorId,
+                  candidatoICE: e.candidate,
+                  emisorId: usuarioId, // Tu ID de usuario
+                });
+              }
+            };
+
+            const oferta = await MiConnexionPeer.createOffer();
+            console.log("Oferta SDP del emisor:", oferta.sdp); // Log del SDP
+            await MiConnexionPeer.setLocalDescription(oferta);
+            console.log(
+              "Pistas enviadas por el emisor:",
+              MiConnexionPeer.getSenders()
+            );
+
+            modalLlamando.show();
+            socket.emit("llamarUsuario", {
+              receptorId: receptorId,
+              oferta: oferta,
+              emisorId: usuarioId, // Tu ID de usuario
+              emisorNombre: nombreDelUsuario,
+            });
+
+            MiConnexionPeer.ontrack = (event) => {
+              console.log("Recibiendo audio remoto...");
+              const remoteStream = event.streams[0];
+              const audioElement = document.createElement("audio");
+              audioElement.srcObject = remoteStream;
+              audioElement.autoplay = true;
+              audioElement.muted = false;
+              document.body.appendChild(audioElement);
+              console.log("Reproduciendo audio remoto por altavoc");
+            };
+          } else {
+            console.log("No hay usuario seleccionado para llamar.");
+          }
+          MiConnexionPeer.oniceconnectionstatechange = () => {
+            console.log("Estado ICE:", MiConnexionPeer.iceConnectionState);
+          };
+        });
+
+        btnAceptarLlamada.addEventListener("click", async () => {
+          const personaQueLlamaId = personaQueLlama.getAttribute(
+            "data-Persona-que-llama-id"
+          );
+          personaConLaQueSeHabla.setAttribute(
+            "data-Persona-Con-La-Que-Se-Habla-Id",
+            personaQueLlamaId
+          );
+
+          /*Configuracion WebRTC*/
+          const iceServers = [
+            { urls: "stun:stun.l.google.com:19302" }, // Servidor STUN de Google
+          ];
+          MiConnexionPeer = new RTCPeerConnection({ iceServers });
+
+          console.log("Anres de On trak ");
+          MiConnexionPeer.ontrack = (event) => {
+            console.log("Recibiendo audio remoto...");
+            const remoteStream = event.streams[0];
+            const audioElement = document.createElement("audio");
+            audioElement.srcObject = remoteStream;
+            audioElement.autoplay = true;
+            audioElement.muted = false;
+            document.body.appendChild(audioElement);
+            console.log("Reproduciendo audio remoto por altavo");
+          };
+
+          if (!localStream) await setupLocalStream();
+          console.log("Pistas locales del emisor:", localStream.getTracks());
+          localStream.getTracks().forEach((track) => {
+            console.log("Añadiendo pista al emisor:", track);
+            MiConnexionPeer.addTrack(track, localStream);
+          });
+          console.log("Oferta recibida en receptor:", ofertaRecibida.sdp); // Log de la oferta recibida
+          await MiConnexionPeer.setRemoteDescription(
+            new RTCSessionDescription(ofertaRecibida)
+          );
+          console.log(
+            "Pistas recibidas por el receptor:",
+            MiConnexionPeer.getReceivers()
+          );
+
+          for (const candidato of candidatosICERecibidos) {
+            try {
+              await MiConnexionPeer.addIceCandidate(
+                new RTCIceCandidate(candidato)
+              );
+            } catch (error) {
+              console.error(
+                "Error al añadir candidato ICE:",
+                error,
+                "Candidato:",
+                candidato
+              );
+            }
+          }
+
+          MiConnexionPeer.onicecandidate = (e) => {
+            if (e.candidate) {
+              socket.emit("enviarCandidatoICE", {
+                receptorId: personaQueLlamaId,
+                candidatoICE: e.candidate,
+                emisorId: usuarioId,
+              });
+            }
+          };
+          const respuestaLlamada = await MiConnexionPeer.createAnswer({
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true,
+          });
+          console.log("Respuesta SDP del receptor:", respuestaLlamada.sdp); // Log de la respuesta
+          await MiConnexionPeer.setLocalDescription(respuestaLlamada);
+
+          socket.emit("aceptarLlamada", {
+            receptorId: personaQueLlamaId,
+            respuestaLlamada: respuestaLlamada,
+            emisorId: usuarioId, // Tu ID de usuario
+            receptorDeLaLLamadaNombre: nombreDelUsuario,
+          });
+
+          MiConnexionPeer.oniceconnectionstatechange = () => {
+            console.log("Estado ICE:", MiConnexionPeer.iceConnectionState);
+          };
+          modalLlamandaEntrante.hide();
+
+          modalLLamadaEnCurso.show();
+        });
+
+        btnRechazarLlamada.addEventListener("click", () => {
+          candidatosICERecibidos = [];
+
+          const personaQueLlamaId = personaQueLlama.getAttribute(
+            "data-Persona-que-llama-id"
+          );
+          socket.emit("rechazarLlamada", {
+            receptorId: personaQueLlamaId,
+            emisorId: usuarioId,
+          });
+
+          modalLlamandaEntrante.hide();
+        });
+        btnFinalizarLLamadaEnCurso.addEventListener("click", () => {
+          console.log("Llamada btnFinalizarLLamadaEnCurso");
+          cerrarConexionPeer();
+          const receptorId = personaConLaQueSeHabla.getAttribute(
+            "data-Persona-Con-La-Que-Se-Habla-Id"
+          );
+          socket.emit("finalizarLlamadaEnCurso", {
+            receptorId: receptorId,
+            emisorId: usuarioId,
+          });
+          modalLLamadaEnCurso.hide();
+        });
+        btnFinalizarLlamando.addEventListener("click", () => {
+          cerrarConexionPeer();
+          socket.emit("finalizarLlamada", {
+            receptorId: personaALaQueSeLlama.getAttribute(
+              "data-Persona-a-la-que-se-llama-id"
+            ),
+            emisorId: usuarioId,
+          });
+          modalLlamando.hide();
+        });
+
+        document
+          .getElementById("sidebarChat")
+          .addEventListener("shown.bs.offcanvas", function () {
+            document.getElementById("chatIcon").style.display = "block";
+            document.getElementById("chatIconNew").style.display = "none";
+          });
+
+        async function cargarMensajes(usuarioReceptorId) {
+          const usuarioEmisorId = localStorage.getItem("usuarioId");
+
+          try {
+            const response = await fetch(
+              `/cargarMensajesChatIndividual?usuarioEmisorId=${usuarioEmisorId}&usuarioReceptorId=${usuarioReceptorId}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const mensajes = await response.json();
+            console.log(mensajes);
+
+            chatBox.innerHTML = ""; // Limpiar chat anterior
+
+            mensajes.forEach((mensaje) => {
+              agregarMensaje(
+                mensaje.contenido,
+                mensaje.esPropio,
+                mensaje.fecha
+              );
+            });
+          } catch (error) {
+            console.error("Error al cargar mensajes:", error);
+          }
+        }
+
+        function agregarMensaje(mensaje, esPropio, fecha) {
+          const li = document.createElement("li");
+          li.classList.add("clearfix");
+
+          if (esPropio) {
+            li.innerHTML = `
+                        <div class="message-time" style="color: #808080; font-size: 10px">
+                          <label class="message-time" style="font-size: 18px;">${formatearFecha(
+                            fecha
+                          )}</label>
+                        </div>
+                        <div class="message other-message float-right">${mensaje}</div>
+                      `;
+          } else {
+            li.innerHTML = `
+                        <div class="message-data">
+                          <span class="message-data-time">${formatearFecha(
+                            fecha
+                          )}</span>
+                        </div>
+                        <div class="message my-message">${mensaje}</div>
+                  `;
+          }
+
+          chatBox.appendChild(li);
+          chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll al último mensaje
+        }
+
+        function formatearFecha(fecha) {
+          const fechaObj = new Date(fecha);
+          const dia = String(fechaObj.getDate()).padStart(2, "0");
+          const mes = String(fechaObj.getMonth() + 1).padStart(2, "0"); // Los meses empiezan desde 0
+          const año = fechaObj.getFullYear();
+          const horas = String(fechaObj.getHours()).padStart(2, "0");
+          const minutos = String(fechaObj.getMinutes()).padStart(2, "0");
+
+          return `${dia}-${mes}-${año} ${horas}:${minutos}`;
+        }
+
+        function cerrarConexionPeer() {
+          if (MiConnexionPeer) {
+            MiConnexionPeer.close();
+            MiConnexionPeer = null;
+            console.log("MiConnexionPeer cerrado");
+          }
+          if (localStream) {
+            localStream.getTracks().forEach((track) => {
+              track.stop();
+              console.log("track.stop() cerrado");
+            });
+            localStream = null;
+          }
+          const elementosAudio = document.querySelectorAll("audio");
+          elementosAudio.forEach((audio) => {
+            audio.remove();
+            console.log("audio.remove() cerrado");
+          });
+
+          oferta = null;
+          console.log("oferta null");
+
+          candidatosICERecibidos = [];
+          console.log("candidatosICERecibidos null");
+        }
+
+        async function setupLocalStream() {
+          try {
+            localStream = await navigator.mediaDevices.getUserMedia({
+              audio: true,
+            });
+
+            console.log("Pistas locales creadas:", localStream.getTracks());
+            localStream.getTracks().forEach((track) => {
+              console.log(
+                `Pista ${track.kind} - ID: ${track.id}, Estado: ${track.readyState}, Muted: ${track.muted}`
+              );
+              // Detectar si el micrófono está capturando audio
+              track.onmute = () => console.log(`Pista ${track.kind} mutada`);
+              track.onunmute = () =>
+                console.log(`Pista ${track.kind} desmutada`);
+            });
+          } catch (error) {
+            console.error("Error al obtener el stream local:", error);
+          }
+        }
+
+        // Escuchar mensajes entrantes del servidor
+        socket.on("mensaje", (data) => {
+          const chatAboutElement = document.querySelector(".chat-about");
+          const usuarioChatActivo =
+            chatAboutElement.getAttribute("data-user-id");
+          console.log("llega el mesnjae" + data.contenido);
+          console.log("usuario activo" + usuarioChatActivo);
+          console.log(data.idEmisor);
+          if (usuarioChatActivo === data.idEmisor) {
+            console.log("llega el mesnjae" + data.contenido);
+
+            agregarMensaje(data.contenido, false, new Date()); // Mostrar mensaje en el chat activo
+          } else {
+            console.log(
+              "Mensaje recibido de otro usuario, no se muestra en la conversación activa."
+            );
+          }
+
+          // Buscar el usuario en la lista
+          console.log(data);
+          const chatList = document.querySelector(".chat-list");
+          const usuarioChat = document.querySelector(
+            `.usuario-chat[data-user-id='${data.idEmisor}']`
+          );
+
+          if (usuarioChat) {
+            // Actualizar el último mensaje y la hora
+            usuarioChat.querySelector(".last-message").textContent =
+              data.contenido;
+            usuarioChat.querySelector(".message-time").textContent =
+              formatearFecha(new Date());
+
+            // Mover el usuario al inicio de la lista
+            chatList.prepend(usuarioChat);
+          }
+
+          if (!sidebarChat.classList.contains("show")) {
+            console.log("El sidebar está cerrado, cambiando icono...");
+            document.getElementById("chatIcon").style.display = "none";
+            document.getElementById("chatIconNew").style.display = "block";
+          }
+        });
+
+        //Escuchar llamadas entrantes
+        socket.on("llamadaEntrante", ({ oferta, emisorId, emisorNombre }) => {
+          console.log("llamnada entrante");
+          ofertaRecibida = oferta;
+          personaQueLlama.textContent = emisorNombre;
+          candidatosICERecibidos = []; // Reiniciar candidatos
+          personaQueLlama.setAttribute("data-Persona-que-llama-id", emisorId); // Guardar el emisorId en un atributo
+          personaConLaQueSeHabla.textContent = emisorNombre;
+          modalLlamandaEntrante.show();
+        });
+        // Recibir candidatos ICE
+        socket.on("recibirCandidatoICE", ({ candidate, emisorId }) => {
+          candidatosICERecibidos.push(candidate); // Acumular candidatos
+        });
+
+        socket.on(
+          "llamadaAceptada",
+          async ({ respuestaLlamada, emisorId, emisorNombre }) => {
+            console.log("llamadaAceptada de:", emisorNombre);
+
+            personaConLaQueSeHabla.textContent = emisorNombre;
+            const receptorId = personaConLaQueSeHabla.setAttribute(
+              "data-Persona-Con-La-Que-Se-Habla-Id",
+              emisorId
+            );
+
+            await MiConnexionPeer.setRemoteDescription(
+              new RTCSessionDescription(respuestaLlamada)
+            );
+            modalLlamando.hide();
+            modalLLamadaEnCurso.show();
+          }
+        );
+        socket.on("llamadaRechazada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLlamando.hide();
+        });
+        socket.on("llamadaFinalizada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLlamandaEntrante.hide();
+        });
+        socket.on("llamadaEnCursoFinalizada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLLamadaEnCurso.hide();
+        });
+
+        // Evento para rechazar la llamada
+
+        // Detectar desconexión
+        socket.on("disconnect", () => {
+          console.log("Desconectado del servidor de WebSockets");
+        });
+      });
+    </script>
+
+    <script>
+      // Variables para el cronómetro
+      let timerInterval;
+      let seconds = 0;
+
+      // Función para actualizar el cronómetro
+      function updateTimer() {
+        seconds++;
+        let mins = Math.floor(seconds / 60);
+        let secs = seconds % 60;
+        document.getElementById("callTimer").textContent = `${mins
+          .toString()
+          .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      // Evento cuando el modal se muestra
+      document
+        .getElementById("modalLLamadaEnCurso")
+        .addEventListener("shown.bs.modal", function () {
+          // Reiniciamos el contador
+          seconds = 0;
+          document.getElementById("callTimer").textContent = "00:00";
+          // Iniciamos el cronómetro
+          timerInterval = setInterval(updateTimer, 1000);
+        });
+
+      // Evento cuando el modal se oculta
+      document
+        .getElementById("modalLLamadaEnCurso")
+        .addEventListener("hidden.bs.modal", function () {
+          // Detenemos el cronómetro
+          clearInterval(timerInterval);
+        });
+
+      // Para Bootstrap 5, asegúrate de tener esta línea si usas el botón para cerrar
+      document
+        .getElementById("btnFinalizarLLamadaEnCurso")
+        .addEventListener("click", function () {
+          bootstrap.Modal.getInstance(
+            document.getElementById("modalLLamadaEnCurso")
+          ).hide();
+        });
+    </script>
+   <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nuevaIncidenciaBtn = document.getElementById('btnNuevaIncidencia');
+    const nuevaIncidenciaForm = document.getElementById('nuevaIncidenciaForm');
+    const cancelarIncidenciaBtn = document.getElementById('btnCancelarIncidencia');
+    const aceptarIncidenciaBtn = document.getElementById('btnAceptarIncidencia');
+    const incidenciaCuerpo = document.getElementById('incidenciaCuerpo');
+    const incidenciasList = document.getElementById('incidenciasList');
+
+    // Mostrar/ocultar formulario de nueva incidencia
+    nuevaIncidenciaBtn.addEventListener('click', () => {
+      nuevaIncidenciaForm.style.display = 'block';
+      nuevaIncidenciaBtn.style.display = 'none';
+    });
+
+    cancelarIncidenciaBtn.addEventListener('click', () => {
+      nuevaIncidenciaForm.style.display = 'none';
+      nuevaIncidenciaBtn.style.display = 'block';
+      incidenciaCuerpo.value = '';
+    });
+
+    // Añadir nueva incidencia
+    aceptarIncidenciaBtn.addEventListener('click', async () => {
+      const cuerpo = incidenciaCuerpo.value.trim();
+      const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+      const documento_identificacion_paciente ='<%= info.infoCabecera.documento_identificacion_paciente || 'unknown' %>';
+     
+      const ingresoId = '<%= info.infoCabecera.ingreso_id || 'unknown' %>';
+      if (!cuerpo) {
+        alert('Por favor, ingrese una descripción para la incidencia.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/enfermeria/reportarIncidencia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingreso_id: ingresoId, cuerpo, activa: 1 ,cama_id:cama_id, documento_identificacion_paciente: documento_identificacion_paciente})
+        });
+       if (response.ok) {
+          const nuevaIncidencia = await response.json();
+          console.log(nuevaIncidencia)
+          const listItem = document.createElement('li');
+          listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+          listItem.innerHTML = `
+            <div>
+              <strong>Descripcion: ${nuevaIncidencia.informacion_incidencia}</strong>
+              <br>
+              <small>Episodio: ${nuevaIncidencia.ingreso_id} | Estado: Activa | Fecha: ${nuevaIncidencia.fecha_emision}</small>
+            </div>
+            <button class="btn btn-danger btn-sm desactivar-incidencia" 
+                    data-id-incidencia="${nuevaIncidencia.id_incidencia}" 
+                    data-id-ingreso="${nuevaIncidencia.ingreso_id}">Desactivar</button>
+          `;
+          incidenciasList.appendChild(listItem);
+          incidenciaCuerpo.value = '';
+          nuevaIncidenciaForm.style.display = 'none';
+          nuevaIncidenciaBtn.style.display = 'block';
+
+          // Si la lista estaba vacía, remover el mensaje de "No hay incidencias"
+          const noIncidenciasItem = incidenciasList.querySelector('li');
+          if (noIncidenciasItem && noIncidenciasItem.textContent === 'No hay incidencias asociadas.') {
+            noIncidenciasItem.remove();
+          }
+
+          const panel = document.querySelector('.panel-paciente img');
+          panel.src = nuevaIncidencia.panelPaciente;
+        }
+         else {
+          alert('Error al añadir la incidencia.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+      }
+    });
+
+    // Desactivar incidencia
+    incidenciasList.addEventListener('click', async (e) => {
+      if (e.target.classList.contains('desactivar-incidencia')) {
+        const idIncidencia = e.target.dataset.idIncidencia;
+        const idIngreso = e.target.dataset.idIngreso;
+        const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+
+        console.log(`Desactivando incidencia - ID Ingreso: ${idIngreso}, ID Incidencia: ${idIncidencia}`);
+
+        try {
+          const response = await fetch(`/enfermeria/desactivarIncidencia`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idIncidencia,activa: 0,cama_id, ingreso_id:idIngreso })
+          });
+
+          if (response.ok) {
+            const nuevaIncidenciaDesactivada = await response.json();
+            console.log(nuevaIncidenciaDesactivada);
+
+            // Actualizar la lista de incidencias
+            const listItem = e.target.closest('.list-group-item');
+            listItem.querySelector('small').textContent = `Episodio: ${nuevaIncidenciaDesactivada.ingreso_id} | Estado: Inactiva | Fecha de desactivación: ${nuevaIncidenciaDesactivada.fecha_desactivacion}`;
+            e.target.remove();
+
+            // Actualizar el panel del paciente si panelPaciente no es null
+            if (nuevaIncidenciaDesactivada.panelPaciente) {
+              const panel = document.querySelector('.panel-paciente img');
+              if (panel) {
+                panel.src = nuevaIncidenciaDesactivada.panelPaciente;
+              } else {
+                console.warn('No se encontró el elemento .panel-paciente img en el DOM');
+              }
+            }
+          }else {
+            alert('Error al desactivar la incidencia.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error al conectar con el servidor.');
+        }
+      }
+    });
+    // Función para expandir/colapsar texto
+    
+  })
+  </script>
+   <script>
+    // Función para expandir/colapsar texto
+    function toggleText(id, fullText) {
+      const element = document.getElementById(id);
+      const button = element.nextElementSibling;
+      if (element.classList.contains('text-limited')) {
+        element.classList.remove('text-limited');
+        element.classList.add('text-full');
+        element.innerText = fullText;
+        button.innerText = 'Ver menos';
+      } else {
+        element.classList.remove('text-full');
+        element.classList.add('text-limited');
+        element.innerText = fullText;
+        button.innerText = 'Ver más';
+      }
+    }
+
+    // Función para inicializar el estado de los campos de alergias y dieta
+    function initializeModalInputs() {
+      const tipoAlergia = document.querySelector('input[name="tipoAlergia"]:checked');
+      const alergiaInput = document.getElementById('modalAlergia');
+      if (tipoAlergia) {
+        alergiaInput.disabled = tipoAlergia.value === 'ninguna';
+        if (tipoAlergia.value === 'ninguna') alergiaInput.value = '';
+      }
+
+      const tipoDieta = document.querySelector('input[name="tipoDieta"]:checked');
+      const dietaInput = document.getElementById('modalDieta');
+      if (tipoDieta) {
+        dietaInput.disabled = tipoDieta.value === 'ninguna';
+        if (tipoDieta.value === 'ninguna') dietaInput.value = '';
+      }
+    }
+
+    // Habilitar/deshabilitar campos de alergias y dieta al cambiar selección
+    document.querySelectorAll('input[name="tipoAlergia"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const alergiaInput = document.getElementById('modalAlergia');
+        alergiaInput.disabled = this.value === 'ninguna';
+        if (this.value === 'ninguna') alergiaInput.value = '';
+      });
+    });
+
+    document.querySelectorAll('input[name="tipoDieta"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const dietaInput = document.getElementById('modalDieta');
+        dietaInput.disabled = this.value === 'ninguna';
+        if (this.value === 'ninguna') dietaInput.value = '';
+      });
+    });
+
+    // Inicializar el estado al abrir el modal
+    document.getElementById('editModal').addEventListener('shown.bs.modal', function () {
+      initializeModalInputs();
+    });
+
+    // Aplicar cambios
+    async function applyChanges(ingresoId) {
+      console.log('Ingreso ID:', ingresoId); // Depuración
+
+      const diagnostico = document.getElementById('modalDiagnostico').value;
+      let tipoAlergiaInput = document.querySelector('input[name="tipoAlergia"]:checked');
+      let tipoAlergia = tipoAlergiaInput ? tipoAlergiaInput.value : 'ninguna';
+      let alergia = document.getElementById('modalAlergia').value;
+      let tipoDietaInput = document.querySelector('input[name="tipoDieta"]:checked');
+      let tipoDieta = tipoDietaInput ? tipoDietaInput.value : 'ninguna';
+      let dieta = document.getElementById('modalDieta').value;
+      const aislamientoInput = document.querySelector('input[name="aislamiento"]:checked');
+      const aislamiento = aislamientoInput ? aislamientoInput.value === 'si' : false;
+      const grupoSanguineo = document.getElementById('modalGrupoSanguineo').value;
+      const cama_id = '<%= info.infoCabecera.cama_id || 'unknown' %>';
+      const medico_id = '<%= info.infoCabecera.medico_id || 'unknown' %>';
+      const documento_identificacion_paciente = '<%= info.infoCabecera.documento_identificacion_paciente || 'unknown' %>';
+      console.log("cama_id", cama_id)
+
+      // Ajustar valores según las condiciones
+      if (tipoDieta === "ninguna") {
+        tipoDieta = "non";
+        dieta = "";
+      }
+
+      if (tipoAlergia === "ninguna") {
+        tipoAlergia = "non";
+        alergia = "";
+      }
+
+      // Mostrar datos en consola
+     
+
+      try {
+        const response = await fetch('/enfermeria/actualizarInformacionCabecera', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ingreso_id: ingresoId,
+        diagnostico: diagnostico,
+        tipo_alergia: tipoAlergia,
+        alergia: alergia,
+        tipo_dieta: tipoDieta,
+        dieta: dieta,
+        aislamiento: aislamiento,
+        grupo_sanguineo: grupoSanguineo,
+        cama_id: cama_id,
+        medico_id: medico_id,
+        documento_identificacion_paciente: documento_identificacion_paciente})
+        });
+       if (response.ok) {
+          const datosActualizados = await response.json();
+          console.log(datosActualizados)
+          if(datosActualizados.panelPaciente){
+            const panel = document.querySelector('.panel-paciente img');
+            panel.src = datosActualizados.panelPaciente;
+
+          }
+
+
+
+          const diagnosticoElement = document.getElementById(`diagnostico-${ingresoId}`);
+          if (diagnosticoElement) {
+            diagnosticoElement.innerText = diagnostico;
+            diagnosticoElement.setAttribute('title', diagnostico);
+            if (diagnostico.length > 30) {
+              const toggleButton = diagnosticoElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => toggleText(`diagnostico-${ingresoId}`, diagnostico);
+                diagnosticoElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = diagnosticoElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID diagnostico-${ingresoId} no encontrado`);
+          }
+
+          const alergiasElement = document.getElementById(`alergias-${ingresoId}`);
+          if (alergiasElement) {
+            const alergiasText = `(${tipoAlergia === 'grave' ? 'Grave' : tipoAlergia === 'moderada' ? 'Moderada' : tipoAlergia === 'leve' ? 'Leve' : 'Ninguna'}) ${alergia || 'Ninguna'}`;
+            alergiasElement.innerText = alergiasText;
+            alergiasElement.setAttribute('title', alergiasText);
+            if (alergiasText.length > 30) {
+              const toggleButton = alergiasElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => toggleText(`alergias-${ingresoId}`, alergiasText);
+                alergiasElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = alergiasElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID alergias-${ingresoId} no encontrado`);
+          }
+
+          const dietaElement = document.getElementById(`dieta-${ingresoId}`);
+          if (dietaElement) {
+            const dietaText = `(${tipoDieta === 'normal' ? 'Normal' : tipoDieta === 'blanda' ? 'Blanda' : tipoDieta === 'liquidos' ? 'Líquida' : 'Ninguna'}) ${dieta || 'Ninguna'}`;
+            dietaElement.innerText = dietaText;
+            dietaElement.setAttribute('title', dietaText);
+            if (dietaText.length > 30) {
+              const toggleButton = dietaElement.nextElementSibling;
+              if (!toggleButton) {
+                const newButton = document.createElement('button');
+                newButton.className = 'toggle-button';
+                newButton.innerText = 'Ver más';
+                newButton.onclick = () => toggleText(`dieta-${ingresoId}`, dietaText);
+                dietaElement.parentNode.appendChild(newButton);
+              }
+            } else {
+              const toggleButton = dietaElement.nextElementSibling;
+              if (toggleButton) toggleButton.remove();
+            }
+          } else {
+            console.warn(`Elemento con ID dieta-${ingresoId} no encontrado`);
+          }
+
+          const aislamientoElement = document.getElementById(`aislamiento-${ingresoId}`);
+          if (aislamientoElement) {
+            aislamientoElement.innerText = aislamiento ? 'Sí' : 'No';
+            aislamientoElement.setAttribute('title', aislamiento ? 'Sí' : 'No');
+          } else {
+            console.warn(`Elemento con ID aislamiento-${ingresoId} no encontrado`);
+          }
+
+          const grupoSanguineoElement = document.getElementById(`grupoSanguineo-${ingresoId}`);
+          if (grupoSanguineoElement) {
+            grupoSanguineoElement.innerText = grupoSanguineo;
+            grupoSanguineoElement.setAttribute('title', grupoSanguineo);
+          } else {
+            console.warn(`Elemento con ID grupoSanguineo-${ingresoId} no encontrado`);
+          }
+
+          // Cerrar el modal
+          const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+          modal.hide();
+          
+        }
+         else {
+          alert('Error al aplicar cambios.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+      }
+
+      // Actualizar la cabecera con validación
+      
+    }
+  </script>
+  
+   
+  </body>
+</html>

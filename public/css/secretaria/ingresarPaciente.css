@@ -1,0 +1,259 @@
+/* Asegura que el cuerpo no genere desplazamiento no deseado */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el contenedor principal */
+  .container-fluid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: none;
+  }
+  
+  /* Ajusta la barra de navegación superior */
+  .navbar {
+    flex-shrink: 0;
+  }
+  
+  /* Ajusta la fila principal */
+  .row {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el sidebar */
+  .sidebar {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el main */
+  main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  
+  /* Main container for the ingreso section */
+  .ingreso-section {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Contenedor desplazable */
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    max-height: calc(100vh - 120px);
+  }
+  
+  /* Espaciador inferior */
+  .bottom-spacer {
+    height: 150px;
+    width: 100%;
+  }
+  
+  /* Estilo para el título */
+  .ingreso-section h2 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2dd4bf;
+    padding-bottom: 8px;
+  }
+  
+  /* Estilo para la tarjeta del formulario */
+  .ingreso-card {
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    min-width: fit-content;
+  }
+  
+  /* Estilos para el formulario */
+  .form-control, .form-select {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    border-color: #e5e7eb;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+  }
+  
+  .form-label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+  }
+  
+  /* Estilo para campos con texto largo */
+  .ubicacion {
+    white-space: normal;
+    word-break: break-word;
+  }
+  
+  /* Estilo para los botones */
+  .btn-sm {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estilo para el botón Autorrellenar */
+  #btnAutorrellenar {
+    background-color: #1e90ff;
+    color: white;
+  }
+  
+  #btnAutorrellenar:hover {
+    background-color: #4169e1;
+  }
+  
+  /* Estilo para el botón Registrar Paciente */
+  .btn-warning {
+    background-color: #ffc107;
+    color: #1f2937;
+  }
+  
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+  
+  /* Estilo para el botón Ingresar */
+  #ingresarPacienteBtn {
+    background-color: #6c27c5;
+    color: white;
+  }
+  
+  #ingresarPacienteBtn:hover {
+    background-color: #8700e0;
+  }
+  
+  /* Estilo para el botón Cerrar Mensaje */
+  #cerrarMensaje {
+    background-color: #1e90ff;
+    color: white;
+  }
+  
+  #cerrarMensaje:hover {
+    background-color: #4169e1;
+  }
+  
+  /* Estilo para el mensaje de no existente */
+  #mensajeNoExistente {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    padding: 15px;
+    background-color: #f8d7da;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+  }
+  
+  #mensajeNoExistente p {
+    margin: 0 0 10px 0;
+    color: #721c24;
+  }
+  
+  #mensajeNoExistente {
+    background-color: #fff3cd; /* Fondo amarillo claro */
+    border: 1px solid #ffeeba; /* Borde amarillo suave */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    margin-bottom: 20px; /* Espacio inferior */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Centra el texto dentro del div */
+  }
+
+  /* Estilo del texto de advertencia */
+  #mensajeNoExistente p {
+    color: #856404; /* Color marrón oscuro para advertencia */
+    font-size: 18px; /* Tamaño de fuente más grande */
+    font-weight: 600; /* Peso de fuente para hacerlo más notorio */
+    margin-bottom: 20px; /* Espacio debajo del texto */
+  }
+  .mensaje-error {
+    background-color: #ffcccc;
+    border: 2px solid #ff6666;
+  }
+
+  .mensaje-success {
+    background-color: #fff45e;
+    border: 2px solid #eeff00;
+  }
+
+  #mensaje button {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  #mensaje button:hover {
+    background-color: #0056b3;
+  }
+
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .ingreso-section {
+      padding: 10px;
+    }
+  
+    .scrollable-content {
+      max-height: calc(100vh - 100px);
+    }
+  
+    .bottom-spacer {
+      height: 100px;
+    }
+  
+    .ingreso-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .form-control, .form-select, .form-label {
+      font-size: 0.8rem;
+    }
+  
+    .btn-sm {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+  
+    #mensajeNoExistente, .mensaje {
+      font-size: 0.8rem;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    main {
+      width: 100%;
+      padding: 0 10px;
+    }
+  }

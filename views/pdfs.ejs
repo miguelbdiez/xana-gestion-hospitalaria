@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Documento PDF</title>
+  </head>
+  <body>
+    <h1>Documento</h1>
+
+    <%
+      /* Los manejadores pasan `pdfUrl` (ruta directa al fichero) o `pdfId`
+         (identificador del documento en la base de datos). Se acepta
+         cualquiera de los dos. */
+      const origen = typeof pdfUrl !== "undefined" && pdfUrl
+        ? pdfUrl
+        : (typeof pdfId !== "undefined" && pdfId ? "/verPDF?id=" + pdfId : null);
+    %>
+
+    <% if (origen) { %>
+      <iframe src="<%= origen %>" width="100%" height="600px"></iframe>
+    <% } else { %>
+      <p>No se ha indicado ningún documento que mostrar.</p>
+    <% } %>
+  </body>
+</html>

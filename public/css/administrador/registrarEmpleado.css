@@ -1,0 +1,198 @@
+/* Asegura que el cuerpo no genere desplazamiento no deseado */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el contenedor principal */
+  .container-fluid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: none; /* Previene el efecto muelle en el contenedor raíz */
+  }
+  
+  /* Ajusta la barra de navegación superior */
+  .navbar {
+    flex-shrink: 0;
+  }
+  
+  /* Ajusta la fila principal */
+  .row {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el sidebar */
+  .sidebar {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el main */
+  main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overscroll-behavior: none; /* Previene el efecto muelle */
+  }
+  
+  /* Main container for the registro-empleado section */
+  .registro-empleado-section {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Contenedor desplazable */
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto; /* Desplazamiento vertical */
+    overflow-x: auto; /* Desplazamiento horizontal */
+    -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en iOS */
+    overscroll-behavior: contain; /* Previene el efecto muelle en ambos ejes */
+    max-height: calc(100vh - 120px); /* Ajusta para navbar (~56px) y encabezado (~64px) */
+  }
+  
+  /* Espaciador inferior para evitar que el efecto muelle afecte el contenido */
+  .bottom-spacer {
+    height: 150px; /* Espacio adicional en la parte inferior */
+    width: 100%; /* Asegura que cubra todo el ancho */
+  }
+  
+  /* Estilo para el título principal */
+  .registro-empleado-section h1 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1f2937; /* Color consistente con los h2 de otras páginas */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2dd4bf; /* Línea de separación idéntica */
+    padding-bottom: 8px;
+  }
+  
+  /* Estilo para el contenedor del formulario */
+  .registro-empleado-card {
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease;
+    min-width: fit-content; /* Asegura que la tarjeta no se encoja más allá del contenido */
+    padding: 1.5rem;
+  }
+  
+  /* Efecto hover */
+  .registro-empleado-card:hover {
+    background-color: #e6fffa;
+  }
+  
+  /* Estilo para el contenedor interno */
+  .container.mt-4 {
+    margin-top: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%; /* Usa todo el ancho disponible */
+  }
+  
+  /* Estilo para los campos del formulario */
+  .form-control, .form-select {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+    white-space: normal; /* Permite que el texto se envuelva */
+    word-break: break-word; /* Rompe palabras largas de forma natural */
+  }
+  
+  /* Estilo para etiquetas */
+  .form-label {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  /* Estilo para botones */
+  .btn-primary {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background-color: #1e90ff; /* Color consistente con botones primarios */
+    border-color: #1e90ff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #4169e1; /* Color de hover consistente */
+    border-color: #4169e1;
+  }
+  
+  .btn-secondary {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Estilo para el contenedor de la fila */
+  .row.g-3 {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  
+  .col-md-6, .col-12 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .registro-empleado-section {
+      padding: 10px;
+    }
+  
+    .scrollable-content {
+      max-height: calc(100vh - 100px); /* Ajusta para pantallas pequeñas */
+    }
+  
+    .bottom-spacer {
+      height: 100px; /* Menos espacio en pantallas pequeñas */
+    }
+  
+    .registro-empleado-section h1 {
+      font-size: 1.5rem;
+    }
+  
+    .registro-empleado-card {
+      padding: 1rem;
+    }
+  
+    .form-control, .form-select {
+      font-size: 0.8rem;
+    }
+  
+    .form-label {
+      font-size: 0.8rem;
+    }
+  
+    .btn-primary, .btn-secondary {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    main {
+      width: 100%;
+      padding: 0 10px;
+    }
+  }

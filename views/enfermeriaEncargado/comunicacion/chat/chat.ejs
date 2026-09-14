@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Xana Chat</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.3/examples/dashboard/"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    />
+    <script src="/assets/js/color-modes.js"></script>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+
+    <link href="/public/css/comunicacion/chat.css" rel="stylesheet" />
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+    rel="stylesheet"
+  />
+  <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+
+
+    
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+
+    <header
+      class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+      data-bs-theme=""
+    >
+      <a
+        class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+        href="/home"
+        >XANA INDUSTRIES</a
+      >
+    </header>
+
+    <div class="container-fluid" >
+        <div class="row">
+          <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+            <div class="flex-shrink-0 p-3 scrollarea">
+              <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+                <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+              </a>
+              <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                  <div class="d-flex align-items-center">
+                    <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                  </div>
+                </li>
+                <li class="border-top my-3"></li>  
+                <li class="mb-1">
+                  <div class="d-flex align-items-center">
+                    <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                      <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                    </button>
+                  </div>
+                  <div class="collapse" id="cima-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                      <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                      <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                      <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                      <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                      <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                      <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                      <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                      <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="border-top my-3"></li>            
+                <li class="mb-1">
+                  <div class="d-flex align-items-center">
+                    <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                      <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                    </button>
+                  </div>
+                  <div class="collapse" id="comunicacion-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                      <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                      <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                      <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                    </ul>
+                  </div>
+                </li>    
+                <li class="border-top my-3"></li>   
+                <li class="mb-1">
+                  <div class="d-flex align-items-center">
+                    <a href="/enfermeria/horarios" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Horarios</a>
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#horarios-collapse" aria-expanded="false">
+                      <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                    </button>
+                  </div>
+                  <div class="collapse" id="horarios-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                      <li><a href="/enfermeriaEncargado/horarios/generarHorario" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generar Horario</a></li>
+                    </ul>
+                  </div>
+                </li>     
+                <li class="border-top my-3"></li> 
+                <li class="mb-1">
+                  <div class="d-flex align-items-center">
+                    <a href="/enfermeria/farmacia" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Farmacia</a>
+                  </div>
+                </li>
+                <li class="border-top my-3"></li> 
+              </ul>
+            </div>
+          </div>     
+               <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 id="nombreDelUsuario"><%= info.nombre %></h1>
+              <div class="d-flex align-items-center">
+                <a id="btnVolverLista" class="call-btn btn-img me-2" href="/comunicacionHome">
+                  <img src="/imagenes/volver.png" alt="Volver" style="width: 24px; height: 24px" />
+                </a>
+                <h2 class="m-0">Chat</h2>
+              </div>
+            </div>
+            <div class="chat-section">
+              <div class="container-fluid">
+                <div class="card chat-app shadow">
+                  <div id="plist" class="people-list">
+                    <div class="input-group p-3">
+                      <input type="text" class="form-control" id="searchInput" placeholder="Buscar..." />
+                    </div>
+                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                      <% info.listaPersonasChat.forEach(persona => { %>
+                      <li class="clearfix usuario-chat d-flex align-items-center" data-user-id="<%= persona.id %>">
+                        <img src="<%= persona.foto_perfil ? persona.foto_perfil : '/imagenes/user.png' %>" alt="<%= persona.nombre || 'Usuario' %>" class="avatar">
+                        <div class="about flex-grow-1">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="name"><%= persona.nombre %></div>
+                            <div class="d-flex align-items-center">
+                              <div class="status mr-2">
+                                <i class="fa fa-circle <%= persona.estado ? 'online' : 'offline' %>"></i>
+                                <%= persona.estado ? 'online' : 'offline' %>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="last-message"><%= persona.ultimo_mensaje || '' %></div>
+                          <div class="message-time"><%= persona.fecha_ultimo_mensaje || '' %></div>
+                        </div>
+                      </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+                  <div class="chat">
+                    <div class="chat-header clearfix">
+                      <div class="row align-items-center">
+                        <div class="col-lg-6 d-flex align-items-center">
+                          <img src="<%= info.infoChat.foto_perfil ? info.infoChat.foto_perfil : '/imagenes/user.png' %>" alt="<%= info.infoChat.nombre || 'Usuario' %>" class="avatar">
+                          <div class="chat-about" data-user-id="<%= info.infoChat.id %>">
+                            <h6 class="m-b-0"><%= info.infoChat.nombre %></h6>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 text-end">
+                          <button class="call-btn btn-img" data-user-id="<%= info.infoChat.id %>">
+                            <img src="/imagenes/llamada.png" alt="Llamar" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chat-history" id="chat-box">
+                      <ul class="m-b-0">
+                        <% info.infoChat.mensajesPrimerChat.forEach(mensaje => { %>
+                        <li class="clearfix">
+                          <div class="message-data <%= mensaje.esPropio ? 'text-right' : '' %>">
+                            <span class="message-data-time">
+                              <%= new Date(mensaje.fecha).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>,
+                              <%= new Date(mensaje.fecha).toLocaleDateString() %>
+                            </span>
+                          </div>
+                          <div class="message <%= mensaje.esPropio ? 'my-message float-right' : 'other-message' %>">
+                            <%= mensaje.contenido %>
+                          </div>
+                        </li>
+                        <% }) %>
+                      </ul>
+                    </div>
+                    <div class="chat-message clearfix">
+                      <div class="input-group mb-0">
+                        <input id="mensajeInput" type="text" class="form-control" placeholder="Escribe un mensaje...">
+                        <button id="enviarBtn" class="btn btn-primary">Enviar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom-spacer"></div> <!-- Espacio adicional en la parte inferior -->
+
+          </main>
+
+
+        </div>
+      </div>
+
+    
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const usuarioId = localStorage.getItem("usuarioId");
+        const nombreDelUsuario =
+          document.getElementById("nombreDelUsuario").innerText;
+        const socket = io({ query: { usuarioId } });
+
+        //WebRTC
+        let MiConnexionPeer;
+        let localStream;
+        let ofertaRecibida;
+        let candidatosICERecibidos = [];
+
+        /*Modal LLamada en Curso*/
+        const modalLLamadaEnCurso = new bootstrap.Modal(
+          document.getElementById("modalLLamadaEnCurso")
+        );
+        const personaConLaQueSeHabla = document.getElementById(
+          "persona_con_la_que_se_habla"
+        );
+        const btnFinalizarLLamadaEnCurso = document.getElementById(
+          "btnFinalizarLLamadaEnCurso"
+        );
+
+        /* Modal Llamada Entrante */
+
+        const modalLlamandaEntrante = new bootstrap.Modal(
+          document.getElementById("modalLlamandaEntrante")
+        );
+        const personaQueLlama = document.getElementById("Persona_que_llama");
+
+        const btnRechazarLlamada =
+          document.getElementById("btnRechazarLlamada");
+        const btnAceptarLlamada = document.getElementById("btnAceptarLlamada");
+        console.log(btnAceptarLlamada);
+
+        /********************/
+        let guardarNombreUser = "";
+        let receptorId = ""
+        /****************/
+
+        btnAceptarLlamada.addEventListener("click", async () => {
+          const personaQueLlamaId = personaQueLlama.getAttribute(
+            "data-Persona-que-llama-id"
+          );
+          personaConLaQueSeHabla.setAttribute(
+            "data-Persona-Con-La-Que-Se-Habla-Id",
+            personaQueLlamaId
+          );
+
+          /*Configuracion WebRTC*/
+          const iceServers = [
+            { urls: "stun:stun.l.google.com:19302" }, // Servidor STUN de Google
+          ];
+          MiConnexionPeer = new RTCPeerConnection({ iceServers });
+
+          MiConnexionPeer.ontrack = (event) => {
+            const remoteStream = event.streams[0];
+            const audioElement = document.createElement("audio");
+            audioElement.srcObject = remoteStream;
+            audioElement.autoplay = true;
+            audioElement.muted = false;
+            document.body.appendChild(audioElement);
+          };
+
+          if (!localStream) await setupLocalStream();
+          console.log("Pistas locales del emisor:", localStream.getTracks());
+          localStream.getTracks().forEach((track) => {
+            console.log("Añadiendo pista al emisor:", track);
+            MiConnexionPeer.addTrack(track, localStream);
+          });
+          console.log("Oferta recibida en receptor:", ofertaRecibida.sdp); // Log de la oferta recibida
+          await MiConnexionPeer.setRemoteDescription(
+            new RTCSessionDescription(ofertaRecibida)
+          );
+          console.log(
+            "Pistas recibidas por el receptor:",
+            MiConnexionPeer.getReceivers()
+          );
+
+          for (const candidato of candidatosICERecibidos) {
+            try {
+              await MiConnexionPeer.addIceCandidate(
+                new RTCIceCandidate(candidato)
+              );
+            } catch (error) {
+              console.error(
+                "Error al añadir candidato ICE:",
+                error,
+                "Candidato:",
+                candidato
+              );
+            }
+          }
+
+          MiConnexionPeer.onicecandidate = (e) => {
+            if (e.candidate) {
+              socket.emit("enviarCandidatoICE", {
+                receptorId: personaQueLlamaId,
+                candidatoICE: e.candidate,
+                emisorId: usuarioId,
+              });
+            }
+          };
+          const respuestaLlamada = await MiConnexionPeer.createAnswer({
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true,
+          });
+          console.log("Respuesta SDP del receptor:", respuestaLlamada.sdp); // Log de la respuesta
+          await MiConnexionPeer.setLocalDescription(respuestaLlamada);
+
+          socket.emit("aceptarLlamada", {
+            receptorId: personaQueLlamaId,
+            respuestaLlamada: respuestaLlamada,
+            emisorId: usuarioId, // Tu ID de usuario
+            receptorDeLaLLamadaNombre: nombreDelUsuario,
+          });
+
+          MiConnexionPeer.oniceconnectionstatechange = () => {
+            console.log("Estado ICE:", MiConnexionPeer.iceConnectionState);
+          };
+          modalLlamandaEntrante.hide();
+
+          modalLLamadaEnCurso.show();
+        });
+        btnRechazarLlamada.addEventListener("click", () => {
+          candidatosICERecibidos = [];
+
+          const personaQueLlamaId = personaQueLlama.getAttribute(
+            "data-Persona-que-llama-id"
+          );
+          socket.emit("rechazarLlamada", {
+            receptorId: personaQueLlamaId,
+            emisorId: usuarioId,
+          });
+
+          modalLlamandaEntrante.hide();
+        });
+        btnFinalizarLLamadaEnCurso.addEventListener("click", () => {
+          console.log("Llamada btnFinalizarLLamadaEnCurso");
+          cerrarConexionPeer();
+          const receptorId = personaConLaQueSeHabla.getAttribute(
+            "data-Persona-Con-La-Que-Se-Habla-Id"
+          );
+          socket.emit("finalizarLlamadaEnCurso", {
+            receptorId: receptorId,
+            emisorId: usuarioId,
+          });
+          modalLLamadaEnCurso.hide();
+        });
+        
+
+       
+        function formatearFecha(fecha) {
+          const fechaObj = new Date(fecha);
+          const dia = String(fechaObj.getDate()).padStart(2, "0");
+          const mes = String(fechaObj.getMonth() + 1).padStart(2, "0"); // Los meses empiezan desde 0
+          const año = fechaObj.getFullYear();
+          const horas = String(fechaObj.getHours()).padStart(2, "0");
+          const minutos = String(fechaObj.getMinutes()).padStart(2, "0");
+
+          return `${dia}-${mes}-${año} ${horas}:${minutos}`;
+        }
+
+        function cerrarConexionPeer() {
+          if (MiConnexionPeer) {
+            MiConnexionPeer.close();
+            MiConnexionPeer = null;
+            console.log("MiConnexionPeer cerrado");
+          }
+          if (localStream) {
+            localStream.getTracks().forEach((track) => {
+              track.stop();
+              console.log("track.stop() cerrado");
+            });
+            localStream = null;
+          }
+          const elementosAudio = document.querySelectorAll("audio");
+          elementosAudio.forEach((audio) => {
+            audio.remove();
+            console.log("audio.remove() cerrado");
+          });
+
+          oferta = null;
+          console.log("oferta null");
+
+          candidatosICERecibidos = [];
+          console.log("candidatosICERecibidos null");
+        }
+
+        async function setupLocalStream() {
+          try {
+            localStream = await navigator.mediaDevices.getUserMedia({
+              audio: true,
+            });
+
+            console.log("Pistas locales creadas:", localStream.getTracks());
+            localStream.getTracks().forEach((track) => {
+              console.log(
+                `Pista ${track.kind} - ID: ${track.id}, Estado: ${track.readyState}, Muted: ${track.muted}`
+              );
+              // Detectar si el micrófono está capturando audio
+              track.onmute = () => console.log(`Pista ${track.kind} mutada`);
+              track.onunmute = () =>
+                console.log(`Pista ${track.kind} desmutada`);
+            });
+          } catch (error) {
+            console.error("Error al obtener el stream local:", error);
+          }
+        }
+
+        // Escuchar mensajes entrantes del servidor
+
+
+        //Escuchar llamadas entrantes
+        socket.on("llamadaEntrante", ({ oferta, emisorId, emisorNombre }) => {
+          console.log("llamnada entrante");
+          ofertaRecibida = oferta;
+          personaQueLlama.textContent = emisorNombre;
+          candidatosICERecibidos = []; // Reiniciar candidatos
+          personaQueLlama.setAttribute("data-Persona-que-llama-id", emisorId); // Guardar el emisorId en un atributo
+          personaConLaQueSeHabla.textContent = emisorNombre;
+          modalLlamandaEntrante.show();
+        });
+        // Recibir candidatos ICE
+        socket.on("recibirCandidatoICE", ({ candidate, emisorId }) => {
+          candidatosICERecibidos.push(candidate); // Acumular candidatos
+        });
+
+        socket.on(
+          "llamadaAceptada",
+          async ({ respuestaLlamada, emisorId, emisorNombre }) => {
+            console.log("llamadaAceptada de:", emisorNombre);
+
+            personaConLaQueSeHabla.textContent = emisorNombre;
+            const receptorId = personaConLaQueSeHabla.setAttribute(
+              "data-Persona-Con-La-Que-Se-Habla-Id",
+              emisorId
+            );
+
+            await MiConnexionPeer.setRemoteDescription(
+              new RTCSessionDescription(respuestaLlamada)
+            );
+            modalLlamando.hide();
+            modalLLamadaEnCurso.show();
+          }
+        );
+        socket.on("llamadaRechazada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLlamando.hide();
+        });
+        socket.on("llamadaFinalizada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLlamandaEntrante.hide();
+        });
+        socket.on("llamadaEnCursoFinalizada", () => {
+          cerrarConexionPeer();
+
+          personaConLaQueSeHabla.textContent = "";
+          modalLLamadaEnCurso.hide();
+        });
+
+        // Evento para rechazar la llamada
+
+
+
+
+
+        /*mensajes*/
+        const chatBox = document.getElementById("chat-box"); // Historial de mensajes
+        const chatAboutElement = document.querySelector(".chat-about"); // Info del usuario en el chat
+        const usuarioReceptorMensaje = chatAboutElement.getAttribute("data-user-id");
+        const chatHeaderImg = document.querySelector(".chat-header img"); // Imagen en el chat
+        const enviarBtn = document.getElementById("enviarBtn")
+        const mensajeInput = document.getElementById("mensajeInput")
+
+
+
+        document.querySelectorAll(".usuario-chat").forEach((usuario) => {
+          usuario.addEventListener("click", async () => {
+            const receptorId = usuario.getAttribute("data-user-id"); // ID del usuario seleccionado
+            const nombreUsuario = usuario.querySelector(".name").textContent; // Nombre del usuario
+            guardarNombreUser = nombreUsuario;
+            const fotoPerfil = usuario.querySelector("img").src; // Foto de perfil
+
+            // Actualizar la información del usuario en el chat
+
+            chatAboutElement.setAttribute("data-user-id", receptorId);
+            chatAboutElement.querySelector("h6").textContent = nombreUsuario;
+            chatHeaderImg.src = fotoPerfil; // Actualizar imagen en el chat
+
+           
+            // Cargar mensajes del usuario seleccionado
+            await cargarMensajes(receptorId);
+          });
+        });
+
+        enviarBtn.addEventListener("click", () => {
+          const mensaje = mensajeInput.value.trim();
+          const chatAboutElement = document.querySelector(".chat-about"); // Info del usuario en el chat
+          const usuarioReceptorMensaje =
+            chatAboutElement.getAttribute("data-user-id");
+          if (mensaje !== "") {
+            socket.emit("mensaje", {
+              contenido: mensaje,
+              usuarioReceptorMensaje: usuarioReceptorMensaje,
+            });
+            agregarMensaje(mensaje, true, new Date()); // Mostrar el mensaje en el chat
+            mensajeInput.value = ""; // Limpiar el input después de enviar
+
+            // Buscar el usuario en la lista
+            const chatList = document.querySelector(".chat-list");
+            const usuarioChat = document.querySelector(
+              `.usuario-chat[data-user-id='${usuarioReceptorMensaje}']`
+            );
+
+            if (usuarioChat) {
+              // Actualizar el último mensaje y la hora
+              usuarioChat.querySelector(".last-message").textContent = mensaje;
+              usuarioChat.querySelector(".message-time").textContent =
+                formatearFecha(new Date());
+
+              // Mover el usuario al inicio de la lista
+              chatList.prepend(usuarioChat);
+            }
+          }
+        });
+
+
+
+
+
+
+        socket.on("mensaje", (data) => {
+          const chatAboutElement = document.querySelector(".chat-about");
+          const usuarioChatActivo =
+            chatAboutElement.getAttribute("data-user-id");
+          console.log("llega el mesnjae" + data.contenido);
+          console.log("usuario activo" + usuarioChatActivo);
+          console.log(data.idEmisor);
+          if (usuarioChatActivo === data.idEmisor) {
+            console.log("llega el mesnjae" + data.contenido);
+
+            agregarMensaje(data.contenido, false, new Date()); // Mostrar mensaje en el chat activo
+          } else {
+            console.log(
+              "Mensaje recibido de otro usuario, no se muestra en la conversación activa."
+            );
+          }
+
+          // Buscar el usuario en la lista
+          console.log(data);
+          const chatList = document.querySelector(".chat-list");
+          const usuarioChat = document.querySelector(
+            `.usuario-chat[data-user-id='${data.idEmisor}']`
+          );
+
+          if (usuarioChat) {
+            // Actualizar el último mensaje y la hora
+            usuarioChat.querySelector(".last-message").textContent =
+              data.contenido;
+            usuarioChat.querySelector(".message-time").textContent =
+              formatearFecha(new Date());
+
+            // Mover el usuario al inicio de la lista
+            chatList.prepend(usuarioChat);
+          }
+
+         
+        });
+
+        
+
+
+
+
+        async function cargarMensajes(usuarioReceptorId) {
+          const usuarioEmisorId = localStorage.getItem("usuarioId");
+
+          try {
+            const response = await fetch(
+              `/cargarMensajesChatIndividual?usuarioEmisorId=${usuarioEmisorId}&usuarioReceptorId=${usuarioReceptorId}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const mensajes = await response.json();
+            console.log(mensajes);
+
+           chatBox.innerHTML = ""; // Limpiar chat anterior
+
+            mensajes.forEach((mensaje) => {
+              agregarMensaje(
+                mensaje.contenido,
+                mensaje.esPropio,
+                mensaje.fecha
+              );
+            });
+          } catch (error) {
+            console.error("Error al cargar mensajes:", error);
+          }
+        }
+
+        function agregarMensaje(mensaje, esPropio, fecha) {
+          const li = document.createElement("li");
+          li.classList.add("clearfix");
+
+          if (esPropio) {
+            li.innerHTML = `
+                        <div class="message-time" style="color: #808080; font-size: 10px">
+                          <label class="message-time" style="font-size: 18px;">${formatearFecha(
+                            fecha
+                          )}</label>
+                        </div>
+                        <div class="message other-message float-right">${mensaje}</div>
+                      `;
+          } else {
+            li.innerHTML = `
+                        <div class="message-data">
+                          <span class="message-data-time">${formatearFecha(
+                            fecha
+                          )}</span>
+                        </div>
+                        <div class="message my-message">${mensaje}</div>
+                  `;
+          }
+
+          chatBox.appendChild(li);
+          chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll al último mensaje
+        }
+
+        // Detectar desconexión
+        socket.on("disconnect", () => {
+          console.log("Desconectado del servidor de WebSockets");
+        });
+      });
+    </script>
+    <script>
+      // Variables para el cronómetro
+      let timerInterval;
+      let seconds = 0;
+
+      // Función para actualizar el cronómetro
+      function updateTimer() {
+        seconds++;
+        let mins = Math.floor(seconds / 60);
+        let secs = seconds % 60;
+        document.getElementById("callTimer").textContent = `${mins
+          .toString()
+          .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      // Evento cuando el modal se muestra
+      document
+        .getElementById("modalLLamadaEnCurso")
+        .addEventListener("shown.bs.modal", function () {
+          // Reiniciamos el contador
+          seconds = 0;
+          document.getElementById("callTimer").textContent = "00:00";
+          // Iniciamos el cronómetro
+          timerInterval = setInterval(updateTimer, 1000);
+        });
+
+      // Evento cuando el modal se oculta
+      document
+        .getElementById("modalLLamadaEnCurso")
+        .addEventListener("hidden.bs.modal", function () {
+          // Detenemos el cronómetro
+          clearInterval(timerInterval);
+        });
+
+      // Para Bootstrap 5, asegúrate de tener esta línea si usas el botón para cerrar
+      document
+        .getElementById("btnFinalizarLLamadaEnCurso")
+        .addEventListener("click", function () {
+          bootstrap.Modal.getInstance(
+            document.getElementById("modalLLamadaEnCurso")
+          ).hide();
+        });
+    </script>
+  </body>
+</html>

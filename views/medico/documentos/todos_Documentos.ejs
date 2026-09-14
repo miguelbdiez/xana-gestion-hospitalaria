@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="../assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    title>Documentos | XANA</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://getbootstrap.com/docs/5.3/examples/dashboard/"  rel="canonical" />
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" rel="stylesheet"/>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="/public/css/secretaria/documentos/bandejaEntrada_Documentos.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+
+   
+
+    
+    <style>
+      .call-btn {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+      .btn-img {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px; /* Tamaño más pequeño */
+        height: 35px;
+      }
+
+      .btn-img img {
+        width: 100%; /* Ajusta la imagen al botón */
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, 0.1);
+        border: solid rgba(0, 0, 0, 0.15);
+        border-width: 1px 0;
+        box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
+          inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -0.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+      .chat .chat-header {
+        padding: 15px 20px;
+        border-bottom: 2px solid #f4f7f6;
+      }
+
+      .chat .chat-header img {
+        float: left;
+        border-radius: 40px;
+        width: 40px;
+      }
+
+      .chat .chat-header .chat-about {
+        float: left;
+        padding-left: 10px;
+      }
+
+      .chat .chat-history {
+        padding: 20px;
+        border-bottom: 2px solid #fff;
+      }
+
+      .chat .chat-history ul {
+        padding: 0;
+      }
+
+      .chat .chat-history ul li {
+        list-style: none;
+        margin-bottom: 30px;
+      }
+
+      .chat .chat-history ul li:last-child {
+        margin-bottom: 0px;
+      }
+
+      .chat .chat-history .message-data {
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .message-data img {
+        border-radius: 40px;
+        width: 40px;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .message-data-time {
+        color: #434651;
+        padding-left: 6px;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .message {
+        color: #444;
+        padding: 18px 20px;
+        line-height: 26px;
+        font-size: 16px;
+        border-radius: 7px;
+        display: inline-block;
+        position: relative;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .message:after {
+        bottom: 100%;
+        left: 7%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: #fff;
+        border-width: 10px;
+        margin-left: -10px;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .my-message {
+        background: #efefef;
+      }
+
+      .chat .chat-history .my-message:after {
+        bottom: 100%;
+        left: 30px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: #efefef;
+        border-width: 10px;
+        margin-left: -10px;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .other-message {
+        background: #e8f1f3;
+        text-align: right;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-history .other-message:after {
+        border-bottom-color: #e8f1f3;
+        left: 93%;
+        margin-bottom: 40px;
+      }
+
+      .chat .chat-message {
+        padding: 20px;
+      }
+
+      .online,
+      .offline,
+      .me {
+        margin-right: 2px;
+        font-size: 8px;
+        vertical-align: middle;
+      }
+
+      .online {
+        color: #86c541;
+      }
+
+      .offline {
+        color: #e47297;
+      }
+
+      .me {
+        color: #1d8ecd;
+      }
+
+      .float-right {
+        float: right;
+      }
+
+      .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+      }
+
+      @media only screen and (max-width: 767px) {
+        .chat-app .people-list {
+          height: 465px;
+          width: 100%;
+          overflow-x: auto;
+          background: #fff;
+          left: -400px;
+          display: none;
+        }
+        .chat-app .people-list.open {
+          left: 0;
+        }
+        .chat-app .chat {
+          margin: 0;
+        }
+        .chat-app .chat .chat-header {
+          border-radius: 0.55rem 0.55rem 0 0;
+        }
+        .chat-app .chat-history {
+          height: 300px;
+          overflow-x: auto;
+          margin-bottom: 40px;
+        }
+        .offcanvas {
+          display: flex;
+          flex-direction: column;
+          height: 100vh; /* Altura completa de la pantalla */
+        }
+
+        .chat {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .chat-history {
+          flex-grow: 1; /* Permite que el chat ocupe el espacio restante */
+          overflow-y: auto; /* Habilita el scroll vertical */
+          padding: 15px;
+          max-height: calc(
+            100vh - 140px
+          ); /* Ajuste dinámico para evitar que tape la barra de entrada */
+          margin-bottom: 40px;
+        }
+
+        .chat-message {
+          position: sticky;
+          bottom: 0;
+          background: white;
+          padding: 10px;
+          border-top: 1px solid #ccc;
+        }
+      }
+
+      @media only screen and (min-width: 768px) and (max-width: 992px) {
+        .chat-app .chat-list {
+          height: 650px;
+          overflow-x: auto;
+        }
+        .chat-app .chat-history {
+          height: 600px;
+          overflow-x: auto;
+          margin-bottom: 40px;
+        }
+        .offcanvas {
+          display: flex;
+          flex-direction: column;
+          height: 100vh; /* Altura completa de la pantalla */
+        }
+
+        .chat {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .chat-history {
+          flex-grow: 1; /* Permite que el chat ocupe el espacio restante */
+          overflow-y: auto; /* Habilita el scroll vertical */
+          padding: 15px;
+          max-height: calc(
+            100vh - 140px
+          ); /* Ajuste dinámico para evitar que tape la barra de entrada */
+          margin-bottom: 40px;
+        }
+
+        .chat-message {
+          position: sticky;
+          bottom: 0;
+          background: white;
+          padding: 10px;
+          border-top: 1px solid #ccc;
+        }
+      }
+
+      @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+        .chat-app .chat-list {
+          height: 480px;
+          overflow-x: auto;
+        }
+        .chat-app .chat-history {
+          height: calc(100vh - 350px);
+          overflow-x: auto;
+          margin-bottom: 40px;
+        }
+
+        .offcanvas {
+          display: flex;
+          flex-direction: column;
+          height: 100vh; /* Altura completa de la pantalla */
+        }
+
+        .chat {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .chat-history {
+          flex-grow: 1; /* Permite que el chat ocupe el espacio restante */
+          overflow-y: auto; /* Habilita el scroll vertical */
+          padding: 15px;
+          max-height: calc(
+            100vh - 140px
+          ); /* Ajuste dinámico para evitar que tape la barra de entrada */
+          margin-bottom: 40px;
+        }
+
+        .chat-message {
+          position: sticky;
+          bottom: 0;
+          background: white;
+          padding: 10px;
+          border-top: 1px solid #ccc;
+        }
+      }
+
+      .offcanvas {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .chat {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .chat-history {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 15px;
+        height: calc(100vh - 100px); /* Ajuste dinámico */
+        margin-bottom: 75px; /* Espacio para el input */
+      }
+
+      .chat-message {
+        background: white;
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 450px; /* Ajusta al ancho del chat */
+      }
+
+      #enviarBtn {
+        margin-right: 50px;
+        margin-bottom: 10px;
+      }
+      #mensajeInput {
+        flex-grow: 1;
+        padding: 10px;
+      }
+
+      .people-list {
+        -moz-transition: 0.5s;
+        -o-transition: 0.5s;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+      }
+
+      .people-list .chat-list li {
+        padding: 10px 15px;
+        list-style: none;
+        border-radius: 3px;
+      }
+      .name {
+        color: #fc3574;
+      }
+      .m-b-0 {
+        color: #000000;
+      }
+
+      .people-list .chat-list li:hover {
+        background: #efefef;
+        cursor: pointer;
+      }
+
+      .people-list .chat-list li.active {
+        background: #efefef;
+      }
+
+      .people-list .chat-list li .name {
+        font-size: 15px;
+      }
+
+      .people-list .chat-list img {
+        width: 45px;
+        border-radius: 50%;
+      }
+
+      .people-list img {
+        float: left;
+        border-radius: 50%;
+      }
+
+      .people-list .about {
+        float: left;
+        padding-left: 8px;
+      }
+
+      .people-list .status {
+        color: #999;
+        font-size: 13px;
+      }
+      .mensaje-no-leido {
+        width: 10px;
+        height: 10px;
+        background-color: blue;
+        border-radius: 50%;
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        display: none; /* Oculto por defecto */
+      }
+      .button-list {
+        list-style: none;
+        width: 100%;
+      }
+
+      .button-list li {
+        margin-bottom: 15px;
+      }
+
+      .button-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #444;
+        font-size: 18px;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .button-item:hover {
+        background-color: #e8f1f3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .button-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        object-fit: contain;
+      }
+
+      .button-item span {
+        flex-grow: 1;
+      }
+
+      /* Responsividad */
+      @media (max-width: 600px) {
+        .button-item {
+          font-size: 16px;
+          padding: 12px 15px;
+        }
+
+        .button-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+
+    <!-- Sidebar Chat -->
+    <div
+    class="offcanvas offcanvas-end"
+    id="sidebarChat"
+    tabindex="-1"
+    aria-labelledby="sidebarLeftLabel"
+    >
+    <div id="plist" class="people-list">
+      <div class="offcanvas-header border-bottom bg-primary text-white">
+        <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="input-group p-3">
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Buscar..."
+        />
+      </div>
+      <ul class="list-unstyled chat-list mb-0">
+        <% info.listaPersonasChat.forEach(persona => { %>
+        <li
+          class="clearfix usuario-chat d-flex align-items-center p-3"
+          data-user-id="<%= persona.id %>"
+        >
+          <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+          <div class="about flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="name"><%= persona.nombre %></div>
+              <% if (persona.mensajes_no_leidos > 0) { %>
+              <div class="mensaje-no-leido" style="display: block"></div>
+              <% } %>
+            </div>
+            <div class="last-message">
+              <%= persona.ultimo_mensaje || '' %>
+            </div>
+            <div class="message-data-time">
+              <%= persona.fecha_ultimo_mensaje || '' %>
+            </div>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="chat" style="display: none">
+      <div class="chat-header bg-primary text-white">
+        <div
+          class="row align-items-center d-flex justify-content-between p-3"
+        >
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+            <div class="chat-about" data-user-id="">
+              <h6 class="m-0"></h6>
+            </div>
+          </div>
+          <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+            <button class="call-btn btn-img">
+              <img src="/imagenes/llamada.png" alt="Llamar" />
+            </button>
+            <button id="btnVolverLista" class="call-btn btn-img">
+              <img src="/imagenes/volver.png" alt="Volver" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-history" id="chat-box">
+        <ul class="m-b-0"></ul>
+      </div>
+      <div class="chat-message">
+        <div class="input-group">
+          <input
+            id="mensajeInput"
+            type="text"
+            class="form-control"
+            placeholder="Escribe un mensaje..."
+          />
+          <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Cerrar"
+    ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+    <ul class="list-unstyled m-0" id="notificaciones">
+      <% info.notificaciones.forEach(notificacion => { %>
+      <li
+        class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+        data-notificacion-id="<%= notificacion.id %>"
+      >
+        <small class="text-muted"
+          ><%= notificacion.fecha_formateada %></small
+        >
+        <div class="fw-bold">
+          <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+          Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+          'tipo_horario') { %> Cambio de Horario <% } else if
+          (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+          Perdida <% } else if (notificacion.tipo_notificacion ===
+          'tipo_mail') { %> Nuevo Email <% } else if
+          (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+          %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+          === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+          días) <% } else if (notificacion.tipo_notificacion ===
+          'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+          <% } else { %> Notificación <% } %>
+        </div>
+        <div><%= notificacion.contenido_notificacion %></div>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          Borrar
+        </button>
+      </li>
+      <% }) %>
+    </ul>
+    <div class="p-3">
+      <a
+        href="/enfermeria/notificaciones"
+        class="btn btn-outline-primary w-100"
+      >
+        Ver todas las notificaciones
+      </a>
+    </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a
+    >
+
+    <div class="d-flex gap-2 me-3">
+    <button
+    class="btn btn-secondary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarChat"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="chatIcon" style="display: block">
+      <img
+        src="/imagenes/chatIcon.png"
+        alt="Chat"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="chatIconNew" style="display: none">
+      <img
+        src="/imagenes/chatIconNew.png"
+        alt="Chat Nuevo"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+
+    <button
+    class="btn btn-secondary"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarNotificaciones"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="notIcon" style="display: block">
+      <img
+        src="/imagenes/campana.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="notIconNew" style="display: none">
+      <img
+        src="/imagenes/campanaConNotificacion.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+    </div>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/documentos" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Documentos</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documentos-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="documentos-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/documentos/listaEmitirDocumento" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Emitir Documento</a></li>
+                    <li><a href="/documentos/listaDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Imprimir Documento</a></li>
+                    <li><a href="/documentos/todosDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ver Documentos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>        
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/medicina/consultarExpedientes" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Expedientes</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>        
+
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Medicina</h1>
+            <div class="d-flex align-items-center">
+              <a
+                id="btnVolverLista"
+                class="call-btn btn-img me-2"
+                href="/documentos"
+              >
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+              <h2 class="m-0">Todos los Documentos</h2>
+            </div>
+          </div>
+          <div class="bandeja-section">
+            <div class="scrollable-content">
+              <div class="container mt-3">
+                <h2 class="mb-4">Consultar Documentos Hospitalarios</h2>
+                <div class="card shadow bandeja-card p-4">
+                  <!-- Filtros -->
+                  <div class="row mb-4 g-3">
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <i class="fas fa-user"></i>
+                        </span>
+                        <input
+                          type="text"
+                          id="filtroNombre"
+                          class="form-control"
+                          placeholder="Filtrar por nombre del paciente"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <i class="fas fa-id-card"></i>
+                        </span>
+                        <input
+                          type="text"
+                          id="filtroDocumento"
+                          class="form-control"
+                          placeholder="Filtrar por documento"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <i class="fas fa-file-alt"></i>
+                        </span>
+                        <select id="filtroTipoDocumento" class="form-select">
+                          <option value="">Todos los tipos</option>
+                          <option value="cita_previa">Cita Previa</option>
+                          <option value="consentimiento_paciente">Consentimiento Paciente</option>
+                          <option value="registro_paciente">Registro Paciente</option>
+                          <option value="justificante_paciente">Justificante Paciente</option>
+                          <option value="receta_medica">Receta Médica</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Tabla -->
+                  <div class="table-responsive">
+                    <table
+                      id="tablaDocumentos"
+                      class="table table-striped table-bordered mb-0"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nombre del Archivo</th>
+                          <th>Documento Identificación</th>
+                          <th>Nombre del Paciente</th>
+                          <th>Fecha de Emisión</th>
+                          <th>Tipo de Documento</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tablaDocumentosBody">
+                        <% if (info && info.filasDocumentos && info.filasDocumentos.length > 0) { %>
+                          <% info.filasDocumentos.forEach((documento, index) => { %>
+                            <tr
+                              class="documento-row"
+                              data-id="<%= documento.id_documento %>"
+                              data-tipo="<%= documento.tipo_documento %>"
+                            >
+                              <td id="nombreArchivo_<%= index %>">
+                                <%= documento.nombre_archivo %>
+                              </td>
+                              <td id="documentoIdentificacion_<%= index %>">
+                                <%= documento.documento_identificacion %>
+                              </td>
+                              <td id="nombrePaciente_<%= index %>">
+                                <%= documento.nombre_paciente %>
+                              </td>
+                              <td id="fechaEmision_<%= index %>">
+                                <%= documento.fecha_emision %>
+                              </td>
+                              <td id="tipoDocumento_<%= index %>">
+                                <% if (documento.tipo_documento === 'cita_previa') { %> Cita Previa
+                                <% } else if (documento.tipo_documento === 'consentimiento_paciente') { %> Consentimiento Paciente
+                                <% } else if (documento.tipo_documento === 'registro_paciente') { %> Registro Paciente
+                                <% } else if (documento.tipo_documento === 'justificante_paciente') { %> Justificante Paciente
+                                <% } else if (documento.tipo_documento === 'receta_medica') { %> Receta Médica
+                                <% } else { %> <%= documento.tipo_documento %> <% } %>
+                              </td>
+                            </tr>
+                          <% }) %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="5" class="text-center">No hay documentos disponibles</td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="bottom-spacer"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+ 
+
+    <script>
+      const documentos = <%- JSON.stringify(info.filasDocumentos) %>;
+
+      // Función para filtrar la tabla
+      function filtrarTabla() {
+        const filtroNombre = document.getElementById("filtroNombre").value.toLowerCase();
+        const filtroDocumento = document.getElementById("filtroDocumento").value.toLowerCase();
+        const filtroTipoDocumento = document.getElementById("filtroTipoDocumento").value.toLowerCase();
+
+        const tbody = document.getElementById("tablaDocumentosBody");
+        const filas = tbody.getElementsByClassName("documento-row");
+
+        for (let i = 0; i < filas.length; i++) {
+          const nombrePaciente = (document.getElementById("nombrePaciente_" + i).textContent || "").toLowerCase();
+          const documentoIdentificacion = (document.getElementById("documentoIdentificacion_" + i).textContent || "").toLowerCase();
+          const tipoDocumento = (filas[i].getAttribute("data-tipo") || "").toLowerCase(); // Usar data-tipo
+
+          const coincideNombre = nombrePaciente.includes(filtroNombre);
+          const coincideDocumento = documentoIdentificacion.includes(filtroDocumento);
+          const coincideTipo = filtroTipoDocumento === "" || tipoDocumento === filtroTipoDocumento;
+
+          if (coincideNombre && coincideDocumento && coincideTipo) {
+            filas[i].style.display = "";
+          } else {
+            filas[i].style.display = "none";
+          }
+        }
+      }
+
+      // Añadir eventos a los filtros
+      document.getElementById("filtroNombre").addEventListener("input", function() {
+        filtrarTabla();
+      });
+
+      document.getElementById("filtroDocumento").addEventListener("input", function() {
+        filtrarTabla();
+      });
+
+      document.getElementById("filtroTipoDocumento").addEventListener("change", function() {
+        filtrarTabla();
+      });
+
+      // Añadir evento de clic a las filas
+      const filas = document.getElementsByClassName("documento-row");
+      for (let i = 0; i < filas.length; i++) {
+        filas[i].addEventListener("click", function() {
+          const idDocumento = this.getAttribute("data-id");
+          const index = Array.from(filas).indexOf(this);
+
+          const nombreArchivo = document.getElementById("nombreArchivo_" + index).textContent;
+          const documentoIdentificacion = document.getElementById("documentoIdentificacion_" + index).textContent;
+          const nombrePaciente = document.getElementById("nombrePaciente_" + index).textContent;
+          const fechaEmision = document.getElementById("fechaEmision_" + index).textContent;
+          const tipoDocumento = document.getElementById("tipoDocumento_" + index).textContent;
+
+          console.log("ID del documento seleccionado:", idDocumento);
+          window.location.href = `/documentos/visorDocumento?idDocumento=${idDocumento}`;
+
+
+        });
+      }
+    </script>
+  </body>
+</html>

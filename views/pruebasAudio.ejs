@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Detalles completos de dispositivos de audio</title>
+  </head>
+  <body>
+    <button id="startButton">Iniciar prueba detallada</button>
+    <div id="logContainer"></div>
+
+    <script>
+      // Configura el contenedor de logs
+      const logContainer = document.getElementById("logContainer");
+      logContainer.style.position = "fixed";
+      logContainer.style.bottom = "10px";
+      logContainer.style.left = "10px";
+      logContainer.style.background = "white";
+      logContainer.style.border = "1px solid black";
+      logContainer.style.padding = "10px";
+      logContainer.style.maxHeight = "200px";
+      logContainer.style.overflow = "auto";
+
+      // Función para mostrar logs
+      function logToScreen(message, color = "black") {
+        logContainer.innerHTML += `<span style="color: ${color}">${message}</span><br>`;
+      }
+
+      // Redefine console.log y console.error
+      console.log = (...args) => logToScreen(args.join(" "));
+      console.error = (...args) => logToScreen(args.join(" "), "red");
+
+      // Verifica soporte de la API
+      console.log("Cargando página...");
+      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+        console.error("API navigator.mediaDevices no soportada.");
+        throw new Error("API no disponible");
+      }
+      console.log("API soportada.");
+
+      // Función para obtener detalles de dispositivos
+      async function getDetailedAudioInfo() {
+        console.log("Iniciando análisis detallado...");
+
+        // 1. Enumerar dispositivos
+        try {
+          console.log("Enumerando dispositivos...");
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          console.log(`Total de dispositivos encontrados: ${devices.length}`);
+
+          const microphones = devices.filter((d) => d.kind === "audioinput");
+          const speakers = devices.filter((d) => d.kind === "audiooutput");
+
+          // Detalles de micrófonos
+          console.log(`Micrófonos detectados: ${microphones.length}`);
+          microphones.forEach((mic, index) => {
+            console.log(`Micrófono ${index + 1}:`);
+            console.log(
+              `- Nombre: ${mic.label || "Sin nombre (permisos pendientes)"}`
+            );
+            console.log(`- ID: ${mic.deviceId}`);
+            console.log(`- Tipo: ${mic.kind}`);
+            console.log(`- GroupID: ${mic.groupId || "No disponible"}`);
+          });
+
+          // Detalles de altavoces
+          console.log(`Altavoces detectados: ${speakers.length}`);
+          speakers.forEach((spk, index) => {
+            console.log(`Altavoz ${index + 1}:`);
+            console.log(
+              `- Nombre: ${spk.label || "Sin nombre (permisos pendientes)"}`
+            );
+            console.log(`- ID: ${spk.deviceId}`);
+            console.log(`- Tipo: ${spk.kind}`);
+            console.log(`- GroupID: ${spk.groupId || "No disponible"}`);
+          });
+
+          if (microphones.length === 0)
+            console.error("No se detectaron micrófonos.");
+          if (speakers.length === 0)
+            console.error("No se detectaron altavoces.");
+        } catch (error) {
+          console.error("Error al enumerar dispositivos:", error.message);
+        }
+
+        // 2. Probar captura de audio para más detalles
+        try {
+          console.log(
+            "Solicitando acceso al micrófono para detalles adicionales..."
+          );
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          const audioTracks = stream.getAudioTracks();
+
+          console.log(`Pistas de audio capturadas: ${audioTracks.length}`);
+          audioTracks.forEach((track, index) => {
+            console.log(`Pista de audio ${index + 1}:`);
+            console.log(`- Etiqueta: ${track.label || "Sin etiqueta"}`);
+            console.log(`- ID: ${track.id}`);
+            console.log(`- Activada: ${track.enabled}`);
+            console.log(`- Silenciada: ${track.muted}`);
+            console.log(`- Estado: ${track.readyState}`);
+
+            // Obtener capacidades técnicas del micrófono
+            const capabilities = track.getCapabilities
+              ? track.getCapabilities()
+              : {};
+            console.log("- Capacidades:");
+            for (let key in capabilities) {
+              console.log(`  - ${key}: ${capabilities[key]}`);
+            }
+
+            // Configuración actual
+            const settings = track.getSettings ? track.getSettings() : {};
+            console.log("- Configuración actual:");
+            for (let key in settings) {
+              console.log(`  - ${key}: ${settings[key]}`);
+            }
+          });
+
+          // Reproduce el audio para probar altavoces
+          const audioElement = document.createElement("audio");
+          audioElement.srcObject = stream;
+          audioElement.autoplay = true;
+          audioElement.muted = false;
+          document.body.appendChild(audioElement);
+          console.log("Reproduciendo audio local... ¿Escuchas algo?");
+        } catch (error) {
+          console.error("Error al capturar audio:", error.message);
+        }
+
+        console.log("Análisis finalizado.");
+      }
+
+      // Evento del botón
+      const startButton = document.getElementById("startButton");
+      if (startButton) {
+        console.log("Botón encontrado.");
+        startButton.addEventListener("click", async () => {
+          console.log("Botón clicado. Iniciando...");
+          await getDetailedAudioInfo();
+        });
+      } else {
+        console.error("ERROR: Botón no encontrado.");
+      }
+
+      console.log("Esperando clic en el botón...");
+    </script>
+  </body>
+</html>

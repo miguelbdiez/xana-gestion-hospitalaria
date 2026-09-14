@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+
+# Entorno y secretos
+.env
+.env.local
+credenciales/
+*.pem
+*.key
+*.crt
+*.p12
+ssl/
+
+# Datos y volcados: se excluyen las copias de seguridad, pero no el esquema
+copiasDeSeguridad/
+*.sql
+!db/schema.sql
+*.sqlite
+
+# Logs
+logs/
+*.log
+loginLog.txt
+
+# Ficheros generados en runtime
+public/documentosSecretaria/*.pdf
+public/documentosSecretaria/pdfs_generados/
+
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

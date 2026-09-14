@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="../assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Lista Imprimir Documentos | XANA</title>
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+    <style>
+      
+      .button-list {
+        list-style: none;
+        width: 100%;
+      }
+
+      .button-list li {
+        margin-bottom: 15px;
+      }
+
+      .button-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #444;
+        font-size: 18px;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .button-item:hover {
+        background-color: #e8f1f3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .button-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        object-fit: contain;
+      }
+
+      .button-item span {
+        flex-grow: 1;
+      }
+
+      /* Responsividad */
+      @media (max-width: 600px) {
+        .button-item {
+          font-size: 16px;
+          padding: 12px 15px;
+        }
+
+        .button-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    </style>
+
+ 
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+    <div
+    class="offcanvas offcanvas-end"
+    id="sidebarChat"
+    tabindex="-1"
+    aria-labelledby="sidebarLeftLabel"
+    >
+    <div id="plist" class="people-list">
+      <div class="offcanvas-header border-bottom bg-primary text-white">
+        <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="input-group p-3">
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Buscar..."
+        />
+      </div>
+      <ul class="list-unstyled chat-list mb-0">
+        <% info.listaPersonasChat.forEach(persona => { %>
+        <li
+          class="clearfix usuario-chat d-flex align-items-center p-3"
+          data-user-id="<%= persona.id %>"
+        >
+          <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+          <div class="about flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="name"><%= persona.nombre %></div>
+              <% if (persona.mensajes_no_leidos > 0) { %>
+              <div class="mensaje-no-leido" style="display: block"></div>
+              <% } %>
+            </div>
+            <div class="last-message">
+              <%= persona.ultimo_mensaje || '' %>
+            </div>
+            <div class="message-data-time">
+              <%= persona.fecha_ultimo_mensaje || '' %>
+            </div>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="chat" style="display: none">
+      <div class="chat-header bg-primary text-white">
+        <div
+          class="row align-items-center d-flex justify-content-between p-3"
+        >
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+            <div class="chat-about" data-user-id="">
+              <h6 class="m-0"></h6>
+            </div>
+          </div>
+          <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+            <button class="call-btn btn-img">
+              <img src="/imagenes/llamada.png" alt="Llamar" />
+            </button>
+            <button id="btnVolverLista" class="call-btn btn-img">
+              <img src="/imagenes/volver.png" alt="Volver" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-history" id="chat-box">
+        <ul class="m-b-0"></ul>
+      </div>
+      <div class="chat-message">
+        <div class="input-group">
+          <input
+            id="mensajeInput"
+            type="text"
+            class="form-control"
+            placeholder="Escribe un mensaje..."
+          />
+          <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Cerrar"
+    ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+    <ul class="list-unstyled m-0" id="notificaciones">
+      <% info.notificaciones.forEach(notificacion => { %>
+      <li
+        class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+        data-notificacion-id="<%= notificacion.id %>"
+      >
+        <small class="text-muted"
+          ><%= notificacion.fecha_formateada %></small
+        >
+        <div class="fw-bold">
+          <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+          Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+          'tipo_horario') { %> Cambio de Horario <% } else if
+          (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+          Perdida <% } else if (notificacion.tipo_notificacion ===
+          'tipo_mail') { %> Nuevo Email <% } else if
+          (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+          %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+          === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+          días) <% } else if (notificacion.tipo_notificacion ===
+          'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+          <% } else { %> Notificación <% } %>
+        </div>
+        <div><%= notificacion.contenido_notificacion %></div>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          Borrar
+        </button>
+      </li>
+      <% }) %>
+    </ul>
+    <div class="p-3">
+      <a
+        href="/enfermeria/notificaciones"
+        class="btn btn-outline-primary w-100"
+      >
+        Ver todas las notificaciones
+      </a>
+    </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a
+    >
+
+    <div class="d-flex gap-2 me-3">
+    <button
+    class="btn btn-secondary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarChat"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="chatIcon" style="display: block">
+      <img
+        src="/imagenes/chatIcon.png"
+        alt="Chat"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="chatIconNew" style="display: none">
+      <img
+        src="/imagenes/chatIconNew.png"
+        alt="Chat Nuevo"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+
+    <button
+    class="btn btn-secondary"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarNotificaciones"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="notIcon" style="display: block">
+      <img
+        src="/imagenes/campana.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="notIconNew" style="display: none">
+      <img
+        src="/imagenes/campanaConNotificacion.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+    </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/secretaria/pacientesIngresados" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Pacientes | Ingresados</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#pacientesIngresados-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="pacientesIngresados-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li class="mb-1">
+                        <div class="d-flex align-items-center">
+                          <a href="/secretaria/pacientesIngresados/pacientesHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Pacientes</a>
+                          <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#pacientes-collapse" aria-expanded="false">
+                            <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                          </button>
+                        </div>
+                        <div class="collapse" id="pacientes-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="/secretaria/consultarPacientes" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Consultar Pacientes</a></li>
+                                <li><a href="/secretaria/registrarPaciente" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registrar Paciente</a></li>                               
+                            </ul>                
+                        </div>
+                    </li>    
+                    <li class="mb-1">
+                        <div class="d-flex align-items-center">
+                          <a href="/secretaria/pacientesIngresados/ingresadosHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Ingresados</a>
+                          <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#ingresados-collapse" aria-expanded="false">
+                            <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                          </button>
+                        </div>
+                        <div class="collapse" id="ingresados-collapse">
+                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="/secretaria/consultarIngresados" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Consultar Ingresados</a></li>
+                            <li><a href="/secretaria/ingresoPaciente" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ingresar Paciente</a></li>                               
+                          </ul>
+                        </div>
+                    </li>  
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3 "></li> <!-- Enhanced separator -->     
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/documentos" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Documentos</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documentos-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="documentos-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/documentos/listaEmitirDocumento" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Emitir Documento</a></li>
+                    <li><a href="/documentos/listaDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Imprimir Documento</a></li>
+                    <li><a href="/documentos/todosDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ver Documentos</a></li>
+                    <li><a href="/secretaria/documentos/bandejaEntrada_Documentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Bandeja Entrada Documentos</a></li>
+
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Secretaría</h1>
+            <div class=" d-flex align-items-center">
+                <a id="btnVolverLista" class="call-btn btn-img me-2" href="/documentos">
+                  <img
+                    src="/imagenes/volver.png"
+                    alt="Volver"
+                    style="width: 24px; height: 24px"
+                  />
+                </a>
+                <h2 class="m-0">Lista Documentos </h2>
+              </div>
+          </div>
+          <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+              <ul class="button-list">
+                <li>
+                  <a
+                    href="/documentos/imprimirDocumento?tipo_documento=cita_previa"
+                    class="button-item"
+                  >
+                    <img
+                      src="/imagenes/imagenesSecretaria/pdf_icono.png"
+                      alt="Medicamentos"
+                      class="button-icon"
+                    />
+                    <span>Cita Previa</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/documentos/imprimirDocumento?tipo_documento=consentimiento_paciente"
+                    class="button-item"
+                  >
+                    <img
+                    src="/imagenes/imagenesSecretaria/pdf_icono.png"
+                    alt="Medicamentos"
+                      class="button-icon"
+                    />
+                    <span>Consentimiento Paciente</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/documentos/imprimirDocumento?tipo_documento=registro_paciente"
+                    class="button-item"
+                  >
+                    <img
+                    src="/imagenes/imagenesSecretaria/pdf_icono.png"
+                    alt="Medicamentos"
+                      class="button-icon"
+                    />
+                    <span>Documento de Registro de Paciente</span>
+                  </a>
+                </li>
+
+        
+              </ul>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+
+
+   
+  </body>
+</html>

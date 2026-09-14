@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Estadísticas Hospital | XANA</title>
+
+    <link href="https://getbootstrap.com/docs/5.3/examples/dashboard/" rel="canonical"/>
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" rel="stylesheet"  />
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/administrador/estadisticasHospital.css" rel="stylesheet" />
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+
+   
+
+    <!-- Custom styles for this template -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+    <!-- Sidebar Chat -->
+    <div
+      class="offcanvas offcanvas-end"
+      id="sidebarChat"
+      tabindex="-1"
+      aria-labelledby="sidebarLeftLabel"
+    >
+      <div id="plist" class="people-list">
+        <div class="offcanvas-header border-bottom bg-primary text-white">
+          <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+        <div class="input-group p-3">
+          <input
+            type="text"
+            class="form-control"
+            id="searchInput"
+            placeholder="Buscar..."
+          />
+        </div>
+        <ul class="list-unstyled chat-list mb-0">
+          <% info.listaPersonasChat.forEach(persona => { %>
+          <li
+            class="clearfix usuario-chat d-flex align-items-center p-3"
+            data-user-id="<%= persona.id %>"
+          >
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+            <div class="about flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="name"><%= persona.nombre %></div>
+                <% if (persona.mensajes_no_leidos > 0) { %>
+                <div class="mensaje-no-leido" style="display: block"></div>
+                <% } %>
+              </div>
+              <div class="last-message">
+                <%= persona.ultimo_mensaje || '' %>
+              </div>
+              <div class="message-data-time">
+                <%= persona.fecha_ultimo_mensaje || '' %>
+              </div>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <div class="chat" style="display: none">
+        <div class="chat-header bg-primary text-white">
+          <div
+            class="row align-items-center d-flex justify-content-between p-3"
+          >
+            <div class="col-lg-6 d-flex align-items-center">
+              <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+              <div class="chat-about" data-user-id="">
+                <h6 class="m-0"></h6>
+              </div>
+            </div>
+            <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+              <button class="call-btn btn-img">
+                <img src="/imagenes/llamada.png" alt="Llamar" />
+              </button>
+              <button id="btnVolverLista" class="call-btn btn-img">
+                <img src="/imagenes/volver.png" alt="Volver" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-history" id="chat-box">
+          <ul class="m-b-0"></ul>
+        </div>
+        <div class="chat-message">
+          <div class="input-group">
+            <input
+              id="mensajeInput"
+              type="text"
+              class="form-control"
+              placeholder="Escribe un mensaje..."
+            />
+            <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Cerrar"
+      ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <ul class="list-unstyled m-0" id="notificaciones">
+        <% info.notificaciones.forEach(notificacion => { %>
+        <li
+          class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          <small class="text-muted"
+            ><%= notificacion.fecha_formateada %></small
+          >
+          <div class="fw-bold">
+            <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+            Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+            'tipo_horario') { %> Cambio de Horario <% } else if
+            (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+            Perdida <% } else if (notificacion.tipo_notificacion ===
+            'tipo_mail') { %> Nuevo Email <% } else if
+            (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+            %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+            === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+            días) <% } else if (notificacion.tipo_notificacion ===
+            'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+            <% } else { %> Notificación <% } %>
+          </div>
+          <div><%= notificacion.contenido_notificacion %></div>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+            data-notificacion-id="<%= notificacion.id %>"
+          >
+            Borrar
+          </button>
+        </li>
+        <% }) %>
+      </ul>
+      <div class="p-3">
+        <a
+          href="/enfermeria/notificaciones"
+          class="btn btn-outline-primary w-100"
+        >
+          Ver todas las notificaciones
+        </a>
+      </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a
+    >
+
+    <div class="d-flex gap-2 me-3">
+    <button
+      class="btn btn-secondary"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sidebarChat"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <div id="chatIcon" style="display: block">
+        <img
+          src="/imagenes/chatIcon.png"
+          alt="Chat"
+          width="24"
+          height="24"
+        />
+      </div>
+
+      <!-- Imagen cuando hay mensajes nuevos -->
+      <div id="chatIconNew" style="display: none">
+        <img
+          src="/imagenes/chatIconNew.png"
+          alt="Chat Nuevo"
+          width="24"
+          height="24"
+        />
+      </div>
+    </button>
+
+    <button
+      class="btn btn-secondary"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sidebarNotificaciones"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <div id="notIcon" style="display: block">
+        <img
+          src="/imagenes/campana.png"
+          alt="notificacion"
+          width="24"
+          height="24"
+        />
+      </div>
+
+      <!-- Imagen cuando hay mensajes nuevos -->
+      <div id="notIconNew" style="display: none">
+        <img
+          src="/imagenes/campanaConNotificacion.png"
+          alt="notificacion"
+          width="24"
+          height="24"
+        />
+      </div>
+    </button>
+    </div>
+    </header>
+
+
+    
+
+    
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/plantillaHospital" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Plantilla</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#plantilla-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="plantilla-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/registrarUsuario" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registrar Usuario</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/estadisticasHospital" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Estadisticas Hospital</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/copiasDeSeguridad" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Copias De Seguridad</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>                        
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Administración</h1>
+            <div class=" d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/home">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+              <h2 class="m-1">Estadísticas Hospital</h2>
+            </div>
+          </div>
+          <div class="estadisticas-section">
+            <div class="scrollable-content">
+              <div class="container mt-3" id="estadisticasContainer">
+                <h2 class="mb-4">Estadísticas del Hospital</h2>
+        
+                <!-- Contenedor principal (Ocupación) -->
+                <div class="card shadow p-3 mb-4 estadisticas-card">
+                  <!-- Gráfico de Ocupación Total -->
+                  <div class="mb-4">
+                    <h5 class="card-title text-center">Ocupación Total del Hospital</h5>
+                    <canvas id="ocupacionHospitalChart" style="max-height: 200px; max-width: 200px; margin: 0 auto;"></canvas>
+                  </div>
+        
+                  <!-- Contenedor inferior: Gráfico de barras y sección de especialidad -->
+                  <div class="d-flex flex-wrap">
+                    <!-- Gráfico de barras -->
+                    <div class="flex-grow-1 me-3" style="min-width: 300px;">
+                      <h5 class="card-title">Camas Ocupadas por Especialidad</h5>
+                      <canvas id="camasEspecialidadChart" style="max-height: 150px;"></canvas>
+                    </div>
+        
+                    <!-- Selección de especialidad y gráfico circular -->
+                    <div style="min-width: 200px;">
+                      <h5 class="card-title">Ocupación por Especialidad</h5>
+                      <select id="especialidadSelect" class="form-select mb-3">
+                        <option value="">Seleccione una especialidad</option>
+                        <% info.infoEstadisticas.especialidades.forEach(especialidad => { %>
+                          <option value="<%= especialidad %>"><%= especialidad %></option>
+                        <% }) %>
+                      </select>
+                      <canvas id="ocupacionEspecialidadChart" style="max-height: 150px; max-width: 150px; margin: 0 auto;"></canvas>
+                    </div>
+                  </div>
+                </div>
+        
+                <!-- Contenedor (Ingresos y Altas) -->
+                <div class="card shadow p-3 mb-4 estadisticas-card">
+                  <h5 class="card-title">Ingresos y Altas</h5>
+                  <div class="row g-3 mb-4">
+                    <!-- Gráfico de Ingresos y Altas Totales -->
+                    <div class="col-12">
+                      <h6 class="card-title">Ingresos y Altas por Fecha</h6>
+                      <canvas id="ingresosAltasChart" style="max-height: 200px;"></canvas>
+                    </div>
+                  </div>
+                  <div class="row g-3">
+                    <!-- Gráfico de Ingresos por Especialidad -->
+                    <div class="col-md-6">
+                      <h6 class="card-title">Ingresos por Especialidad</h6>
+                      <canvas id="ingresosEspecialidadChart" style="max-height: 150px;"></canvas>
+                    </div>
+                    <!-- Gráfico de Altas por Especialidad -->
+                    <div class="col-md-6">
+                      <h6 class="card-title">Altas por Especialidad</h6>
+                      <canvas id="altasEspecialidadChart" style="max-height: 150px;"></canvas>
+                    </div>
+                  </div>
+                </div>
+        
+                <!-- Contenedor (Otras Estadísticas) -->
+                <div class="card shadow p-3 estadisticas-card">
+                  <h5 class="card-title">Otras Estadísticas</h5>
+                  <div class="row g-3 mb-4">
+                    <!-- Gráfico de Diagnósticos Más Frecuentes -->
+                    <div class="col-md-6">
+                      <h6 class="card-title">Diagnósticos Más Frecuentes</h6>
+                      <canvas id="diagnosticosFrecuentesChart" style="max-height: 150px;"></canvas>
+                    </div>
+                    <!-- Gráfico de Ingresos por Médico por Mes -->
+                    <div class="col-md-6">
+                      <h6 class="card-title">Ingresos por Médico por Mes</h6>
+                      <canvas id="ingresosPorMedicoChart" style="max-height: 150px;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom-spacer"></div> <!-- Espacio adicional en la parte inferior -->
+              </div>
+            </div>
+          </div>
+        </main>
+          
+      </div>
+    </div>
+
+¡
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Scripts necesarios -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Chart.js y script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Gráfico de Ocupación Total del Hospital
+        const totalCamas = <%= info.infoEstadisticas.ocupacionTotal.ocupadas %> + <%= info.infoEstadisticas.ocupacionTotal.libres %>;
+        const ocupacionHospitalChart = new Chart(document.getElementById('ocupacionHospitalChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Ocupadas', 'Libres'],
+            datasets: [{
+              data: [
+                <%= info.infoEstadisticas.ocupacionTotal.ocupadas %>,
+                <%= info.infoEstadisticas.ocupacionTotal.libres %>
+              ],
+              backgroundColor: ['#007bff', '#e9ecef']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom', labels: { font: { size: 10 } } },
+              title: { 
+                display: true, 
+                text: totalCamas > 0 
+                  ? '<%= ((info.infoEstadisticas.ocupacionTotal.ocupadas / (info.infoEstadisticas.ocupacionTotal.ocupadas + info.infoEstadisticas.ocupacionTotal.libres)) * 100).toFixed(1) %>% Ocupado'
+                  : 'Sin datos de camas',
+                font: { size: 12 }
+              }
+            }
+          }
+        });
+
+        // Gráfico de Camas Ocupadas por Especialidad
+        const camasEspecialidadChart = new Chart(document.getElementById('camasEspecialidadChart'), {
+          type: 'bar',
+          data: {
+            labels: <%- JSON.stringify(info.infoEstadisticas.ocupacionPorEspecialidad.map(s => s.especialidad)) %>,
+            datasets: [{
+              label: 'Camas Ocupadas',
+              data: <%- JSON.stringify(info.infoEstadisticas.ocupacionPorEspecialidad.map(s => s.ocupadas)) %>,
+              backgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { 
+                title: { display: true, text: 'Especialidad', font: { size: 10 } },
+                ticks: { font: { size: 9 } }
+              },
+              y: { 
+                title: { display: true, text: 'Camas Ocupadas', font: { size: 10 } }, 
+                beginAtZero: true,
+                ticks: { font: { size: 9 } }
+              }
+            },
+            plugins: {
+              legend: { labels: { font: { size: 10 } } }
+            }
+          }
+        });
+
+        // Gráfico de Ocupación por Especialidad
+        let ocupacionEspecialidadChart = new Chart(document.getElementById('ocupacionEspecialidadChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Ocupadas', 'Libres'],
+            datasets: [{
+              data: [0, 1],
+              backgroundColor: ['#007bff', '#e9ecef']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom', labels: { font: { size: 10 } } },
+              title: { 
+                display: true, 
+                text: 'Seleccione una especialidad', 
+                font: { size: 12 }
+              }
+            }
+          }
+        });
+
+        document.getElementById('especialidadSelect').addEventListener('change', (e) => {
+          const especialidad = e.target.value;
+          if (!especialidad) {
+            ocupacionEspecialidadChart.data.datasets[0].data = [0, 1];
+            ocupacionEspecialidadChart.options.plugins.title.text = 'Seleccione una especialidad';
+            ocupacionEspecialidadChart.update();
+            return;
+          }
+
+          const especialidadData = <%- JSON.stringify(info.infoEstadisticas.ocupacionPorEspecialidad) %>
+            .find(s => s.especialidad === especialidad);
+          const camasOcupadas = especialidadData ? especialidadData.ocupadas : 0;
+          const camasLibres = especialidadData ? especialidadData.libres : 0;
+          const totalCamas = camasOcupadas + camasLibres;
+
+          ocupacionEspecialidadChart.data.datasets[0].data = [camasOcupadas, camasLibres];
+          ocupacionEspecialidadChart.options.plugins.title.text = totalCamas > 0 
+            ? `${((camasOcupadas / totalCamas) * 100).toFixed(1)}% Ocupado`
+            : 'Sin datos';
+          ocupacionEspecialidadChart.update();
+        });
+
+        // Gráfico de Ingresos y Altas Totales
+        const ingresos = <%- JSON.stringify(info.infoEstadisticas.ingresosPorMes) %>;
+        const altas = <%- JSON.stringify(info.infoEstadisticas.altasPorMes) %>;
+        const ingresosAltasChart = new Chart(document.getElementById('ingresosAltasChart'), {
+          type: 'line',
+          data: {
+            labels: [...new Set([...ingresos.map(i => i.mes), ...altas.map(a => a.mes)])].sort(),
+            datasets: [
+              {
+                label: 'Ingresos',
+                data: ingresos.map(i => ({ x: i.mes, y: i.cantidad })),
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                fill: true
+              },
+              {
+                label: 'Altas',
+                data: altas.map(a => ({ x: a.mes, y: a.cantidad })),
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                fill: true
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: 'Fecha', font: { size: 10 } } },
+              y: { title: { display: true, text: 'Cantidad', font: { size: 10 } }, beginAtZero: true }
+            },
+            plugins: {
+              legend: { labels: { font: { size: 10 } } }
+            }
+          }
+        });
+
+        // Gráfico de Ingresos por Especialidad
+        const ingresosPorEspecialidad = <%- JSON.stringify(info.infoEstadisticas.ingresosPorEspecialidad) %>;
+        const ingresosEspecialidadChart = new Chart(document.getElementById('ingresosEspecialidadChart'), {
+          type: 'bar',
+          data: {
+            labels: ingresosPorEspecialidad.map(i => i.especialidad),
+            datasets: [{
+              label: 'Ingresos',
+              data: ingresosPorEspecialidad.map(i => i.cantidad),
+              backgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: 'Especialidad', font: { size: 10 } }, ticks: { font: { size: 9 } } },
+              y: { title: { display: true, text: 'Ingresos', font: { size: 10 } }, beginAtZero: true, ticks: { font: { size: 9 } } }
+            },
+            plugins: {
+              legend: { labels: { font: { size: 10 } } }
+            }
+          }
+        });
+
+        // Gráfico de Altas por Especialidad
+        const altasPorEspecialidad = <%- JSON.stringify(info.infoEstadisticas.altasPorEspecialidad) %>;
+        const altasEspecialidadChart = new Chart(document.getElementById('altasEspecialidadChart'), {
+          type: 'bar',
+          data: {
+            labels: altasPorEspecialidad.map(a => a.especialidad),
+            datasets: [{
+              label: 'Altas',
+              data: altasPorEspecialidad.map(a => a.cantidad),
+              backgroundColor: '#28a745'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: 'Especialidad', font: { size: 10 } }, ticks: { font: { size: 9 } } },
+              y: { title: { display: true, text: 'Altas', font: { size: 10 } }, beginAtZero: true, ticks: { font: { size: 9 } } }
+            },
+            plugins: {
+              legend: { labels: { font: { size: 10 } } }
+            }
+          }
+        });
+      
+        // Gráfico de Diagnósticos Más Frecuentes
+        const diagnosticosFrecuentes = <%- JSON.stringify(info.infoEstadisticas.diagnosticosFrecuentes) %>;
+        const diagnosticosFrecuentesChart = new Chart(document.getElementById('diagnosticosFrecuentesChart'), {
+        type: 'bar',
+        data: {
+            labels: diagnosticosFrecuentes.map(d => d.descripcion),
+            datasets: [{
+            label: 'Frecuencia',
+            data: diagnosticosFrecuentes.map(d => d.cantidad),
+            backgroundColor: '#ff6384'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+            x: { title: { display: true, text: 'Diagnóstico', font: { size: 10 } }, ticks: { font: { size: 9 } } },
+            y: { title: { display: true, text: 'Cantidad', font: { size: 10 } }, beginAtZero: true, ticks: { font: { size: 9 } } }
+            },
+            plugins: {
+            legend: { labels: { font: { size: 10 } } }
+            }
+        }
+        });
+
+        // Gráfico de Ingresos por Médico por Mes
+        const ingresosPorMedico = <%- JSON.stringify(info.infoEstadisticas.ingresosPorMedicoMes) %>;
+        const medicosUnicos = [...new Set(ingresosPorMedico.map(i => i.medico))];
+        const mesesUnicos = [...new Set(ingresosPorMedico.map(i => i.mes))].sort();
+        const ingresosPorMedicoChart = new Chart(document.getElementById('ingresosPorMedicoChart'), {
+        type: 'line',
+        data: {
+            labels: mesesUnicos,
+            datasets: medicosUnicos.map((medico, index) => ({
+            label: medico,
+            data: mesesUnicos.map(mes => {
+                const entry = ingresosPorMedico.find(i => i.medico === medico && i.mes === mes);
+                return entry ? entry.cantidad : 0;
+            }),
+            borderColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff'][index % 5],
+            backgroundColor: ['rgba(255, 99, 132, 0.1)', 'rgba(54, 162, 235, 0.1)', 'rgba(255, 206, 86, 0.1)', 'rgba(75, 192, 192, 0.1)', 'rgba(153, 102, 255, 0.1)'][index % 5],
+            fill: true
+            }))
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+            x: { title: { display: true, text: 'Mes', font: { size: 10 } } },
+            y: { title: { display: true, text: 'Ingresos', font: { size: 10 } }, beginAtZero: true }
+            },
+            plugins: {
+            legend: { labels: { font: { size: 10 } } }
+            }
+        }
+        });
+        
+      });
+    </script>
+    
+   
+  </body>
+</html>

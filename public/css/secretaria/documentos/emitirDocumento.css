@@ -1,0 +1,281 @@
+/* Asegura que el cuerpo no genere desplazamiento no deseado */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el contenedor principal */
+  .container-fluid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: none;
+  }
+  
+  /* Ajusta la barra de navegación superior */
+  .navbar {
+    flex-shrink: 0;
+  }
+  
+  /* Ajusta la fila principal */
+  .row {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el sidebar */
+  .sidebar {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Ajusta el main */
+  main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  
+  /* Main container for the visor section */
+  .visor-section {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Contenedor desplazable */
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    max-height: calc(100vh - 120px);
+  }
+  
+  /* Espaciador inferior */
+  .bottom-spacer {
+    height: 150px;
+    width: 100%;
+  }
+  
+  /* Estilo para el título */
+  .visor-section h2 {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2dd4bf;
+    padding-bottom: 8px;
+  }
+  
+  /* Estilo para la tarjeta */
+  .visor-card {
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    min-width: fit-content;
+  }
+  
+  /* Estilo para la sección del formulario */
+  .form-section {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #1f2937;
+  }
+  
+  .form-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  /* Estilo para inputs inline */
+  .inline-input {
+    display: inline-block;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    border-color: #e5e7eb;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .inline-input:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+  }
+  
+  /* Estilo para el contenedor de la firma */
+  .signature-container {
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    width: fit-content;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .signature-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: bold;
+    color: #1f2937;
+  }
+  
+  #signature-pad {
+    background-color: white;
+    border: 2px solid #ddd !important;
+    border-radius: 4px;
+    cursor: crosshair;
+  }
+  
+  /* Estilo para los botones */
+  .btn-sm {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estilo específico para Continuar */
+  #continuarBtn {
+    background-color: #6c27c5;
+    color: white;
+  }
+  
+  #continuarBtn:hover {
+    background-color: #8700e0;
+  }
+  
+  /* Estilo específico para Confirmar */
+  #confirmarBtn {
+    background-color: #1dd617;
+    color: white;
+  }
+  
+  #confirmarBtn:hover {
+    background-color: #34d41f;
+  }
+  
+  /* Estilo específico para Descartar */
+  #descartarBtn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  #descartarBtn:hover {
+    background-color: #c82333;
+  }
+  
+  /* Estilo para el botón Limpiar Firma */
+  .signature-container .btn-sm {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .signature-container .btn-sm:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo para el contenedor de PDF */
+  #pdfView {
+    width: 100%;
+    margin: 20px 0;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  #pdf {
+    width: 100%;
+    height: calc(100vh - 180px);
+    min-width: 800px;
+    min-height: 600px;
+    border: none;
+    display: block;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #panelBtns {
+    height: 60px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    border-top: 1px solid #e5e7eb;
+    box-sizing: border-box;
+  }
+  
+  /* Estilo para la sección de confirmación */
+  .confirm-section {
+    padding: 10px;
+    text-align: center;
+    background-color: #f1f5f9;
+  }
+  
+  /* Estilo para el mensaje de error */
+  #error-message {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .visor-section {
+      padding: 10px;
+    }
+  
+    .scrollable-content {
+      max-height: calc(100vh - 100px);
+    }
+  
+    .bottom-spacer {
+      height: 100px;
+    }
+  
+    .visor-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .form-section, .inline-input {
+      font-size: 0.8rem;
+    }
+  
+    .btn-sm {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+  
+    #pdf {
+      min-width: 100%;
+      min-height: 400px;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    main {
+      width: 100%;
+      padding: 0 10px;
+    }
+  }

@@ -1,0 +1,589 @@
+/* Fondo del modal */
+.modal_prueba {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscurecido */
+  z-index: 1000;
+}
+.modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.modal_prueba.active {
+  display: block; /* Mostrar cuando está activo */
+}
+
+/* Llamada en curso */
+#modalLlamando .modal_prueba-dialog {
+  max-width: 350px;
+  margin: 1.75rem auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#modalLlamando .card {
+  border: none;
+  border-radius: 15px;
+  width: 400px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: #4dabf7;
+}
+
+#modalLlamando .header {
+  padding: 20px;
+  text-align: center;
+  background: #4dabf7;
+  color: white;
+  position: relative;
+}
+
+#modalLlamando .contenedorInfoHeader {
+  margin: 0;
+}
+
+#modalLlamando .caller-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px 0;
+  word-break: break-word;
+}
+
+/* Efecto de "llamando" con puntos animados */
+#modalLlamando .caller-name::after {
+  content: " .";
+  animation: dots 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes dots {
+  0% {
+    content: " .";
+  }
+  33% {
+    content: " ..";
+  }
+  66% {
+    content: " ...";
+  }
+}
+
+#modalLlamando .footer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background: #4dabf7;
+}
+
+/* Estilo del botón */
+#modalLlamando .bouton.raccrocher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #dc3545;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLlamando .bouton.raccrocher:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+#modalLlamando .icon.red {
+  display: flex;
+  align-items: center;
+}
+
+#modalLlamando .icon.red svg {
+  fill: white;
+}
+
+/* Estilo del botón verde "Aceptar" (si lo añades después) */
+#modalLlamando .bouton.accepter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #28a745;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLlamando .bouton.accepter:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+#modalLlamando .icon.green {
+  display: flex;
+  align-items: center;
+}
+
+#modalLlamando .icon.green svg {
+  fill: white;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLlamando .bouton.accepter {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+#modalLlamando .btn-text {
+  font-size: 1rem;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLlamando .modal-dialog {
+    margin: 0.5rem;
+    max-width: 100%;
+  }
+
+  #modalLlamando .caller-name {
+    font-size: 1.2rem;
+  }
+
+  #modalLlamando .bouton.raccrocher {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/*En LLAMADA*/
+
+#modalEnLLamada .modal-dialog {
+  max-width: 350px;
+  margin: 1.75rem auto;
+}
+
+#modalEnLLamada .card {
+  border: none;
+  border-radius: 15px;
+  width: 400px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: #4dabf7;
+}
+
+#modalEnLLamada .header {
+  padding: 20px;
+  text-align: center;
+  background: #4dabf7;
+  color: white;
+  position: relative;
+}
+
+#modalEnLLamada .contenedorInfoHeader {
+  margin: 0;
+}
+
+#modalEnLLamada .caller-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px 0;
+  word-break: break-word;
+}
+
+/* Efecto de "llamando" con puntos animados */
+#modalEnLLamada .caller-name::after {
+  content: " .";
+  animation: dots 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes dots {
+  0% {
+    content: " .";
+  }
+  33% {
+    content: " ..";
+  }
+  66% {
+    content: " ...";
+  }
+}
+
+#modalEnLLamada .footer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background: #4dabf7;
+}
+
+/* Estilo del botón */
+#modalEnLLamada .bouton.raccrocher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #dc3545;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalEnLLamada .bouton.raccrocher:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+#modalEnLLamada .icon.red {
+  display: flex;
+  align-items: center;
+}
+
+#modalEnLLamada .icon.red svg {
+  fill: white;
+}
+
+#modalEnLLamada .btn-text {
+  font-size: 1rem;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLlamando .modal-dialog {
+    margin: 0.5rem;
+    max-width: 100%;
+  }
+
+  #modalLlamando .caller-name {
+    font-size: 1.2rem;
+  }
+
+  #modalLlamando .bouton.raccrocher {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/*LLmada entrante /***/
+#modalLlamandaEntrante .modal-dialog {
+  max-width: 350px;
+  margin: 1.75rem auto;
+}
+
+#modalLlamandaEntrante .card {
+  border: none;
+  border-radius: 15px;
+  width: 400px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: #4dabf7;
+}
+
+#modalLlamandaEntrante .header {
+  padding: 20px;
+  text-align: center;
+  background: #4dabf7;
+  color: white;
+  position: relative;
+}
+
+#modalLlamandaEntrante .contenedorInfoHeader {
+  margin: 0;
+}
+
+#modalLlamandaEntrante .caller-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px 0;
+  word-break: break-word;
+}
+
+/* Efecto de "llamando" con puntos animados */
+#modalLlamandaEntrante .caller-name::after {
+  content: " .";
+  animation: dots 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes dots {
+  0% {
+    content: " .";
+  }
+  33% {
+    content: " ..";
+  }
+  66% {
+    content: " ...";
+  }
+}
+
+#modalLlamandaEntrante .footer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background: #4dabf7;
+}
+
+/* Estilo del botón */
+#modalLlamandaEntrante .bouton.raccrocher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #dc3545;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLlamandaEntrante .bouton.raccrocher:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+#modalLlamandaEntrante .icon.red {
+  display: flex;
+  align-items: center;
+}
+
+#modalLlamandaEntrante .icon.red svg {
+  fill: white;
+}
+/* Estilo del botón verde "Aceptar" */
+#modalLlamandaEntrante .bouton.accepter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #28a745;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLlamandaEntrante .bouton.accepter:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+#modalLlamandaEntrante .icon.green {
+  display: flex;
+  align-items: center;
+}
+
+#modalLlamandaEntrante .icon.green svg {
+  fill: white;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLlamandaEntrante .bouton.accepter {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+#modalLlamandaEntrante .btn-text {
+  font-size: 1rem;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLlamandaEntrante .modal-dialog {
+    margin: 0.5rem;
+    max-width: 100%;
+  }
+
+  #modalLlamandaEntrante .caller-name {
+    font-size: 1.2rem;
+  }
+
+  #modalLlamandaEntrante .bouton.raccrocher {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/*LLamada en curso */
+
+#modalLLamadaEnCurso .modal-dialog {
+  max-width: 350px;
+  margin: 1.75rem auto;
+}
+
+#modalLLamadaEnCurso .card {
+  border: none;
+  border-radius: 15px;
+  width: 400px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: #4dabf7;
+}
+
+#modalLLamadaEnCurso .header {
+  padding: 20px;
+  text-align: center;
+  background: #4dabf7;
+  color: white;
+  position: relative;
+}
+
+#modalLLamadaEnCurso .contenedorInfoHeader {
+  margin: 0;
+}
+
+#modalLLamadaEnCurso .caller-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px 0;
+  word-break: break-word;
+}
+
+/* Efecto de "llamando" con puntos animados */
+#modalLLamadaEnCurso .caller-name::after {
+  content: " .";
+  animation: dots 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes dots {
+  0% {
+    content: " .";
+  }
+  33% {
+    content: " ..";
+  }
+  66% {
+    content: " ...";
+  }
+}
+
+#modalLLamadaEnCurso .footer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  background: #4dabf7;
+}
+
+/* Estilo del botón */
+#modalLLamadaEnCurso .bouton.raccrocher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #dc3545;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLLamadaEnCurso .bouton.raccrocher:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+#modalLLamadaEnCurso .icon.red {
+  display: flex;
+  align-items: center;
+}
+
+#modalLLamadaEnCurso .icon.red svg {
+  fill: white;
+}
+/* Estilo del botón verde "Aceptar" */
+#modalLLamadaEnCurso .bouton.accepter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #28a745;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modalLLamadaEnCurso .bouton.accepter:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+#modalLLamadaEnCurso .icon.green {
+  display: flex;
+  align-items: center;
+}
+
+#modalLLamadaEnCurso .icon.green svg {
+  fill: white;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLLamadaEnCurso .bouton.accepter {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+#modalLLamadaEnCurso .btn-text {
+  font-size: 1rem;
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+  #modalLLamadaEnCurso .modal-dialog {
+    margin: 0.5rem;
+    max-width: 100%;
+  }
+
+  #modalLLamadaEnCurso .caller-name {
+    font-size: 1.2rem;
+  }
+
+  #modalLLamadaEnCurso .bouton.raccrocher {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Registrar Paciente | XANA</title>
+
+    <link  href="https://getbootstrap.com/docs/5.3/examples/dashboard/" rel="canonical" />
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"  rel="stylesheet"/>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="/public/css/secretaria/registrarPaciente.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+
+  
+    <!-- Custom styles for this template -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+
+ 
+
+    <!-- Sidebar Chat -->
+    <div
+      class="offcanvas offcanvas-end"
+      id="sidebarChat"
+      tabindex="-1"
+      aria-labelledby="sidebarLeftLabel"
+    >
+      <div id="plist" class="people-list">
+        <div class="offcanvas-header border-bottom bg-primary text-white">
+          <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+        <div class="input-group p-3">
+          <input
+            type="text"
+            class="form-control"
+            id="searchInput"
+            placeholder="Buscar..."
+          />
+        </div>
+        <ul class="list-unstyled chat-list mb-0">
+          <% info.listaPersonasChat.forEach(persona => { %>
+          <li
+            class="clearfix usuario-chat d-flex align-items-center p-3"
+            data-user-id="<%= persona.id %>"
+          >
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+            <div class="about flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="name"><%= persona.nombre %></div>
+                <% if (persona.mensajes_no_leidos > 0) { %>
+                <div class="mensaje-no-leido" style="display: block"></div>
+                <% } %>
+              </div>
+              <div class="last-message">
+                <%= persona.ultimo_mensaje || '' %>
+              </div>
+              <div class="message-data-time">
+                <%= persona.fecha_ultimo_mensaje || '' %>
+              </div>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <div class="chat" style="display: none">
+        <div class="chat-header bg-primary text-white">
+          <div
+            class="row align-items-center d-flex justify-content-between p-3"
+          >
+            <div class="col-lg-6 d-flex align-items-center">
+              <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+              <div class="chat-about" data-user-id="">
+                <h6 class="m-0"></h6>
+              </div>
+            </div>
+            <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+              <button class="call-btn btn-img">
+                <img src="/imagenes/llamada.png" alt="Llamar" />
+              </button>
+              <button id="btnVolverLista" class="call-btn btn-img">
+                <img src="/imagenes/volver.png" alt="Volver" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-history" id="chat-box">
+          <ul class="m-b-0"></ul>
+        </div>
+        <div class="chat-message">
+          <div class="input-group">
+            <input
+              id="mensajeInput"
+              type="text"
+              class="form-control"
+              placeholder="Escribe un mensaje..."
+            />
+            <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Cerrar"
+      ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <ul class="list-unstyled m-0" id="notificaciones">
+        <% info.notificaciones.forEach(notificacion => { %>
+        <li
+          class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          <small class="text-muted"
+            ><%= notificacion.fecha_formateada %></small
+          >
+          <div class="fw-bold">
+            <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+            Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+            'tipo_horario') { %> Cambio de Horario <% } else if
+            (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+            Perdida <% } else if (notificacion.tipo_notificacion ===
+            'tipo_mail') { %> Nuevo Email <% } else if
+            (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+            %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+            === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+            días) <% } else if (notificacion.tipo_notificacion ===
+            'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+            <% } else { %> Notificación <% } %>
+          </div>
+          <div><%= notificacion.contenido_notificacion %></div>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+            data-notificacion-id="<%= notificacion.id %>"
+          >
+            Borrar
+          </button>
+        </li>
+        <% }) %>
+      </ul>
+      <div class="p-3">
+        <a
+          href="/enfermeria/notificaciones"
+          class="btn btn-outline-primary w-100"
+        >
+          Ver todas las notificaciones
+        </a>
+      </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a
+    >
+
+    <div class="d-flex gap-2 me-3">
+    <button
+      class="btn btn-secondary"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sidebarChat"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <div id="chatIcon" style="display: block">
+        <img
+          src="/imagenes/chatIcon.png"
+          alt="Chat"
+          width="24"
+          height="24"
+        />
+      </div>
+
+      <!-- Imagen cuando hay mensajes nuevos -->
+      <div id="chatIconNew" style="display: none">
+        <img
+          src="/imagenes/chatIconNew.png"
+          alt="Chat Nuevo"
+          width="24"
+          height="24"
+        />
+      </div>
+    </button>
+
+    <button
+      class="btn btn-secondary"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#sidebarNotificaciones"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <div id="notIcon" style="display: block">
+        <img
+          src="/imagenes/campana.png"
+          alt="notificacion"
+          width="24"
+          height="24"
+        />
+      </div>
+
+      <!-- Imagen cuando hay mensajes nuevos -->
+      <div id="notIconNew" style="display: none">
+        <img
+          src="/imagenes/campanaConNotificacion.png"
+          alt="notificacion"
+          width="24"
+          height="24"
+        />
+      </div>
+    </button>
+    </div>
+    </header>
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/secretaria/pacientesIngresados" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Pacientes | Ingresados</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#pacientesIngresados-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="pacientesIngresados-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li class="mb-1">
+                        <div class="d-flex align-items-center">
+                          <a href="/secretaria/pacientesIngresados/pacientesHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Pacientes</a>
+                          <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#pacientes-collapse" aria-expanded="false">
+                            <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                          </button>
+                        </div>
+                        <div class="collapse" id="pacientes-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="/secretaria/consultarPacientes" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Consultar Pacientes</a></li>
+                                <li><a href="/secretaria/registrarPaciente" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registrar Paciente</a></li>                               
+                            </ul>                
+                        </div>
+                    </li>    
+                    <li class="mb-1">
+                        <div class="d-flex align-items-center">
+                          <a href="/secretaria/pacientesIngresados/ingresadosHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Ingresados</a>
+                          <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#ingresados-collapse" aria-expanded="false">
+                            <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                          </button>
+                        </div>
+                        <div class="collapse" id="ingresados-collapse">
+                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="/secretaria/consultarIngresados" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Consultar Ingresados</a></li>
+                            <li><a href="/secretaria/ingresoPaciente" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ingresar Paciente</a></li>                               
+                          </ul>
+                        </div>
+                    </li>  
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3 "></li> <!-- Enhanced separator -->     
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/documentos" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Documentos</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#documentos-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="documentos-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/documentos/listaEmitirDocumento" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Emitir Documento</a></li>
+                    <li><a href="/documentos/listaDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Imprimir Documento</a></li>
+                    <li><a href="/documentos/todosDocumentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Ver Documentos</a></li>
+                    <li><a href="/secretaria/documentos/bandejaEntrada_Documentos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Bandeja Entrada Documentos</a></li>
+
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Secretaría</h1>
+            <div class="d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/secretaria/PacientesIngresados/pacientesHome">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+              <h2 class="m-0">Registrar Paciente</h2>
+            </div>
+          </div>
+          <div class="copias-section">
+            <div class="scrollable-content">
+              <div class="container mt-3">
+                <h2 class="mb-4">Registrar Paciente</h2>
+                <div class="card shadow copias-card p-4">
+                  <form id="formRegistroPaciente">
+                    <!-- Documento de Identificación -->
+                    <div class="mb-3 d-flex align-items-center">
+                      <label
+                        for="documento"
+                        class="form-label me-2"
+                        style="min-width: 200px"
+                      >Documento de Identificación</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="documento"
+                        name="documento"
+                        required
+                      />
+                    </div>
+        
+                    <!-- Cuadro de Datos del Paciente -->
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="nombre"
+                          name="nombre"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="primerApellido" class="form-label">Primer Apellido</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="apellido1"
+                          name="primerApellido"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="apellido2"
+                          name="segundoApellido"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="fechaNacimiento"
+                          name="fechaNacimiento"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="telefono" class="form-label">Teléfono de Contacto</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="telefono"
+                          name="telefono"
+                          pattern="[0-9]{9,13}"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="sexo" class="form-label">Sexo</label>
+                        <select
+                          class="form-select"
+                          id="sexo"
+                          name="sexo"
+                          required
+                        >
+                          <option value="">Seleccione sexo</option>
+                          <option value="hombre">Hombre</option>
+                          <option value="mujer">Mujer</option>
+                          <option value="otro">Otro</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="direccion"
+                          name="direccion"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="correo" class="form-label">Correo Electrónico</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="correo"
+                          name="correo"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="personaEmergencia" class="form-label">Persona de Emergencia</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="personaEmergencia"
+                          name="personaEmergencia"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="parentescoRegistro" class="form-label">Relación</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="parentescoRegistro"
+                          name="parentescoRegistro"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="contactoEmergencia" class="form-label">Contacto de Emergencia</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="contactoEmergencia"
+                          name="contactoEmergencia"
+                          pattern="[0-9]{9,13}"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="nacionalidad" class="form-label">Nacionalidad</label>
+                        <select
+                          class="form-select"
+                          id="nacionalidad"
+                          name="nacionalidad"
+                          required
+                        >
+                          <option value="">Seleccione nacionalidad</option>
+                          <option value="España">España</option>
+                          <option value="Argentina">Argentina</option>
+                          <option value="Brasil">Brasil</option>
+                          <option value="Chile">Chile</option>
+                          <option value="Colombia">Colombia</option>
+                          <option value="México">México</option>
+                          <option value="Perú">Perú</option>
+                          <option value="Estados Unidos">Estados Unidos</option>
+                          <option value="Francia">Francia</option>
+                          <option value="Alemania">Alemania</option>
+                          <option value="Italia">Italia</option>
+                          <option value="Portugal">Portugal</option>
+                          <option value="Reino Unido">Reino Unido</option>
+                        </select>
+                      </div>
+                      <div class="condiciones">
+                        <h2>Condiciones Generales y Cláusulas Legales</h2>
+                        <p class="intro">
+                          El presente formulario tiene por objeto recabar los datos personales y sanitarios necesarios para la correcta identificación, atención médica y administración de los servicios ofrecidos por este centro sanitario.
+                        </p>
+                        <ol>
+                          <li><strong>Tratamiento de Datos Personales (Protección de Datos - RGPD y LOPDGDD):</strong> De conformidad con el RGPD y la LOPDGDD, los datos personales recogidos serán incorporados a un fichero automatizado responsabilidad del centro, con la finalidad de gestionar la atención sanitaria. El paciente podrá ejercer sus derechos de acceso, rectificación, cancelación y oposición conforme a la normativa vigente.</li>
+                          <li><strong>Consentimiento para la Asistencia Sanitaria:</strong> El/la paciente autoriza al personal médico y sanitario del centro a realizar todas aquellas actuaciones diagnósticas, terapéuticas o preventivas necesarias para garantizar su adecuada atención médica. Esta autorización incluye la administración de medicamentos, realización de pruebas clínicas y cualquier intervención necesaria para preservar la salud del paciente.</li>
+                          <li><strong>Cláusula para Pacientes Menores de Edad:</strong> Si el paciente es menor de edad, el formulario debe ser firmado por el padre, madre o tutor legal, quien otorga el consentimiento para que se realicen las actuaciones sanitarias necesarias. El centro se reserva el derecho de solicitar documentación acreditativa del parentesco o tutela legal en caso de duda o discrepancia.</li>
+                          <li><strong>Persona de Contacto en Caso de Emergencia:</strong> Se autoriza al centro a contactar a la persona indicada en el formulario en caso de emergencia médica o cualquier situación urgente. Esta persona podrá recibir información estrictamente necesaria para colaborar con la atención del paciente y facilitar las decisiones que deban tomarse en su beneficio inmediato.</li>
+                          <li><strong>Comunicaciones y Contacto:</strong> Se autoriza el uso del teléfono y correo electrónico proporcionados para fines asistenciales.</li>
+                          <li><strong>Actualización de Datos:</strong> Es responsabilidad del paciente mantener actualizados sus datos personales, de contacto y situación médica. Cualquier cambio relevante debe ser notificado a la mayor brevedad posible al centro para garantizar una atención adecuada y segura.</li>
+                        </ol>
+                      </div>
+                      <div class="signature-container">
+                        <label>Firma Paciente:</label>
+                        <canvas
+                          id="signature-pad"
+                          width="300"
+                          height="100"
+                          style="border: 1px solid #000"
+                        ></canvas>
+                        <br />
+                        <button type="button" onclick="clearSignature()" class="btn btn-sm">
+                          Limpiar Firma
+                        </button>
+                      </div>
+                    </div>
+                    <div id="error-message" style="display: none; color: red"></div>
+                    <div class="confirm-section">
+                      <button class="btn btn-sm" id="continuarBtn">
+                        Continuar
+                      </button>
+                    </div>
+                    <div id="pdfView" style="display: none">
+                      <div id="panelBtns">
+                        <button class="btn btn-sm" id="registrarBtn">
+                          Registrar
+                        </button>
+                        <button class="btn btn-sm" id="descartarBtn">
+                          Descartar
+                        </button>
+                      </div>
+                      <iframe id="pdf"></iframe>
+                    </div>
+                  </form>
+                </div>
+                <div class="bottom-spacer"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <script>
+      const canvas = document.getElementById("signature-pad");
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+
+      canvas.addEventListener("mousedown", (e) => {
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+      });
+
+      canvas.addEventListener("mousemove", (e) => {
+        if (!drawing) return;
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+      });
+
+      canvas.addEventListener("mouseup", () => (drawing = false));
+
+      function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function getSignatureImageDataUrl() {
+        return canvas.toDataURL("image/png");
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const formRegistroPaciente = document.getElementById(
+          "formRegistroPaciente"
+        );
+        const documentoInput = document.getElementById("documento");
+        const nombreInput = document.getElementById("nombre");
+        const apellido1Input = document.getElementById("apellido1");
+        const apellido2Input = document.getElementById("apellido2");
+        const fechaNacimientoInput = document.getElementById("fechaNacimiento");
+        const telefonoInput = document.getElementById("telefono");
+        const sexoInput = document.getElementById("sexo");
+        const direccionInput = document.getElementById("direccion");
+        const correoInput = document.getElementById("correo");
+        const personaEmergenciaInput =
+          document.getElementById("personaEmergencia");
+        const contactoEmergenciaInput =
+          document.getElementById("contactoEmergencia");
+        const nacionalidadInput = document.getElementById("nacionalidad");
+        const parentescoRegistro=  document.getElementById("parentescoRegistro");
+
+        let pdfId;
+
+
+        document.getElementById("continuarBtn").addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          // Recoger datos
+          const campos = {
+             documento_identificacion : documentoInput.value.trim(),
+           nombreRegistro : nombreInput.value.trim(),
+           apellido1Registro : apellido1Input.value.trim(),
+           apellido2Registro : apellido2Input.value.trim(),
+           fecha_nacimientoRegistro : fechaNacimientoInput.value,
+           telefonoRegistro : telefonoInput.value.trim(),
+           sexoRegistro : sexoInput.value,
+           direccionRegistro : direccionInput.value.trim(),
+           correo_electronicoRegistro : correoInput.value.trim(),
+           persona_emergenciaRegistro :
+            personaEmergenciaInput.value.trim(),
+           contacto_emergenciaRegistro :
+            contactoEmergenciaInput.value.trim(),
+           nacionalidadRegistro : nacionalidadInput.value,
+           parentescoRegistro:parentescoRegistro.value.trim(),
+           firma : document
+            .getElementById("signature-pad")
+            .toDataURL("image/png"),
+
+          }
+         
+          // Validaciones
+         
+          const body = {
+              tipo_documento: "registro_paciente",
+              campos: campos,
+            };
+
+            // Enviar solicitud al servidor para verificar el documento_identificacion
+            const response = await fetch("/secretaria/documentos/generarPdf", {
+              method: "POST", // Cambiamos a POST para enviar el cuerpo
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(body),
+            });
+
+            const data = await response.json();
+            // Verificar si el DNI existe en la base de datos
+            const errorMessage = document.getElementById("error-message");
+            if (data.success) {
+              // Si el DNI existe, cargar el PDF desde data.url
+              errorMessage.style.display = "none";
+              pdfId= data.pdfId
+
+              const pdfIframe = document.getElementById("pdf");
+              const pdfUrl = `/recuperarPDF?id=${data.pdfId}`; // Construimos la URL correcta: /recuperarPDF?id=4
+              pdfIframe.src = pdfUrl; // Asignamos la URL
+              // Mostrar el visor
+              document.getElementById("continuarBtn").disabled = true;
+              document.getElementById("pdfView").style.display = "block";
+
+          
+              return;
+            } else {
+              errorMessage.textContent =
+                data.message ||
+                "El documento de identificación del usuario no existe";
+              errorMessage.style.display = "block";
+            }
+        });
+      
+
+
+        document.getElementById("registrarBtn").addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          // Recoger datos
+          const documento_identificacion = documentoInput.value.trim();
+          const nombreRegistro = nombreInput.value.trim();
+          const apellido1Registro = apellido1Input.value.trim();
+          const apellido2Registro = apellido2Input.value.trim();
+          const fecha_nacimientoRegistro = fechaNacimientoInput.value;
+          const telefonoRegistro = telefonoInput.value.trim();
+          const sexoRegistro = sexoInput.value;
+          const direccionRegistro = direccionInput.value.trim();
+          const correo_electronicoRegistro = correoInput.value.trim();
+          const persona_emergenciaRegistro =
+            personaEmergenciaInput.value.trim() +" "
+           parentescoRegistro.value.trim();
+
+          const contacto_emergenciaRegistro =
+            contactoEmergenciaInput.value.trim();
+          const nacionalidadRegistro = nacionalidadInput.value;
+          
+
+          // Validaciones
+          if (
+            !documento_identificacion ||
+            !nombreRegistro ||
+            !apellido1Registro ||
+            !fecha_nacimientoRegistro ||
+            !telefonoRegistro ||
+            !sexoRegistro ||
+            !direccionRegistro ||
+            !correo_electronicoRegistro ||
+            !persona_emergenciaRegistro ||
+            !contacto_emergenciaRegistro ||
+            !nacionalidadRegistro
+          ) {
+            alert("Por favor, complete todos los campos obligatorios.");
+            return;
+          }
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(correo_electronicoRegistro)) {
+            alert("Por favor, ingrese un correo electrónico válido.");
+            return;
+          }
+
+          const phoneRegex = /^[0-9]{9,13}$/;
+          if (
+            !phoneRegex.test(telefonoRegistro) ||
+            !phoneRegex.test(contacto_emergenciaRegistro)
+          ) {
+            alert("Los números de teléfono deben tener entre 9 y 13 dígitos.");
+            return;
+          }
+
+          try {
+            const response = await fetch("/registroPaciente", {
+              method: "POST",
+              body: JSON.stringify({
+                documento_identificacion,
+                nombreRegistro,
+                apellido1Registro,
+                apellido2Registro,
+                fecha_nacimientoRegistro,
+                sexoRegistro,
+                direccionRegistro,
+                telefonoRegistro,
+                correo_electronicoRegistro,
+                persona_emergenciaRegistro,
+                contacto_emergenciaRegistro,
+                nacionalidadRegistro,
+                directo:null,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              console.log(pdfId)
+              alert("Paciente registrado exitosamente.");
+              const response = await fetch("/secretaria/documentos/accionPdf", {
+              method: "POST", // Cambiamos a POST para enviar el cuerpo
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({accion: "confirmar", pdfId:pdfId}),
+            });
+
+            const data = await response.json();
+            if(data.success){
+              document.getElementById("continuarBtn").disabled = false;  
+              document.getElementById("pdfView").style.display = "none";
+            }
+              formRegistroPaciente.reset();
+              window.location.href="/home"
+            } else {
+              alert(data.message);
+            }
+          } catch (error) {
+            console.error("Error al registrar el paciente:", error);
+            alert("Error al conectar con el servidor.");
+          }
+        });
+      
+
+
+      document
+        .getElementById("descartarBtn")
+        .addEventListener("click", async () => {
+
+          const response = await fetch("/secretaria/documentos/accionPdf", {
+              method: "POST", // Cambiamos a POST para enviar el cuerpo
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({accion: "descartar", pdfId:pdfId}),
+            });
+
+            const data = await response.json();
+            if(data.success){
+              document.getElementById("continuarBtn").disabled = false;  
+              document.getElementById("pdfView").style.display = "none";
+            }
+
+          
+        })
+      });
+    </script>
+
+   
+  </body>
+</html>

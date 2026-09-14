@@ -1,0 +1,58 @@
+# Entorno completo de desarrollo: base de datos y aplicación.
+#
+#   docker compose up --build
+#
+# Al terminar de arrancar, la aplicación queda en https://localhost:3000
+# con el esquema cargado y cinco empleados de prueba, uno por rol.
+#
+# El navegador avisará de que el certificado no es de confianza: es un
+# autofirmado generado dentro de la imagen. Acepta y continúa.
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: xana-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: xanadb
+      MYSQL_USER: xana
+      MYSQL_PASSWORD: xanapw
+    ports:
+      # Expuesto por si quieres conectarte con un cliente MySQL desde el equipo.
+      - "3307:3306"
+    volumes:
+      - datos-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpw"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    container_name: xana-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      IP_SERVIDOR: localhost
+      SALT: 10
+      # Clave de desarrollo. En un despliegue real iría en un gestor de secretos.
+      SECRET_KEY: clave_de_desarrollo_solo_para_el_entorno_docker_no_usar_en_produccion
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: xana
+      DB_PASSWORD: xanapw
+      DB_NAME: xanadb
+      SEED_PASSWORD: Prueba1234
+    ports:
+      - "3000:3000"
+    volumes:
+      # Los registros quedan accesibles desde el equipo.
+      - ./logs:/app/logs
+
+volumes:
+  datos-mysql:

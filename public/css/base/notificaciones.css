@@ -1,0 +1,59 @@
+.mensaje-no-leido {
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    display: none; /* Oculto por defecto */
+  }
+  /*notificaciones */
+  .text-purple {
+    color: #6f42c1; /* Morado para horarios */
+  }
+
+  .text-orange {
+    color: #fd7e14; /* Naranja para llamadas */
+  }
+
+  .text-turquoise {
+    color: #20c997; /* Turquesa para emails */
+  }
+
+  /* Estilos para cada tipo de notificación */
+  #notificaciones li {
+    transition: background-color 0.2s;
+  }
+
+  #notificaciones li:hover {
+    background-color: #f8f9fa;
+  }
+
+  #notificaciones .tipo_mensaje {
+    border-left: 4px solid #428ae9; /* Azul para mensajes */
+  }
+
+  #notificaciones .tipo_horario {
+    border-left: 4px solid #6f42c1; /* Morado para horarios */
+  }
+
+  #notificaciones .tipo_llamada {
+    border-left: 4px solid #fd7e14; /* Naranja para llamadas */
+  }
+
+  #notificaciones .tipo_mail {
+    border-left: 4px solid #20c997; /* Turquesa para emails */
+  }
+
+  #notificaciones .tipo_bandeja_documentos {
+    border-left: 4px solid #198754; /* Verde para Bandeja Documentos */
+  }
+
+  #notificaciones .tipo_caducidad_3_dias_lote {
+    border-left: 4px solid #ffc107; /* Amarillo para advertencia de caducidad a 3 días */
+  }
+
+  #notificaciones .tipo_caducidad_1_dias_lote {
+    border-left: 4px solid #dc3545; /* Rojo para urgencia de caducidad a 1 día */
+  }

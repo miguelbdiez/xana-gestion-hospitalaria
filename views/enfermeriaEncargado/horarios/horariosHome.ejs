@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Horarios | XANA</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" rel="stylesheet"/>
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+    <link href="/public/css/base/notificaciones.css" rel="stylesheet" />
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="/public/css/base/sideChat.css" rel="stylesheet" />
+
+    
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+    <link href="/public/css/sidebars.css" rel="stylesheet" />
+
+    
+
+    <style>
+      
+      .button-list {
+        list-style: none;
+        width: 100%;
+      }
+
+      .button-list li {
+        margin-bottom: 15px;
+      }
+
+      .button-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #444;
+        font-size: 18px;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .button-item:hover {
+        background-color: #e8f1f3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .button-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        object-fit: contain;
+      }
+
+      .button-item span {
+        flex-grow: 1;
+      }
+
+      /* Responsividad */
+      @media (max-width: 600px) {
+        .button-item {
+          font-size: 16px;
+          padding: 12px 15px;
+        }
+
+        .button-icon {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .header {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .especialidad-title {
+        font-size: 28px;
+        color: #343a40;
+        margin: 0;
+      }
+
+      .fecha-actual {
+        font-size: 18px;
+        color: #6c757d;
+      }
+
+      .trabajadores h3 {
+        font-size: 20px;
+        color: #495057;
+        margin-bottom: 10px;
+      }
+
+      .lista-trabajadores {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .lista-trabajadores li {
+        padding: 8px 12px;
+        background-color: #ffffff;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
+        transition: background-color 0.2s;
+      }
+
+      .lista-trabajadores li:hover {
+        background-color: #e9ecef;
+      }
+
+      .btn-generar {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .btn-generar:hover {
+        background-color: #0056b3;
+      }
+      
+      
+.calendario {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendario-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #343a40;
+}
+
+.selector-mes {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  max-width: 100%;
+}
+
+.dia-semana {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.dia-vacio {
+  background-color: #f5f5f5;
+  min-height: 140px; /* Altura mínima para mantener consistencia */
+}
+
+.dia {
+  background-color: #f5f0e1;
+  border: 2px solid #d1c8a8;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  min-height: 140px; /* Altura mínima, pero puede crecer */
+  overflow: visible; /* Permitir que el contenido se expanda */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.numero-dia {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 8px;
+  background-color: #fff8e1;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.turno {
+  font-size: 12px;
+  padding: 4px;
+  border-top: 1px solid #ccc;
+  cursor: pointer; /* Indica que es clicable */
+  white-space: normal; /* Permitir múltiples líneas */
+  overflow: visible; /* Mostrar todo el contenido */
+}
+
+.turno.mañana {
+  background-color: #dbeafe;
+  color: #1e3a8a;
+}
+
+.turno.tarde {
+  background-color: #fff8e1;
+  color: #4a3c31;
+}
+
+.turno.noche {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.turno.resaltado {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+/*modal*/
+#turnoModal .modal-content {
+  background-color: #1e3a8a; /* Azul oscuro */
+  color: #ffffff; /* Texto blanco */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#turnoModal .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Borde blanco tenue */
+}
+
+#turnoModal .modal-title {
+  font-size: 1.5rem;
+}
+
+#turnoModal .btn-close-white {
+  filter: invert(1); /* Hace el botón de cierre blanco */
+}
+
+#turnoModal .modal-body {
+  padding: 20px;
+}
+
+#turnoModal .modal-body p {
+  margin: 5px 0;
+}
+
+#turnoModal .modal-body ul {
+  margin-top: 10px;
+}
+
+#turnoModal .modal-body li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#turnoModal .modal-body li:last-child {
+  border-bottom: none; /* Sin borde en el último elemento */
+}
+
+#turnoModal .modal-body .btn-solicitar {
+  background-color: #3b82f6; /* Azul más claro */
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#turnoModal .modal-body .btn-solicitar:hover {
+  background-color: #2563eb; /* Tono más oscuro al pasar el ratón */
+}
+
+#turnoModal .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#turnoModal .modal-footer .btn-light {
+  background-color: #ffffff;
+  color: #1e3a8a;
+}
+
+#turnoModal .modal-footer .btn-light:hover {
+  background-color: #e5e7eb;
+}
+#cambioTurnoModal .modal-body {
+  padding: 20px;
+}
+
+#cambioTurnoModal .turno-info p,
+#cambioTurnoModal .solicitud-info p {
+  margin: 5px 0;
+}
+
+#cambioTurnoModal .form-select,
+#cambioTurnoModal .form-control {
+  background-color: #ffffff;
+  color: #1e3a8a;
+  border: none;
+  border-radius: 4px;
+}
+
+#cambioTurnoModal .form-select:focus,
+#cambioTurnoModal .form-control:focus {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  border-color: #3b82f6;
+}
+
+#cambioTurnoModal .modal-footer .btn-primary {
+  background-color: #3b82f6;
+  border: none;
+}
+
+#cambioTurnoModal .modal-footer .btn-primary:hover {
+  background-color: #2563eb;
+}
+
+/*eventos*/
+.eventos {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Eliminamos max-width y margin: auto para que ocupe todo el ancho */
+    width: 100%;
+    margin: 20px 0;
+}
+
+.solicitudes, .registroEventos {
+    margin-bottom: 30px;
+}
+
+.solicitudes h2, .registroEventos h2 {
+    font-size: 20px;
+    color: #495057;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.solicitudes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%; /* Aseguramos que ocupe todo el ancho */
+}
+
+.solicitud-card {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+    width: 100%; /* Tarjetas ocupan todo el ancho del contenedor */
+}
+
+.solicitud-card:hover {
+    background-color: #e9ecef;
+}
+
+.solicitud-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.solicitante-nombre {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.solicitud-content {
+    padding: 10px 0;
+}
+
+.solicitud-content p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.solicitud-content .comentario {
+    font-style: italic;
+    color: #6c757d;
+}
+
+.solicitud-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn {
+    padding: 6px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.aceptar {
+    background-color: #28a745;
+    color: white;
+}
+
+.rechazar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.aceptar:hover {
+    background-color: #218838;
+}
+.anular {
+    background-color: #e7e960;
+}
+.anular:hover {
+    background-color: #f3f712;
+}
+
+.rechazar:hover {
+    background-color: #c82333;
+}
+
+.no-solicitudes {
+    font-size: 16px;
+    color: #6c757d;
+    text-align: center;
+    padding: 10px;
+}
+/* Nuevo estilo para registroEventos */
+.eventos-container {
+      display: block; /* Cambiamos a bloque para un diseño vertical */
+    }
+    .evento {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .evento-fecha {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 2px 8px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+  .evento-detalle {
+    font-size: 1em;
+    color: #333;
+  }
+  .evento-detalle p {
+    margin: 0;
+    line-height: 1.4;
+  }
+  .separador {
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    opacity: 0.2;
+  }
+  .no-eventos {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* Colores según el tipo de solicitud */
+  .solicitudCambio {
+    background: #eef2ff;
+    border-left: 5px solid #1e3a8a;
+  }
+  .confirmacionCambio {
+    background: #e6f9e6;
+    border-left: 5px solid #2d862d;
+  }
+  .rechazoCambio {
+    background: #fbeaea;
+    border-left: 5px solid #cc0000;
+  }
+  .anularCambio {
+    background: #fff5cc;
+    border-left: 5px solid #e6b800;
+  }
+    </style>
+
+
+  </head>
+  <body>
+    <audio id="remoteAudio" autoplay></audio>
+    <!-- Sidebar Chat -->
+    <div
+    class="offcanvas offcanvas-end"
+    id="sidebarChat"
+    tabindex="-1"
+    aria-labelledby="sidebarLeftLabel"
+    >
+    <div id="plist" class="people-list">
+      <div class="offcanvas-header border-bottom bg-primary text-white">
+        <h5 class="offcanvas-title" id="sidebarLeftLabel">Chats</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="input-group p-3">
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Buscar..."
+        />
+      </div>
+      <ul class="list-unstyled chat-list mb-0">
+        <% info.listaPersonasChat.forEach(persona => { %>
+        <li
+          class="clearfix usuario-chat d-flex align-items-center p-3"
+          data-user-id="<%= persona.id %>"
+        >
+          <img src="/imagenes/user.png" alt="Avatar" class="avatar" />
+          <div class="about flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="name"><%= persona.nombre %></div>
+              <% if (persona.mensajes_no_leidos > 0) { %>
+              <div class="mensaje-no-leido" style="display: block"></div>
+              <% } %>
+            </div>
+            <div class="last-message">
+              <%= persona.ultimo_mensaje || '' %>
+            </div>
+            <div class="message-data-time">
+              <%= persona.fecha_ultimo_mensaje || '' %>
+            </div>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="chat" style="display: none">
+      <div class="chat-header bg-primary text-white">
+        <div
+          class="row align-items-center d-flex justify-content-between p-3"
+        >
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="/imagenes/user.png" alt="Avatar" class="avatar me-2" />
+            <div class="chat-about" data-user-id="">
+              <h6 class="m-0"></h6>
+            </div>
+          </div>
+          <div class="col-lg-6 text-end d-flex justify-content-end gap-2">
+            <button class="call-btn btn-img">
+              <img src="/imagenes/llamada.png" alt="Llamar" />
+            </button>
+            <button id="btnVolverLista" class="call-btn btn-img">
+              <img src="/imagenes/volver.png" alt="Volver" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-history" id="chat-box">
+        <ul class="m-b-0"></ul>
+      </div>
+      <div class="chat-message">
+        <div class="input-group">
+          <input
+            id="mensajeInput"
+            type="text"
+            class="form-control"
+            placeholder="Escribe un mensaje..."
+          />
+          <button class="btn btn-primary" id="enviarBtn">Enviar</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Sidebar Notificaciones -->
+
+    <div
+    class="offcanvas offcanvas-end bg-light"
+    id="sidebarNotificaciones"
+    tabindex="-1"
+    aria-labelledby="sidebarRightLabel"
+    >
+    <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title" id="sidebarRightLabel">Notificaciones</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Cerrar"
+    ></button>
+    </div>
+    <div class="offcanvas-body p-0">
+    <ul class="list-unstyled m-0" id="notificaciones">
+      <% info.notificaciones.forEach(notificacion => { %>
+      <li
+        class="p-3 border-bottom <%= notificacion.tipo_notificacion %>"
+        data-notificacion-id="<%= notificacion.id %>"
+      >
+        <small class="text-muted"
+          ><%= notificacion.fecha_formateada %></small
+        >
+        <div class="fw-bold">
+          <% if (notificacion.tipo_notificacion === 'tipo_mensaje') { %>
+          Mensaje Nuevo <% } else if (notificacion.tipo_notificacion ===
+          'tipo_horario') { %> Cambio de Horario <% } else if
+          (notificacion.tipo_notificacion === 'tipo_llamada') { %> Llamada
+          Perdida <% } else if (notificacion.tipo_notificacion ===
+          'tipo_mail') { %> Nuevo Email <% } else if
+          (notificacion.tipo_notificacion === 'tipo_bandeja_documentos') {
+          %> Bandeja Documentos <% } else if (notificacion.tipo_notificacion
+          === 'tipo_caducidad_3_dias_lote') { %> Lote Próximo a Caducar (3
+          días) <% } else if (notificacion.tipo_notificacion ===
+          'tipo_caducidad_1_dias_lote') { %> Lote a Punto de Caducar (1 día)
+          <% } else { %> Notificación <% } %>
+        </div>
+        <div><%= notificacion.contenido_notificacion %></div>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger mt-1 borrar-notificacion"
+          data-notificacion-id="<%= notificacion.id %>"
+        >
+          Borrar
+        </button>
+      </li>
+      <% }) %>
+    </ul>
+    <div class="p-3">
+      <a
+        href="/enfermeria/notificaciones"
+        class="btn btn-outline-primary w-100"
+      >
+        Ver todas las notificaciones
+      </a>
+    </div>
+    </div>
+    </div>
+
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="">
+    <a
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+    href="#"
+    >XANA INDUSTRIES</a>
+
+    <div class="d-flex gap-2 me-3">
+    <button
+    class="btn btn-secondary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarChat"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="chatIcon" style="display: block">
+      <img
+        src="/imagenes/chatIcon.png"
+        alt="Chat"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="chatIconNew" style="display: none">
+      <img
+        src="/imagenes/chatIconNew.png"
+        alt="Chat Nuevo"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+
+    <button
+    class="btn btn-secondary"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebarNotificaciones"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    >
+    <div id="notIcon" style="display: block">
+      <img
+        src="/imagenes/campana.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+
+    <!-- Imagen cuando hay mensajes nuevos -->
+    <div id="notIconNew" style="display: none">
+      <img
+        src="/imagenes/campanaConNotificacion.png"
+        alt="notificacion"
+        width="24"
+        height="24"
+      />
+    </div>
+    </button>
+    </div>
+    </header>
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
+          <div class="flex-shrink-0 p-3 scrollarea">
+            <a href="/home" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+              <h2 class="fs-5 fw-semibold text-primary">Inicio</h2>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/planta" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Planta</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>  
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/cima/cimaHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">CIMA</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#cima-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="cima-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/cima/medicamentosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamentos</a></li>
+                    <li><a href="/cima/medicamentoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Buscar Medicamento</a></li>
+                    <li><a href="/cima/documentoSegmentadoCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Documentos Segmentados</a></li>
+                    <li><a href="/cima/descripcionClinicaCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Descripción Clínica</a></li>
+                    <li><a href="/cima/registroCambiosCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Registro Cambios En Medicamentos</a></li>
+                    <li><a href="/cima/maestrasCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Maestras Medicamento</a></li>
+                    <li><a href="/cima/notasSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Notas De Seguridad</a></li>
+                    <li><a href="/cima/materialesInformativosSeguridadCima" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Materiales Informativos</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>            
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/comunicacionHome" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Comunicación</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#comunicacion-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="comunicacion-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/comunicacion/chat" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Chat</a></li>
+                    <li><a href="/comunicacion/contactos" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Contactos</a></li>
+                    <li><a href="/comunicacion/mail/bandeja" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Mail</a></li>
+                  </ul>
+                </div>
+              </li>    
+              <li class="border-top my-3"></li>   
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/horarios" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Horarios</a>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#horarios-collapse" aria-expanded="false">
+                    <svg class="bi pe-none" width="16" height="16"><use xlink:href="#chevron-down"/></svg>
+                  </button>
+                </div>
+                <div class="collapse" id="horarios-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="/enfermeriaEncargado/horarios/generarHorario" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Generar Horario</a></li>
+                  </ul>
+                </div>
+              </li>     
+              <li class="border-top my-3"></li> 
+              <li class="mb-1">
+                <div class="d-flex align-items-center">
+                  <a href="/enfermeria/farmacia" class="btn d-inline-flex align-items-center rounded border-0 text-decoration-none text-primary fw-semibold">Farmacia</a>
+                </div>
+              </li>
+              <li class="border-top my-3"></li> 
+            </ul>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 id="nombreDelUsuario">Horario</h1>
+            <div class=" d-flex align-items-center">
+              <a id="btnVolverLista" class="call-btn btn-img me-2" href="/home">
+                <img
+                  src="/imagenes/volver.png"
+                  alt="Volver"
+                  style="width: 24px; height: 24px"
+                />
+              </a>
+              <h2 class="m-0"></h2>
+            </div>
+          </div>
+          <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+              <div class="header">
+                <div class="header-top">
+                  <h1 class="especialidad-title"id ="tituloEspecialidad"><%= info.especialidad %></h1>
+                  <span class="fecha-actual"><%= info.mes %> <%= info.año %></span>
+                </div>
+                <div class="trabajadores">
+                  <h3>Plantilla</h3>
+                  <p class="lista-trabajadores">
+                    <% info.nombresPlantilla.forEach(trabajador => { %>
+                      <%= trabajador.nombre_completo %>,
+                    <% }) %>
+                    </p>
+                </div>
+                <button class="btn-generar" id="generarHorarioBtn">Generar Horario</button>
+              </div>
+            
+              <!-- Sección del calendario -->
+              <div class="calendario">
+                <div class="calendario-header">
+                  <h2 id="titulo-calendario">Horario de <%= info.mes %> <%= info.año %></h2>
+                  <select class="selector-mes" id="selector-mes">
+                    <% info.meses.forEach(mes => { %>
+                      <option value="<%= mes %>" <%= mes === info.mes ? 'selected' : '' %>><%= mes %></option>
+                    <% }) %>
+                  </select>
+                  <select class="selector-año" id="selector-año">
+                    <% const años = [2024, 2025, 2026, 2027, 2028, 2029, 2030]; %> <!-- Ajusta los años según necesites -->
+                    <% años.forEach(año => { %>
+                      <option value="<%= año %>" <%= año === info.año ? 'selected' : '' %>><%= año %></option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="calendario-grid">
+                  <!-- Días de la semana -->
+                  <div class="dia-semana">Lun</div>
+                  <div class="dia-semana">Mar</div>
+                  <div class="dia-semana">Mié</div>
+                  <div class="dia-semana">Jue</div>
+                  <div class="dia-semana">Vie</div>
+                  <div class="dia-semana">Sáb</div>
+                  <div class="dia-semana">Dom</div>
+              
+                  <!-- Espacios vacíos antes del día 1 -->
+                  <% for(let i = 0; i < info.offset; i++) { %>
+                    <div class="dia-vacio"></div>
+                  <% } %>
+              
+                  <!-- Días del mes -->
+                  <% for(let dia = 1; dia <= info.diasEnMes; dia++) { %>
+                    <div class="dia">
+                      <div class="numero-dia"><%= dia %></div>
+              
+                      <!-- Turno Mañana -->
+                      <div class="turno mañana <%= info.id_usuario && info.horarios.some(h => h.dia === dia && h.turno === 'Mañana' && h.id === info.id_usuario) ? 'resaltado' : '' %>"
+                           data-bs-toggle="modal" data-bs-target="#turnoModal"
+                           data-info='<%= JSON.stringify(info.horarios.filter(h => h.dia === dia && h.turno === "Mañana" && h.mes === info.mes && h.año === info.año).length > 0 ? info.horarios.filter(h => h.dia === dia && h.turno === "Mañana" && h.mes === info.mes && h.año === info.año) : [{ turno: "Mañana", dia: dia, nombre_trabajador: "-", id: null }]) %>'>
+                        <% 
+                          const mañana = info.horarios.filter(h => h.dia === dia && h.turno === 'Mañana' && h.mes === info.mes && h.año === info.año); 
+                          if (mañana.length > 0) { 
+                            mañana.forEach(trabajador => { %>
+                              <div><%= trabajador.nombre_trabajador %></div>
+                            <% });
+                          } else { %>
+                            <div>-</div>
+                          <% } %>
+                      </div>
+              
+                      <!-- Turno Tarde -->
+                      <div class="turno tarde <%= info.id_usuario && info.horarios.some(h => h.dia === dia && h.turno === 'Tarde' && h.id === info.id_usuario) ? 'resaltado' : '' %>"
+                           data-bs-toggle="modal" data-bs-target="#turnoModal"
+                           data-info='<%= JSON.stringify(info.horarios.filter(h => h.dia === dia && h.turno === "Tarde" && h.mes === info.mes && h.año === info.año).length > 0 ? info.horarios.filter(h => h.dia === dia && h.turno === "Tarde" && h.mes === info.mes && h.año === info.año) : [{ turno: "Tarde", dia: dia, nombre_trabajador: "-", id: null }]) %>'>
+                        <% 
+                          const tarde = info.horarios.filter(h => h.dia === dia && h.turno === 'Tarde' && h.mes === info.mes && h.año === info.año); 
+                          if (tarde.length > 0) { 
+                            tarde.forEach(trabajador => { %>
+                              <div><%= trabajador.nombre_trabajador %></div>
+                            <% });
+                          } else { %>
+                            <div>-</div>
+                          <% } %>
+                      </div>
+              
+                      <!-- Turno Noche -->
+                      <div class="turno noche <%= info.id_usuario && info.horarios.some(h => h.dia === dia && h.turno === 'Noche' && h.id === info.id_usuario) ? 'resaltado' : '' %>"
+                           data-bs-toggle="modal" data-bs-target="#turnoModal"
+                           data-info='<%= JSON.stringify(info.horarios.filter(h => h.dia === dia && h.turno === "Noche" && h.mes === info.mes && h.año === info.año).length > 0 ? info.horarios.filter(h => h.dia === dia && h.turno === "Noche" && h.mes === info.mes && h.año === info.año) : [{ turno: "Noche", dia: dia, nombre_trabajador: "-", id: null }]) %>'>
+                        <% 
+                          const noche = info.horarios.filter(h => h.dia === dia && h.turno === 'Noche' && h.mes === info.mes && h.año === info.año); 
+                          if (noche.length > 0) { 
+                            noche.forEach(trabajador => { %>
+                              <div><%= trabajador.nombre_trabajador %></div>
+                            <% });
+                          } else { %>
+                            <div>-</div>
+                          <% } %>
+                      </div>
+                    </div>
+                  <% } %>
+                </div>
+              </div>
+            
+              <div class="eventos">
+                  <!-- Sección de Solicitudes -->
+                <div class="solicitudes">
+                    <h2>Solicitudes de Cambio Recibidas</h2>
+                  <% if (info.eventos.solicitudesRecibidas && info.eventos.solicitudesRecibidas.length > 0) { %>
+                      <div class="solicitudes-container">
+                          <% info.eventos.solicitudesRecibidas.forEach(solicitud => { %>
+                              <div class="solicitud-card" 
+                                  data-id="<%= solicitud.id_registro %>"
+                                  data-id-turno-solicitado="<%= solicitud.id_turno_solicitado %>"
+                                  data-id-turno-a-cambiar="<%= solicitud.id_turno_a_cambiar %>"
+                                  data-id-empleado-receptor="<%= solicitud.id_empleado_receptor %>"
+                                  data-id-empleado-solicitante="<%= solicitud.id_empleado_solicitante %>"
+                                  data-nombre-receptor="<%= solicitud.nombre_receptor %>"
+                                  data-fecha-evento="<%= solicitud.fecha_evento %>">
+                                  <div class="solicitud-header">
+                                      <span class="solicitante-nombre"><%= solicitud.nombre_solicitante %></span>
+                                  </div>
+                                  <div class="solicitud-content">
+                                      <p><strong>Solicita:</strong> <%= solicitud.descripcion_turno_solicitado %></p>
+                                      <p><strong>Ofrece:</strong> <%= solicitud.descripcion_turno_a_cambiar %></p>
+                                      <p class="comentario"><strong>Comentario:</strong> <%= solicitud.comentario || 'Sin comentarios' %></p>
+                                  </div>
+                                  <div class="solicitud-actions">
+                                      <button class="btn aceptar" data-id="<%= solicitud.id_registro %>">Aceptar</button>
+                                      <button class="btn rechazar" data-id="<%= solicitud.id_registro %>">Rechazar</button>
+                                  </div>
+                              </div>
+                          <% }) %>
+                      </div>
+                  <% } else { %>
+                      <p class="no-solicitudes">No hay solicitudes pendientes</p>
+                  <% } %>
+
+                  <h2>Solicitudes de Cambio Enviadas</h2>
+                  <% if (info.eventos.solicitudesEnviadas && info.eventos.solicitudesEnviadas.length > 0) { %>
+                      <div class="solicitudes-container">
+                          <% info.eventos.solicitudesEnviadas.forEach(solicitud => { %>
+                              <div class="solicitud-card" 
+                                  data-id="<%= solicitud.id_registro %>"
+                                  data-id-turno-solicitado="<%= solicitud.id_turno_solicitado %>"
+                                  data-id-turno-a-cambiar="<%= solicitud.id_turno_a_cambiar %>"
+                                  data-id-empleado-receptor="<%= solicitud.id_empleado_receptor %>"
+                                  data-id-empleado-solicitante="<%= solicitud.id_empleado_solicitante %>"
+                                  data-nombre-receptor="<%= solicitud.nombre_receptor %>"
+                                  data-fecha-evento="<%= solicitud.fecha_evento %>">
+                                  <div class="solicitud-header">
+                                      <span class="solicitante-nombre"><%= solicitud.nombre_solicitante %></span>
+                                  </div>
+                                  <div class="solicitud-content">
+                                    <p><strong>Hacia:</strong> <%= solicitud.nombre_receptor %></p>
+                                      <p><strong>Solicita:</strong> <%= solicitud.descripcion_turno_solicitado %></p>
+                                      <p><strong>Ofrece:</strong> <%= solicitud.descripcion_turno_a_cambiar %></p>
+                                      <p class="comentario"><strong>Comentario:</strong> <%= solicitud.comentario || 'Sin comentarios' %></p>
+                                  </div>
+                                  <div class="solicitud-actions">
+                                      <button class="btn anular" data-id="<%= solicitud.id_registro %>">Anular</button>
+                                  </div>
+                              </div>
+                          <% }) %>
+                      </div>
+                  <% } else { %>
+                      <p class="no-solicitudes">No hay solicitudes pendientes</p>
+                  <% } %>
+                </div>
+            
+                <!-- Placeholder para Registro de Eventos -->
+                <div class="registroEventos">
+                    <h2>Registro de Eventos</h2>
+                    <% if (info.eventos.registrosEventos && info.eventos.registrosEventos.length > 0) { %>
+                      <% info.eventos.registrosEventos.forEach((evento, index) => { %>
+                        <% if (['solicitudCambio', 'confirmacionCambio', 'rechazoCambio', 'anularCambio'].includes(evento.tipo_solicitud)) { %>
+                          <div class="evento <%= evento.tipo_solicitud %>">
+                            <div class="evento-fecha">
+                              <%= evento.fecha_evento %>
+                            </div>
+                            <div class="evento-detalle">
+                              <p>
+                                <% if (evento.tipo_solicitud === 'solicitudCambio') { %>
+                                  <%= evento.nombre_solicitante %> solicitó a <%= evento.nombre_receptor %> 
+                                  el turno "<%= evento.descripcion_turno_solicitado %>".
+                                <% } else if (evento.tipo_solicitud === 'confirmacionCambio') { %>
+                                  <%= evento.nombre_solicitante %> confirmó el cambio de turno con <%= evento.nombre_receptor %> 
+                                  por "<%= evento.descripcion_turno_solicitado %>".
+                                <% } else if (evento.tipo_solicitud === 'rechazoCambio') { %>
+                                  <%= evento.nombre_solicitante %> rechazó el cambio de turno con <%= evento.nombre_receptor %> 
+                                  por "<%= evento.descripcion_turno_solicitado %>".
+                                <% } else if (evento.tipo_solicitud === 'anularCambio') { %>
+                                  <%= evento.nombre_solicitante %> anuló la solicitud de cambio con <%= evento.nombre_receptor %> 
+                                  para el turno "<%= evento.descripcion_turno_solicitado %>".
+                                <% } %>
+                                Comentario: "<%= evento.comentario || 'Sin comentarios' %>"
+                              </p>
+                            </div>
+                          </div>
+                          <% if (index < info.eventos.registrosEventos.length - 1) { %>
+                            <div class="separador"></div>
+                          <% } %>
+                        <% } %>
+                      <% }) %>
+                    <% } else { %>
+                      <p class="no-eventos">No hay eventos registrados</p>
+                    <% } %>
+                </div>
+              </div>
+            </div>
+              
+              
+          </div>
+          
+        </main>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamando"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamando</p>
+                <p
+                  data-Persona-a-la-que-se-llama-id=""
+                  id="persona_a_la_que_se_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Este bloque contiene el nombre y se coloca encima del segundo footer -->
+
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLlamando"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLLamadaEnCurso"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name"></p>
+                <p
+                  class=""
+                  data-Persona-Con-La-Que-Se-Habla-Id=""
+                  id="persona_con_la_que_se_habla"
+                ></p>
+                <!-- Agregamos el cronómetro aquí -->
+                <p id="callTimer">00:00</p>
+              </div>
+            </div>
+            <div class="footer">
+              <button
+                class="bouton raccrocher"
+                id="btnFinalizarLLamadaEnCurso"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Finalizar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="modalLlamandaEntrante"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="card">
+            <!-- Header que ya tenías -->
+            <div class="header">
+              <div class="contenedorInfoHeader">
+                <p class="caller-name">Llamanda Entrante</p>
+                <p
+                  class=""
+                  data-Persona-que-llama-id=""
+                  id="Persona_que_llama"
+                ></p>
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Segundo bloque de footer con los botones -->
+              <button
+                class="bouton accepter"
+                id="btnAceptarLlamada"
+                title="Aceptar"
+              >
+                <span class="icon green">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M20.707 5.293a1 1 0 00-1.414 0L9 15.586 4.707 11.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l11-11a1 1 0 000-1.414z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Aceptar</span>
+              </button>
+
+              <button
+                class="bouton raccrocher"
+                id="btnRechazarLlamada"
+                title="Rechazar"
+              >
+                <span class="icon red">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                      d="M18.364 5.636a2 2 0 00-2.828 0L12 9.172 8.464 5.636a2 2 0 00-2.828 2.828L9.172 12l-3.536 3.536a2 2 0 102.828 2.828L12 14.828l3.536 3.536a2 2 0 002.828-2.828L14.828 12l3.536-3.536a2 2 0 000-2.828z"
+                    />
+                  </svg>
+                </span>
+                <span class="btn-text">Colgar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="turnoModal" tabindex="-1" aria-labelledby="turnoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered"> <!-- Centrado en la pantalla -->
+        <div class="modal-content" style="background-color: #1e3a8a; color: #ffffff;"> <!-- Fondo azul -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="turnoModalLabel">Detalles del Turno</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Botón de cierre blanco -->
+          </div>
+          <div class="modal-body">
+            <p><strong>Día:</strong> <span id="modalDia"></span></p>
+            <p><strong>Turno:</strong> <span id="modalTurno"></span></p>
+            <p><strong>Horas:</strong> <span id="modalHora"></span></p>
+            <p><strong>Trabajadores asignados:</strong></p>
+            <ul id="modalTrabajadoresList" class="list-unstyled"></ul> <!-- Lista de trabajadores -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="cambioTurnoModal" tabindex="-1" aria-labelledby="cambioTurnoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #1e3a8a; color: #ffffff;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cambioTurnoModalLabel">Solicitar Cambio de Turno</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Parte 1: Especificaciones del turno -->
+            <div class="turno-info">
+              <p><strong>Día:</strong> <span id="cambioModalDia"></span></p>
+              <p><strong>Turno:</strong> <span id="cambioModalTurno"></span></p>
+              <p><strong>Horas:</strong> <span id="cambioModalHora"></span></p>
+              <p><strong>Trabajador:</strong> <span id="cambioModalTrabajador"></span></p>
+            </div>
+            <hr style="border-color: rgba(255, 255, 255, 0.2);">
+            <!-- Parte 2: Formulario de solicitud -->
+             
+            <div class="solicitud-info">
+              <p><strong>Usuario solicitante:</strong> <span id="cambioModalUsuario"></span></p>
+              <p><strong>Seleccionar nuevo turno:</strong></p>
+              <select id="cambioModalTurnos" class="form-select" style="background-color: #ffffff; color: #1e3a8a;"></select>
+              <p class="mt-3"><strong>Comentarios (opcional):</strong></p>
+              <textarea id="cambioModalComentarios" class="form-control" rows="3" placeholder="Escribe un comentario si lo deseas..." style="background-color: #ffffff; color: #1e3a8a;"></textarea>
+            <div id="infoProceso"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" id="cancelarCambio" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="confirmarCambio">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/comunicacion.js"></script>
+
+
+
+   <script>
+    // Función para inicializar los eventos de los turnos
+    function inicializarEventosTurnos() {
+        document.querySelectorAll('.turno').forEach(turno => {
+            turno.addEventListener('click', async function() {
+                const info = JSON.parse(this.getAttribute('data-info'));
+                const mesActual = document.getElementById('selector-mes').value;
+
+                document.getElementById('modalDia').textContent = `${info[0].dia} de ${mesActual} ${info[0].año}`;
+                document.getElementById('modalTurno').textContent = info[0].turno;
+                document.getElementById('modalHora').textContent = info[0].turno === 'Mañana' ? '08:00 - 14:00' : 
+                                                                  info[0].turno === 'Tarde' ? '14:00 - 20:00' : '20:00 - 08:00';
+
+                const trabajadoresList = document.getElementById('modalTrabajadoresList');
+                trabajadoresList.innerHTML = '';
+                if (info.length === 1 && info[0].nombre_trabajador === '-') {
+                    const li = document.createElement('li');
+                    li.textContent = 'No asignado';
+                    trabajadoresList.appendChild(li);
+                } else {
+                    info.forEach(trabajador => {
+                        const li = document.createElement('li');
+                        const nombreSpan = document.createElement('span');
+                        nombreSpan.textContent = trabajador.nombre_trabajador;
+                        const boton = document.createElement('button');
+                        boton.className = 'btn-solicitar';
+                        boton.textContent = 'Solicitar Cambio';
+                        boton.setAttribute('data-turno-id', trabajador.id);
+                        boton.setAttribute('data-empleado-id', trabajador.id_empleado);
+                        boton.setAttribute('data-trabajador', trabajador.nombre_trabajador);
+                        boton.setAttribute('data-dia', info[0].dia);
+                        boton.setAttribute('data-turno', info[0].turno);
+                        boton.setAttribute('data-hora', info[0].turno === 'Mañana' ? '08:00 - 14:00' : 
+                                                      info[0].turno === 'Tarde' ? '14:00 - 20:00' : '20:00 - 08:00');
+                        boton.addEventListener('click', async function() {
+                            const receptorIdTurno = this.getAttribute('data-turno-id');
+                            const receptorIdEmpleado = this.getAttribute('data-empleado-id');
+                            const receptorNombre = this.getAttribute('data-trabajador');
+                            const receptorDia = this.getAttribute('data-dia');
+                            const receptorTurno = this.getAttribute('data-turno');
+                            const receptorHora = this.getAttribute('data-hora');
+
+                            const turnoModal = bootstrap.Modal.getInstance(document.getElementById('turnoModal'));
+                            turnoModal.hide();
+
+                            document.getElementById('cambioModalDia').textContent = `${receptorDia} de ${mesActual} ${info[0].año}`;
+                            document.getElementById('cambioModalTurno').textContent = receptorTurno;
+                            document.getElementById('cambioModalHora').textContent = receptorHora;
+                            document.getElementById('cambioModalTrabajador').textContent = receptorNombre;
+                            document.getElementById('cambioModalUsuario').textContent = document.getElementById('nombreDelUsuario').textContent || receptorNombre;
+                            document.getElementById('confirmarCambio').setAttribute('data-turno-id', receptorIdTurno);
+                            document.getElementById('confirmarCambio').setAttribute('data-empleado-id', receptorIdEmpleado);
+
+                            const selectTurnos = document.getElementById('cambioModalTurnos');
+                            selectTurnos.innerHTML = '<option value="">Cargando turnos...</option>';
+
+                            try {
+                                const miIdEmpleado = localStorage.getItem("usuarioId");
+                                console.log(miIdEmpleado)
+                                const response = await fetch(`/enfermeria/horariosHome/recuperarTurnosTrabajador?id=${miIdEmpleado}`);
+                                const data = await response.json();
+                                console.log(data);
+
+                                selectTurnos.innerHTML = '<option value="">Selecciona un turno</option>';
+                                if (data.length === 0) {
+                                    selectTurnos.innerHTML = '<option value="">No hay turnos futuros disponibles</option>';
+                                } else {
+                                    data.forEach(turno => {
+                                        const option = document.createElement('option');
+                                        option.value = turno.id;
+                                        const horas = turno.turno === 'Mañana' ? '08:00 - 14:00' : 
+                                                     turno.turno === 'Tarde' ? '14:00 - 20:00' : '20:00 - 08:00';
+                                        option.textContent = `Día ${turno.dia}, ${turno.dia_semana} - ${turno.turno} (${horas})`;
+                                        option.setAttribute('data-año', turno.año);
+                                        option.setAttribute('data-mes', turno.mes);
+                                        option.setAttribute('data-dia_semana', turno.dia_semana);
+                                        option.setAttribute('data-nombre_trabajador', turno.nombre_trabajador);
+                                        option.setAttribute('data-especialidad', turno.especialidad);
+                                        option.setAttribute('data-empleado-id', turno.id_empleado);
+                                        selectTurnos.appendChild(option);
+                                    });
+                                }
+                            } catch (error) {
+                                console.error('Error al cargar turnos:', error);
+                                selectTurnos.innerHTML = '<option value="">Error al cargar turnos</option>';
+                            }
+
+                            document.getElementById('cambioModalComentarios').value = '';
+                            const cambioModal = new bootstrap.Modal(document.getElementById('cambioTurnoModal'));
+                            cambioModal.show();
+                        });
+                        li.appendChild(nombreSpan);
+                        li.appendChild(boton);
+                        trabajadoresList.appendChild(li);
+                    });
+                }
+            });
+        });
+    }
+
+    // Función para actualizar el calendario con fetch
+    function actualizarCalendario() {
+        const mes = document.getElementById('selector-mes').value;
+        const año = document.getElementById('selector-año').value;
+        const especialidad = document.getElementById('tituloEspecialidad').textContent;
+        console.log(especialidad);
+
+        document.getElementById('titulo-calendario').textContent = `Horario de ${mes} ${año}`;
+
+        regenerarGrid(mes, año);
+
+        fetch(`/enfermeria/horarios/actualizarCalendario?mes=${encodeURIComponent(mes)}&año=${año}&especialidad=${especialidad}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Datos recibidos:', data);
+                    llenarTurnos(data.turnos, mes, año);
+                    inicializarEventosTurnos(); // Reaplicamos los eventos después de llenar los turnos
+                } else {
+                    alert("EL HORARIO SELECCIONADO AUN NO ESTA DISPONIBLE");
+                }
+            })
+            .catch(error => {
+                console.error('Error en fetch:', error);
+            });
+    }
+
+    function getDiasEnMes(mes, año) {
+        const mesIndex = {
+            'enero': 0, 'febrero': 1, 'marzo': 2, 'abril': 3, 'mayo': 4, 'junio': 5,
+            'julio': 6, 'agosto': 7, 'septiembre': 8, 'octubre': 9, 'noviembre': 10, 'diciembre': 11
+        }[mes.toLowerCase()];
+        return new Date(año, mesIndex + 1, 0).getDate();
+    }
+
+    function regenerarGrid(mes, año) {
+        const diasEnMes = getDiasEnMes(mes, año);
+        const mesIndex = {
+            'enero': 0, 'febrero': 1, 'marzo': 2, 'abril': 3, 'mayo': 4, 'junio': 5,
+            'julio': 6, 'agosto': 7, 'septiembre': 8, 'octubre': 9, 'noviembre': 10, 'diciembre': 11
+        }[mes.toLowerCase()];
+        
+        const primerDia = new Date(año, mesIndex, 1).getDay();
+        const offset = (primerDia + 6) % 7;
+        
+        let html = `
+            <div class="dia-semana">Lun</div>
+            <div class="dia-semana">Mar</div>
+            <div class="dia-semana">Mié</div>
+            <div class="dia-semana">Jue</div>
+            <div class="dia-semana">Vie</div>
+            <div class="dia-semana">Sáb</div>
+            <div class="dia-semana">Dom</div>
+        `;
+        
+        for(let i = 0; i < offset; i++) {
+            html += '<div class="dia-vacio"></div>';
+        }
+        
+        for(let dia = 1; dia <= diasEnMes; dia++) {
+            html += `
+                <div class="dia">
+                    <div class="numero-dia">${dia}</div>
+                    <div class="turno mañana" data-bs-toggle="modal" data-bs-target="#turnoModal" data-info='[]'>-</div>
+                    <div class="turno tarde" data-bs-toggle="modal" data-bs-target="#turnoModal" data-info='[]'>-</div>
+                    <div class="turno noche" data-bs-toggle="modal" data-bs-target="#turnoModal" data-info='[]'>-</div>
+                </div>
+            `;
+        }
+        
+        document.querySelector('.calendario-grid').innerHTML = html;
+    }
+
+    function llenarTurnos(turnos, mes, año) {
+        const calendarioGrid = document.querySelector('.calendario-grid');
+        const dias = calendarioGrid.querySelectorAll('.dia');
+        const diasEnMes = getDiasEnMes(mes, año);
+
+        turnos.forEach(turno => {
+            if (turno.dia > 0 && turno.dia <= diasEnMes) {
+                const diaNum = turno.dia;
+                const diaElement = Array.from(dias).find(d => 
+                    parseInt(d.querySelector('.numero-dia').textContent) === diaNum
+                );
+
+                if (diaElement) {
+                    let turnoElement;
+                    switch(turno.turno.toLowerCase()) {
+                        case 'mañana':
+                            turnoElement = diaElement.querySelector('.turno.mañana');
+                            break;
+                        case 'tarde':
+                            turnoElement = diaElement.querySelector('.turno.tarde');
+                            break;
+                        case 'noche':
+                            turnoElement = diaElement.querySelector('.turno.noche');
+                            break;
+                    }
+
+                    if (turnoElement) {
+                        turnoElement.innerHTML = `<div>${turno.nombre_trabajador}</div>`;
+                        const turnoInfo = [{
+                            turno: turno.turno,
+                            dia: turno.dia,
+                            nombre_trabajador: turno.nombre_trabajador,
+                            id: turno.id,
+                            mes: turno.mes,
+                            año: turno.año,
+                            id_empleado: turno.id_empleado // Añadimos id_empleado para el modal
+                        }];
+                        turnoElement.dataset.info = JSON.stringify(turnoInfo);
+                    }
+                }
+            }
+        });
+    }
+
+    // Evento para confirmar el cambio
+    document.getElementById('confirmarCambio').addEventListener('click', async function() {
+        const receptorIdTurno = this.getAttribute('data-turno-id');
+        const receptorIdEmpleado = this.getAttribute('data-empleado-id');
+        const receptorDia = document.getElementById('cambioModalDia').textContent;
+        const receptorTurno = document.getElementById('cambioModalTurno').textContent;
+        const receptorNombre = document.getElementById('cambioModalTrabajador').textContent;
+        const selectTurnos = document.getElementById('cambioModalTurnos');
+        const miTurnoId = selectTurnos.value;
+        const selectedOption = selectTurnos.options[selectTurnos.selectedIndex];
+        const miTurnoTexto = selectedOption.textContent;
+        const miIdEmpleado = localStorage.getItem("usuarioId");
+        const miNombreUsuario = "<%= info.nombre %>";
+        const comentarios = document.getElementById('cambioModalComentarios').value;
+
+        if (!miTurnoId || miTurnoId === "") {
+            const existingAlert = document.querySelector('.alert-danger');
+            if (!existingAlert) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger mt-3';
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.textContent = 'Por favor, selecciona un turno para continuar.';
+                document.querySelector('.solicitud-info').appendChild(alertDiv);
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+            return;
+        }
+
+        const solicitudCambio = {
+            receptorIdTurno,
+            receptorIdEmpleado,
+            receptorDia,
+            receptorTurno,
+            receptorNombre,
+            miTurnoId,
+            miIdEmpleado,
+            miTurnoTexto,
+            miNombreUsuario,
+            comentarios
+        };
+
+        try {
+            const response = await fetch('/enfermeria/horariosHome/solicitarCambioDeTurno', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(solicitudCambio)
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.success === true) {
+                const cambioModal = bootstrap.Modal.getInstance(document.getElementById('cambioTurnoModal'));
+                const successDiv = document.getElementById('infoProceso');
+                successDiv.className = 'alert alert-success mt-3';
+                successDiv.textContent = 'Solicitud de cambio enviada con éxito';
+                document.querySelector('.solicitud-info').appendChild(successDiv);
+                setTimeout(() => {
+                    successDiv.remove();
+                    cambioModal.hide();
+                    window.location.reload()
+                }, 3000);
+            } else {
+                const successDiv = document.getElementById('infoProceso');
+                successDiv.className = 'alert alert-danger mt-3';
+                successDiv.textContent = data.message;
+                document.querySelector('.solicitud-info').appendChild(successDiv);
+                setTimeout(() => {
+                    successDiv.remove();
+                }, 3000);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de cambio:', error);
+        }
+    });
+
+    // Eventos para aceptar, rechazar y anular solicitudes
+    document.querySelectorAll('.aceptar').forEach(button => {
+        button.addEventListener('click', async () => {
+            const idRegistro = button.getAttribute('data-id');
+            const card = document.querySelector(`.solicitud-card[data-id="${idRegistro}"]`);
+            if (!card) return;
+
+            const solicitudData = {
+                id_registro: idRegistro,
+                id_turno_solicitado: card.getAttribute('data-id-turno-solicitado'),
+                id_turno_a_cambiar: card.getAttribute('data-id-turno-a-cambiar'),
+                id_empleado_receptor: card.getAttribute('data-id-empleado-receptor'),
+                descripcion_turno_solicitado: card.querySelector('.solicitud-content p:nth-child(1)').textContent.replace('Solicita: ', ''),
+                nombre_receptor: card.getAttribute('data-nombre-receptor'),
+                id_empleado_solicitante: card.getAttribute('data-id-empleado-solicitante'),
+                descripcion_turno_a_cambiar: card.querySelector('.solicitud-content p:nth-child(2)').textContent.replace('Ofrece: ', ''),
+                nombre_solicitante: card.querySelector('.solicitante-nombre').textContent,
+                comentario: card.querySelector('.comentario').textContent.replace('Comentario: ', ''),
+                fecha_evento: card.getAttribute('data-fecha-evento'),
+                contestado: 1,
+                tipo_solicitud: "confirmacionCambio"
+            };
+            console.log(solicitudData);
+
+            try {
+                const response = await fetch('/enfermeria/horariosHome/accionCambioDeTurno', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(solicitudData)
+                });
+
+                if (response.ok) {
+                    window.location.reload()
+                } else {
+                    alert('Error al procesar la solicitud');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectar con el servidor');
+            }
+        });
+    });
+
+    document.querySelectorAll('.rechazar').forEach(button => {
+        button.addEventListener('click', async () => {
+            const idRegistro = button.getAttribute('data-id');
+            const card = document.querySelector(`.solicitud-card[data-id="${idRegistro}"]`);
+            if (!card) return;
+
+            const solicitudData = {
+                id_registro: idRegistro,
+                id_turno_solicitado: card.getAttribute('data-id-turno-solicitado'),
+                id_turno_a_cambiar: card.getAttribute('data-id-turno-a-cambiar'),
+                id_empleado_receptor: card.getAttribute('data-id-empleado-receptor'),
+                descripcion_turno_solicitado: card.querySelector('.solicitud-content p:nth-child(1)').textContent.replace('Solicita: ', ''),
+                nombre_receptor: card.getAttribute('data-nombre-receptor'),
+                id_empleado_solicitante: card.getAttribute('data-id-empleado-solicitante'),
+                descripcion_turno_a_cambiar: card.querySelector('.solicitud-content p:nth-child(2)').textContent.replace('Ofrece: ', ''),
+                nombre_solicitante: card.querySelector('.solicitante-nombre').textContent,
+                comentario: card.querySelector('.comentario').textContent.replace('Comentario: ', ''),
+                fecha_evento: card.getAttribute('data-fecha-evento'),
+                contestado: 1,
+                tipo_solicitud: "rechazoCambio"
+            };
+
+            try {
+                const response = await fetch('/enfermeria/horariosHome/accionCambioDeTurno', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(solicitudData)
+                });
+
+                if (response.ok) {
+                    card.remove();
+                    alert('Solicitud Rechazada');
+                } else {
+                    alert('Error al procesar la solicitud');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectar con el servidor');
+            }
+        });
+    });
+
+    document.querySelectorAll('.anular').forEach(button => {
+        button.addEventListener('click', async () => {
+            const idRegistro = button.getAttribute('data-id');
+            const card = document.querySelector(`.solicitud-card[data-id="${idRegistro}"]`);
+            if (!card) return;
+
+            const solicitudData = {
+                id_registro: idRegistro,
+                id_turno_solicitado: card.getAttribute('data-id-turno-solicitado'),
+                id_turno_a_cambiar: card.getAttribute('data-id-turno-a-cambiar'),
+                id_empleado_receptor: card.getAttribute('data-id-empleado-receptor'),
+                descripcion_turno_solicitado: card.querySelector('.solicitud-content p:nth-child(1)').textContent.replace('Solicita: ', ''),
+                nombre_receptor: card.getAttribute('data-nombre-receptor'),
+                id_empleado_solicitante: card.getAttribute('data-id-empleado-solicitante'),
+                descripcion_turno_a_cambiar: card.querySelector('.solicitud-content p:nth-child(2)').textContent.replace('Ofrece: ', ''),
+                nombre_solicitante: card.querySelector('.solicitante-nombre').textContent,
+                comentario: card.querySelector('.comentario').textContent.replace('Comentario: ', ''),
+                fecha_evento: card.getAttribute('data-fecha-evento'),
+                contestado: 1,
+                tipo_solicitud: "anularCambio"
+            };
+
+            try {
+                const response = await fetch('/enfermeria/horariosHome/accionCambioDeTurno', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(solicitudData)
+                });
+
+                if (response.ok) {
+                    card.remove();
+                    alert('Solicitud Anulada');
+                } else {
+                    alert('Error al procesar la solicitud');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectar con el servidor');
+            }
+        });
+    });
+
+    document.getElementById('generarHorarioBtn').addEventListener("click", async () => {
+        window.location.href = "/enfermeriaEncargado/horarios/generarHorario";
+    });
+
+    // Añadir eventos a los selectores
+    document.getElementById('selector-mes').addEventListener('change', actualizarCalendario);
+    document.getElementById('selector-año').addEventListener('change', actualizarCalendario);
+
+    // Funciones para limpiar modales
+    function limpiarTurnoModal() {
+        document.getElementById('modalDia').textContent = '';
+        document.getElementById('modalTurno').textContent = '';
+        document.getElementById('modalHora').textContent = '';
+        document.getElementById('modalTrabajadoresList').innerHTML = '';
+        document.getElementById('infoProceso').innerHTML = '';
+    }
+
+    function limpiarCambioTurnoModal() {
+        document.getElementById('cambioModalDia').textContent = '';
+        document.getElementById('cambioModalTurno').textContent = '';
+        document.getElementById('cambioModalHora').textContent = '';
+        document.getElementById('cambioModalTrabajador').textContent = '';
+        document.getElementById('cambioModalTurnos').innerHTML = '<option value="">Selecciona un turno</option>';
+        document.getElementById('cambioModalComentarios').value = '';
+        document.getElementById('infoProceso').innerHTML = '';
+    }
+
+    document.getElementById('turnoModal').addEventListener('hidden.bs.modal', limpiarTurnoModal);
+    document.getElementById('cambioTurnoModal').addEventListener('hidden.bs.modal', limpiarCambioTurnoModal);
+
+    // Inicializamos los eventos al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        inicializarEventosTurnos();
+        actualizarCalendario(); // Opcional: carga inicial del calendario
+    });
+</script>
+  </body>
+</html>

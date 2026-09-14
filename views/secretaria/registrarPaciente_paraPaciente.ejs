@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="/assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Xana Home</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.3/examples/dashboard/"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+    />
+
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/llamadas.css" rel="stylesheet" />
+
+    <style>
+      
+
+      /*Registrar pacientes */
+      /* Estilos personalizados */
+      .form-control:focus,
+      .form-select:focus {
+        border-color: #1e90ff;
+        box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+      }
+      .card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .btn-primary {
+        background-color: #1e90ff;
+        border-color: #1e90ff;
+      }
+      .btn-primary:hover {
+        background-color: #4169e1;
+        border-color: #4169e1;
+      }
+      .signature-container {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        width: fit-content;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .signature-container label {
+        display: block;
+        margin-bottom: 8px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #333;
+      }
+
+      #signature-pad {
+        background-color: white;
+        border: 2px solid #ddd !important; /* !important para sobreescribir el inline style */
+        border-radius: 4px;
+        cursor: crosshair;
+      }
+
+      .signature-container button {
+        margin-top: 10px;
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.3s;
+      }
+
+      .signature-container button:hover {
+        background-color: #45a049;
+      }
+      .confirm-section {
+        padding: 10px;
+        text-align: center;
+        background-color: #f0f0f0;
+      }
+      #pdfView {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#pdf {
+  width: 100%;
+  height: calc(100% - 60px); /* Resta el espacio de los botones */
+  min-width: 800px;
+  min-height: 600px;
+  border: none;
+  display: block;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#panelBtns {
+  height: 60px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  border-top: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.btn-bd-primary {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* Estilo específico para Confirmar */
+#continuarBtn {
+  background-color: #6c27c5;
+  color: white;
+}
+
+#continuarBtn:hover {
+  background-color: #8700e0;
+}
+#enviarBtn {
+  background-color: #1dd617;
+  color: white;
+}
+
+#enviarBtn:hover {
+  background-color: #34d41f;
+}
+
+/* Estilo específico para Descartar */
+#descartarBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+#descartarBtn:hover {
+  background-color: #c82333;
+}
+.condiciones {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para el título */
+    .condiciones h2 {
+      text-align: center;
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+
+    /* Estilo para el párrafo general */
+    .condiciones p {
+      line-height: 1.6;
+      color: #555;
+      font-size: 16px;
+      text-align: justify;
+    }
+
+    /* Estilo para los puntos numerados */
+    .condiciones ol {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .condiciones ol li {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    /* Resaltar el número de cada cláusula */
+    .condiciones ol li strong {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    /* Estilo para el texto introductorio antes de la lista */
+    .intro {
+      margin-bottom: 20px;
+    }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link href="/public/css/dashboard.css" rel="stylesheet" />
+  </head>
+  <body>
+   
+
+   
+    </div>
+
+    <header
+      class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+      data-bs-theme="dark"
+    >
+      <a
+        class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+        href="/home"
+        >XANA INDUSTRIES</a
+      >
+
+    
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 id="nombreDelUsuario">Nuevo Paciente</h1>
+            <div class="chat-header d-flex align-items-center">
+              
+              <h2 class="m-0">Formulario De Registro</h2>
+            </div>
+          </div>
+          <div class="album py-5 bg-body-tertiary">
+            <div class="container mt-4">
+              <h1
+                class="text-center mb-4"
+                style="color: #1e90ff; font-weight: bold"
+              >
+                Registrar Paciente
+              </h1>
+
+              <div class="card shadow p-4">
+                <form id="formRegistroPaciente">
+                  <!-- Documento de Identificación -->
+                  <div class="mb-3 d-flex align-items-center">
+                    <label
+                      for="documento"
+                      class="form-label me-2"
+                      style="min-width: 200px"
+                      >Documento de Identificación</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="documento"
+                      name="documento"
+                      required
+                    />
+                  </div>
+
+                  <!-- Cuadro de Datos del Paciente -->
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="nombre" class="form-label">Nombre</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        name="nombre"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="primerApellido" class="form-label"
+                        >Primer Apellido</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="apellido1"
+                        name="primerApellido"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="segundoApellido" class="form-label"
+                        >Segundo Apellido</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="apellido2"
+                        name="segundoApellido"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="fechaNacimiento" class="form-label"
+                        >Fecha de Nacimiento</label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="fechaNacimiento"
+                        name="fechaNacimiento"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="telefono" class="form-label"
+                        >Teléfono de Contacto</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="telefono"
+                        name="telefono"
+                        pattern="[0-9]{9,13}"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="sexo" class="form-label">Sexo</label>
+                      <select
+                        class="form-select"
+                        id="sexo"
+                        name="sexo"
+                        required
+                      >
+                        <option value="">Seleccione sexo</option>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="otro">Otro</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="direccion" class="form-label"
+                        >Dirección</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="direccion"
+                        name="direccion"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="correo" class="form-label"
+                        >Correo Electrónico</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="correo"
+                        name="correo"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="personaEmergencia" class="form-label"
+                        >Persona de Emergencia</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="personaEmergencia"
+                        name="personaEmergencia"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="contactoEmergencia" class="form-label"
+                        >Relacion</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="parentescoRegistro"
+                        name="contactoEmergencia"
+                        pattern="[0-9]{9,13}"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="contactoEmergencia" class="form-label"
+                        >Contacto de Emergencia</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="contactoEmergencia"
+                        name="contactoEmergencia"
+                        pattern="[0-9]{9,13}"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="nacionalidad" class="form-label"
+                        >Nacionalidad</label
+                      >
+                      <select
+                        class="form-select"
+                        id="nacionalidad"
+                        name="nacionalidad"
+                        required
+                      >
+                        <option value="">Seleccione nacionalidad</option>
+                        <option value="España">España</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Brasil">Brasil</option>
+                        <option value="Chile">Chile</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="México">México</option>
+                        <option value="Perú">Perú</option>
+                        <option value="Estados Unidos">Estados Unidos</option>
+                        <option value="Francia">Francia</option>
+                        <option value="Alemania">Alemania</option>
+                        <option value="Italia">Italia</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Reino Unido">Reino Unido</option>
+                        <!-- Puedes añadir más según necesites -->
+                      </select>
+                    </div>
+                    <div class="condiciones">
+                      <h2>Condiciones Generales y Cláusulas Legales</h2>
+                      <p class="intro">
+                        El presente formulario tiene por objeto recabar los datos personales y sanitarios necesarios para la correcta identificación, atención médica y administración de los servicios ofrecidos por este centro sanitario.
+                      </p>
+                      <ol>
+                        <li><strong> Tratamiento de Datos Personales (Protección de Datos - RGPD y LOPDGDD):</strong> De conformidad con el RGPD y la LOPDGDD, los datos personales recogidos serán incorporados a un fichero automatizado responsabilidad del centro, con la finalidad de gestionar la atención sanitaria. El paciente podrá ejercer sus derechos de acceso, rectificación, cancelación y oposición conforme a la normativa vigente.</li>
+                        <li><strong> Consentimiento para la Asistencia Sanitaria:</strong> El/la paciente autoriza al personal médico y sanitario del centro a realizar todas aquellas actuaciones diagnósticas, terapéuticas o preventivas necesarias para garantizar su adecuada atención médica. Esta autorización incluye la administración de medicamentos, realización de pruebas clínicas y cualquier intervención necesaria para preservar la salud del paciente.</li>
+                        <li><strong> Cláusula para Pacientes Menores de Edad:</strong> Si el paciente es menor de edad, el formulario debe ser firmado por el padre, madre o tutor legal, quien otorga el consentimiento para que se realicen las actuaciones sanitarias necesarias. El centro se reserva el derecho de solicitar documentación acreditativa del parentesco o tutela legal en caso de duda o discrepancia.</li>
+                        <li><strong> Persona de Contacto en Caso de Emergencia:</strong> Se autoriza al centro a contactar a la persona indicada en el formulario en caso de emergencia médica o cualquier situación urgente. Esta persona podrá recibir información estrictamente necesaria para colaborar con la atención del paciente y facilitar las decisiones que deban tomarse en su beneficio inmediato.</li>
+                        <li><strong> Comunicaciones y Contacto:</strong> Se autoriza el uso del teléfono y correo electrónico proporcionados para fines asistenciales.</li>
+                        <li><strong> Actualización de Datos:</strong> Es responsabilidad del paciente mantener actualizados sus datos personales, de contacto y situación médica. Cualquier cambio relevante debe ser notificado a la mayor brevedad posible al centro para garantizar una atención adecuada y segura.</li>
+                      </ol>
+                    </div>
+                    <div class="signature-container">
+                      <label>Firma Paciente :</label>
+                      <canvas
+                        id="signature-pad"
+                        width="300"
+                        height="100"
+                        style="border: 1px solid #000"
+                      ></canvas>
+                      <br />
+                      <button type="button" onclick="clearSignature()">
+                        Limpiar Firma
+                      </button>
+                    </div>
+                  </div>
+                  <div id="error-message" style="display: none; color: red"></div>
+
+                  <div class="confirm-section">
+                    <button class="btn btn-bd-primary" id="continuarBtn">
+                      Continuar
+                    </button>
+                  </div>
+                  <div id="pdfView" style="display: none">
+                    <div id="panelBtns">
+                      <button class="btn btn-bd-primary" id="enviarBtn">
+                        Enviar Formulario
+                      </button>              
+                      <button class="btn btn-bd-primary" id="descartarBtn">
+                        Descartar
+                      </button>    
+                    </div>
+                    <iframe id="pdf"></iframe>
+                    
+                  </div>
+
+                  <!-- Botón -->
+                 
+                  </div>
+                </form>
+              </div>
+            </div>
+        </main>
+      </div>
+    </div>
+
+
+
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts necesarios -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      const canvas = document.getElementById("signature-pad");
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+
+      canvas.addEventListener("mousedown", (e) => {
+        drawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+      });
+
+      canvas.addEventListener("mousemove", (e) => {
+        if (!drawing) return;
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+      });
+
+      canvas.addEventListener("mouseup", () => (drawing = false));
+
+      function clearSignature() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function getSignatureImageDataUrl() {
+        return canvas.toDataURL("image/png");
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const formRegistroPaciente = document.getElementById(
+          "formRegistroPaciente"
+        );
+        const documentoInput = document.getElementById("documento");
+        const nombreInput = document.getElementById("nombre");
+        const apellido1Input = document.getElementById("apellido1");
+        const apellido2Input = document.getElementById("apellido2");
+        const fechaNacimientoInput = document.getElementById("fechaNacimiento");
+        const telefonoInput = document.getElementById("telefono");
+        const sexoInput = document.getElementById("sexo");
+        const direccionInput = document.getElementById("direccion");
+        const correoInput = document.getElementById("correo");
+        const personaEmergenciaInput =
+          document.getElementById("personaEmergencia");
+        const contactoEmergenciaInput =
+          document.getElementById("contactoEmergencia");
+        const nacionalidadInput = document.getElementById("nacionalidad");
+        const parentescoRegistro=  document.getElementById("parentescoRegistro");
+
+        let pdfId;
+
+
+        document.getElementById("continuarBtn").addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          // Recoger datos
+          const campos = {
+             documento_identificacion : documentoInput.value.trim(),
+           nombreRegistro : nombreInput.value.trim(),
+           apellido1Registro : apellido1Input.value.trim(),
+           apellido2Registro : apellido2Input.value.trim(),
+           fecha_nacimientoRegistro : fechaNacimientoInput.value,
+           telefonoRegistro : telefonoInput.value.trim(),
+           sexoRegistro : sexoInput.value,
+           direccionRegistro : direccionInput.value.trim(),
+           correo_electronicoRegistro : correoInput.value.trim(),
+           persona_emergenciaRegistro :
+            personaEmergenciaInput.value.trim(),
+           contacto_emergenciaRegistro :
+            contactoEmergenciaInput.value.trim(),
+           nacionalidadRegistro : nacionalidadInput.value,
+           parentescoRegistro:parentescoRegistro.value.trim(),
+           firma : document
+            .getElementById("signature-pad")
+            .toDataURL("image/png"),
+
+          }
+         
+         
+          const body = {
+              tipo_documento: "registro_paciente",
+              campos: campos,
+            };
+
+            const response = await fetch("/secretaria/documentos/generarPdf", {
+              method: "POST", 
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(body),
+            });
+
+            const data = await response.json();
+            // Verificar si el DNI existe en la base de datos
+            const errorMessage = document.getElementById("error-message");
+            if (data.success) {
+              // Si el DNI existe, cargar el PDF desde data.url
+              errorMessage.style.display = "none";
+              pdfId= data.pdfId
+
+              const pdfIframe = document.getElementById("pdf");
+              const pdfUrl = `/recuperarPDF?id=${data.pdfId}`; // Construimos la URL correcta: /recuperarPDF?id=4
+              pdfIframe.src = pdfUrl; // Asignamos la URL
+              // Mostrar el visor
+              document.getElementById("continuarBtn").disabled = true;
+              document.getElementById("pdfView").style.display = "block";
+
+          
+              return;
+            } else {
+              errorMessage.textContent =
+                data.message ||
+                "El documento de identificación del usuario no existe";
+              errorMessage.style.display = "block";
+            }
+        });
+      
+
+
+        document.getElementById("enviarBtn").addEventListener("click", async (e) => {
+          e.preventDefault();
+          
+
+          const documento_identificacion = documentoInput.value.trim();
+          const nombreRegistro = nombreInput.value.trim();
+          const apellido1Registro = apellido1Input.value.trim();
+          const apellido2Registro = apellido2Input.value.trim();
+          const fecha_nacimientoRegistro = fechaNacimientoInput.value;
+          const telefonoRegistro = telefonoInput.value.trim();
+          const sexoRegistro = sexoInput.value;
+          const direccionRegistro = direccionInput.value.trim();
+          const correo_electronicoRegistro = correoInput.value.trim();
+          const persona_emergenciaRegistro =
+            personaEmergenciaInput.value.trim() +" "
+           parentescoRegistro.value.trim();
+
+          const contacto_emergenciaRegistro =
+            contactoEmergenciaInput.value.trim();
+          const nacionalidadRegistro = nacionalidadInput.value;
+          
+
+          
+         
+          // Validaciones
+          if (
+            !documento_identificacion ||
+            !nombreRegistro ||
+            !apellido1Registro ||
+            !fecha_nacimientoRegistro ||
+            !telefonoRegistro ||
+            !sexoRegistro ||
+            !direccionRegistro ||
+            !correo_electronicoRegistro ||
+            !persona_emergenciaRegistro ||
+            !contacto_emergenciaRegistro ||
+            !nacionalidadRegistro
+          ) {
+            alert("Por favor, complete todos los campos obligatorios.");
+            return;
+          }
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(correo_electronicoRegistro)) {
+            alert("Por favor, ingrese un correo electrónico válido.");
+            return;
+          }
+
+          const phoneRegex = /^[0-9]{9,13}$/;
+          if (
+            !phoneRegex.test(telefonoRegistro) ||
+            !phoneRegex.test(contacto_emergenciaRegistro)
+          ) {
+            alert("Los números de teléfono deben tener entre 9 y 13 dígitos.");
+            return;
+          }
+
+          const documento_identificacionEnvio = documentoInput.value.trim()
+          const nombre_paciente= nombreInput.value.trim()+" "+ apellido1Input.value.trim()+" "+ apellido2Input.value.trim()
+          const pdfIdEnvio = pdfId
+           
+
+
+          const camposEnvio = 
+            documentoInput.value.trim()+"?"+
+            nombreInput.value.trim()+"?"+
+            apellido1Input.value.trim()+"?"+
+            apellido2Input.value.trim()+"?"+
+            fechaNacimientoInput.value+"?"+
+            telefonoInput.value.trim()+"?"+
+            sexoInput.value+"?"+
+            direccionInput.value.trim()+"?"+
+            correoInput.value.trim()+"?"+   
+            personaEmergenciaInput.value.trim()+"?"+        
+            contactoEmergenciaInput.value.trim()+"?"+
+            nacionalidadInput.value+"?"+
+            parentescoRegistro.value.trim()+"?"+
+            document
+            .getElementById("signature-pad")
+            .toDataURL("image/png");
+          
+
+          try {
+            const response = await fetch("/secretariaEnviarBandejaDocumentos", {
+              method: "POST",
+              body: JSON.stringify({
+                camposEnvio : camposEnvio,
+                documento_identificacion: documento_identificacionEnvio,
+                nombre_paciente: nombre_paciente,
+                pdfId: pdfIdEnvio,
+                tipo_doc: "registro_paciente"
+
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              alert("La solicitud se envio con exito ,por favor, espere a ser atendido");
+              window.location.reload()
+              }
+        } catch (error) {
+            console.error("Error al registrar el paciente:", error);
+            alert("Error al conectar con el servidor.");
+          }
+        });
+      
+
+
+      document
+        .getElementById("descartarBtn")
+        .addEventListener("click", async () => {
+
+          const response = await fetch("/secretaria/documentos/accionPdf", {
+              method: "POST", // Cambiamos a POST para enviar el cuerpo
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({accion: "descartar", pdfId:pdfId}),
+            });
+
+            const data = await response.json();
+            if(data.success){
+              document.getElementById("continuarBtn").disabled = false;  
+              document.getElementById("pdfView").style.display = "none";
+            }
+
+          
+        })
+      });
+    </script>
+
+  
+
+  
+  </body>
+</html>
